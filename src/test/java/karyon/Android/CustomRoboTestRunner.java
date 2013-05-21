@@ -45,18 +45,6 @@ public class CustomRoboTestRunner extends RobolectricTestRunner
         }
 
         @Override
-        public IDataManager createDataManager()
-        {
-            return new SQLiteDataManager() {
-                @Override
-                public float getCodedVersion()
-                {
-                    return 1;
-                }
-            };
-        }
-
-        @Override
         public ISessionManager createSessionManager()
         {
             return new SessionManager();
