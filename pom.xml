@@ -32,6 +32,14 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
+        <repository>
+            <id>Karyon.Data-mvn-repo</id>
+            <url>https://raw.github.com/kmchugh/Karyon.Data/mvn-repo</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
         <!-- Required for the flurry analytics -->
         <repository>
             <id>Local File Repository</id>
@@ -43,6 +51,13 @@
         <dependency>
             <groupId>uk.co.icatalyst</groupId>
             <artifactId>karyon</artifactId>
+            <version>1.1</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>uk.co.icatalyst</groupId>
+            <artifactId>karyon.data</artifactId>
             <version>1.1</version>
             <scope>compile</scope>
         </dependency>
