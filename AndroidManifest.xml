@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="karyon.Android"
+          android:versionCode="1"
+          android:versionName="0.0.01">
+
+    <!-- TODO: Automate the build number -->
+
+    <!--
+        The Application version above is set to mimic the string vesion.
+        The versionCode is broken down into x.xx.xx for major, minor, and release
+
+        For example the following mappings from name -> code
+        v1.0.0  -> 10000
+        v1.1.1 -> 10101
+        v1.1.15 -> 10115
+        v3.23.17 -> 32317
+        v99.3.34 -> 990334
+    -->
+    <uses-sdk android:minSdkVersion="8"  android:targetSdkVersion="16"/>
+
+    <!-- Required in order to determine if we are online or offline -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application>
+        <activity android:name=".Activities.SplashActivity"/>
+        <activity android:name=".Activities.ErrorActivity"/>
+    </application>
+</manifest> 

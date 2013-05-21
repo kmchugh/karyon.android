@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Defines the customFont attribute for setting fonts from xml -->
+    <attr name="customFont" format="string"/>
+    <declare-styleable name="Button">
+        <attr name="customFont"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextView">
+        <attr name="customFont"/>
+    </declare-styleable>
+
+    <declare-styleable name="Textbox">
+        <attr name="customFont"/>
+    </declare-styleable>
+
+    <!-- Defines the pullToRefresh attribute setting for ListViews -->
+    <attr name="pullToRefresh" format="boolean"/>
+    <attr name="pullToRefreshHeaderResource" format="reference"/>
+    <declare-styleable name="ListView">
+        <attr name="pullToRefresh"/>
+        <attr name="pullToRefreshHeaderResource"/>
+    </declare-styleable>
+</resources>
+

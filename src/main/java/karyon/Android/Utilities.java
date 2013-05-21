@@ -1,0 +1,72 @@
+package karyon.Android;
+
+import Karyon.Collections.HashMap;
+import Karyon.DyanmicCode.Java;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import karyon.Android.Applications.Application;
+
+/**
+ * Utility functions specifically related to the Android applications
+ * @author kmchugh
+ */
+public class Utilities
+{
+    /**
+     * Creates a Bundle from a parameter hashmap.  All of the keys
+     * of the hashmap will be converted to lower case in the returned bundle
+     * @param toHashMap the hashmap to create the bundle from
+     * @return the Bundle created or null if the hashmap was null or had no keys
+     */
+    public static Bundle createBundle(HashMap<String, ?> toHashMap)
+    {
+        if (toHashMap != null && toHashMap.size() > 0)
+        {
+            Bundle loReturn = new Bundle(toHashMap == null ? 0 : toHashMap.size());
+            for (String lcKey : toHashMap.keySet())
+            {
+                Object loValue = toHashMap.get(lcKey);
+
+                // For the moment, only primitives are supported
+                if (loValue == null)
+                {
+                    // Do nothing for nulls
+                }
+                else if (Java.isPrimitive(loValue))
+                {
+                    if (loValue.getClass().isAssignableFrom(String.class))
+                    {
+                        loReturn.putString(lcKey, (String)loValue);
+                    }
+                    else
+                    {
+                        throw new UnsupportedOperationException("Class " + loValue.getClass().getName() + " not yet supported");
+                    }
+                }
+                else
+                {
+                    throw new UnsupportedOperationException("Non primitives are not yet supported");
+                }
+            }
+            return loReturn;
+        }
+        return null;
+    }
+
+    /**
+     * Checks if we are running on a tablet or mobile device
+     * @return true if we are on a tablet, false otherwise
+     */
+    public static boolean isTablet()
+    {
+        return (Application.getInstance().getApplicationContext().getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+
+    }
+    
+    
+    // Not createable
+    private Utilities()
+    {}
+    
+}
