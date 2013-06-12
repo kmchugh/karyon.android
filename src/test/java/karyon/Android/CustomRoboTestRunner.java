@@ -1,6 +1,5 @@
 package karyon.Android;
 
-import Karyon.Data.IDataManager;
 import Karyon.ISessionManager;
 import Karyon.SessionManager;
 import Karyon.Version;
@@ -9,15 +8,11 @@ import com.xtremelabs.robolectric.RobolectricConfig;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import com.xtremelabs.robolectric.res.RobolectricPackageManager;
 import com.xtremelabs.robolectric.shadows.ShadowApplication;
-import com.xtremelabs.robolectric.util.DatabaseConfig;
 import karyon.Android.Applications.AndroidApplication;
 import karyon.Android.Applications.Application;
-import karyon.Android.Data.SQLiteDataManager;
 import org.junit.runners.model.InitializationError;
 
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * Allows customisation of the location of the manifest file

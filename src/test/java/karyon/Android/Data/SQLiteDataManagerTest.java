@@ -1,7 +1,6 @@
 package karyon.Android.Data;
 
 import Karyon.Data.DataManager;
-import Karyon.Data.IDataManager;
 import com.xtremelabs.robolectric.Robolectric;
 import karyon.Android.CustomRoboTestRunner;
 import org.junit.Before;

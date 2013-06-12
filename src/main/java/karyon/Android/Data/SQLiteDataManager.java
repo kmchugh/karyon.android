@@ -2,7 +2,6 @@ package karyon.Android.Data;
 
 import Karyon.Data.DataManager;
 import Karyon.Data.DataObject;
-import Karyon.Data.IDataManager;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
