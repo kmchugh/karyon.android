@@ -1,21 +1,16 @@
 package karyon.Android;
 
 import Karyon.ISessionManager;
-import Karyon.SessionManager;
 import Karyon.Version;
 import karyon.Android.Applications.AndroidApplication;
 import karyon.Android.Applications.Application;
 import org.junit.runners.model.InitializationError;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricConfigs;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.res.builder.RobolectricPackageManager;
-import org.robolectric.shadows.ShadowApplication;
 
 import java.io.File;
 
 /**
- * Allows customisation of the location of the manifest file
+ * This is the test runner that any tests should be executed using
  */
 public class CustomRoboTestRunner extends RobolectricTestRunner
 {

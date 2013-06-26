@@ -2,19 +2,14 @@ package karyon.Android.Applications;
 
 import Karyon.Exceptions.CriticalException;
 import Karyon.Version;
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.webkit.CookieSyncManager;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.cookie.BasicClientCookie;
-
-import java.util.Map;
 
 /**
- * Base abstract class for Android Applications
- * @author kmchugh
+ * The core Android Application Class.
+ * Android Apps should be based on this class in order to hook in
+ * to the Karyon Application Framework
  */
 public abstract class AndroidApplication 
     extends android.app.Application
