@@ -4,6 +4,7 @@ import Karyon.Testing.KaryonTest;
 import karyon.Android.CustomRoboTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,13 +21,23 @@ public class AndroidApplicationTest
     public void testCreateApplication() throws Exception
     {
         startMarker();
+        assertNotNull(Application.getInstance());
     }
 
     @Test
     public void testOnCreate() throws Exception
     {
         startMarker();
+        assertTrue(Application.getInstance().isRunning());
+    }
 
+    @Test
+    public void testOnTerminate() throws Exception
+    {
+        startMarker();
+
+        CustomRoboTestRunner.TestApplication.terminate();
+        assertFalse(Application.getInstance().isRunning());
     }
 
     @Test
@@ -35,9 +46,4 @@ public class AndroidApplicationTest
         startMarker();
     }
 
-    @Test
-    public void testOnTerminate() throws Exception
-    {
-        startMarker();
-    }
 }

@@ -44,11 +44,11 @@ public abstract class AndroidApplication
             // If it does happen it is a critical error
             throw new CriticalException("Unable to create Android Application");
         }
-        
+
+        // TODO: Move CookieSyncManager to Session Manager
         // Force the cookie synch manager to be created
         CookieSyncManager.createInstance(this);
-        // TODO: refactor this END----------------
-        
+
         Application.getInstance().start();
     }
     

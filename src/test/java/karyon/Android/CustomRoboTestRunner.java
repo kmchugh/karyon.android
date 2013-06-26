@@ -48,9 +48,12 @@ public class CustomRoboTestRunner extends RobolectricTestRunner
     public static class TestApplication
             extends Application
     {
+        private static AndroidApplication g_oApp;
+
         private TestApplication(Version toVersion, AndroidApplication toApp)
         {
             super(toVersion, toApp);
+            g_oApp = toApp;
         }
 
         @Override
@@ -71,6 +74,11 @@ public class CustomRoboTestRunner extends RobolectricTestRunner
         public ISessionManager createSessionManager()
         {
             return null;
+        }
+
+        public static void terminate()
+        {
+            g_oApp.onTerminate();
         }
     }
 
