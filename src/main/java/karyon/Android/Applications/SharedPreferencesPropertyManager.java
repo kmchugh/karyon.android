@@ -1,6 +1,6 @@
 package karyon.Android.Applications;
 
-import Karyon.Applications.IPropertyManager;
+import Karyon.Applications.PropertyManagers.IPropertyManager;
 import Karyon.Text.Utilities;
 import android.app.Activity;
 import android.content.SharedPreferences;

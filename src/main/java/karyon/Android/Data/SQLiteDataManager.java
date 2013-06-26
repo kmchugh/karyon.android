@@ -1,5 +1,6 @@
 package karyon.Android.Data;
 
+import Karyon.Data.DataConnector;
 import Karyon.Data.DataManager;
 import Karyon.Data.DataObject;
 import android.content.Context;
@@ -13,16 +14,37 @@ import java.io.File;
  * Data Manager for SQLite data stores on an Android Device
  */
 public abstract class SQLiteDataManager
-    extends DataManager
+    extends DataConnector
 {
     /**
      * SQLite Helper class
      */
     private class SQLHelper extends SQLiteOpenHelper
     {
-        private IDataManager m_oManager;
+        private DataManager m_oManager;
         private Context m_oContext;
         private boolean m_lSkipUpdate;
+
+        private SQLHelper(Context toContext, float tnVersion, DataManager toDataManager)
+        {
+            super(toContext, Application.getInstance().getApplicationGUID(),
+                    null, (int)(tnVersion*1000f));
+            m_oManager = toDataManager;
+            m_oContext = toContext;
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db)
+        {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+        {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+        /*
 
         private SQLHelper(Context toContext, float tnVersion, IDataManager toDataManager)
         {
@@ -52,15 +74,12 @@ public abstract class SQLiteDataManager
             }
         }
 
-        /**
-         * Checks if the database already exists
-         * @return true if exists, false otherwise
-         */
         public boolean exists()
         {
             File loDB = Application.getInstance().getApplicationContext().getDatabasePath(Application.getInstance().getApplicationGUID());
             return loDB != null && loDB.exists();
         }
+        */
 
 
     }
@@ -72,7 +91,7 @@ public abstract class SQLiteDataManager
      * Creates a new instance of SQLiteDataManager.
      * The underlying SQLHelper is shared through all instances of SQLiteDataManager
      */
-    public SQLiteDataManager()
+    protected SQLiteDataManager()
     {
     }
 
@@ -84,11 +103,12 @@ public abstract class SQLiteDataManager
     {
         if (m_oHelper == null)
         {
-            m_oHelper = new SQLHelper(Application.getInstance().getApplicationContext(), getCodedVersion(), this);
+            m_oHelper = null;//new SQLHelper(Application.getInstance().getApplicationContext(), getCodedVersion(), this);
         }
         return m_oHelper;
     }
 
+    /*
     @Override
     public boolean isDataStoreCreated()
     {
@@ -125,4 +145,5 @@ public abstract class SQLiteDataManager
     {
         return false;
     }
+    */
 }

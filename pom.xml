@@ -49,7 +49,7 @@
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
             <version>${com.google.android.android.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Android Support Libraries -->
@@ -70,7 +70,7 @@
 
         <!-- Make sure this is below the android dependencies -->
         <dependency>
-            <groupId>com.pivotallabs</groupId>
+            <groupId>org.robolectric</groupId>
             <artifactId>robolectric</artifactId>
             <version>${com.pivotallabs.robolectric.version}</version>
             <scope>test</scope>
@@ -146,6 +146,7 @@
                     <sdk>
                         <platform>8</platform>
                     </sdk>
+                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
                 </configuration>
                 <extensions>true</extensions>
             </plugin>

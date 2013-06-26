@@ -1,7 +1,7 @@
 package karyon.Android.Applications;
 
 import Karyon.Applications.ICapabilitiesManager;
-import Karyon.Applications.IPropertyManager;
+import Karyon.Applications.PropertyManagers.IPropertyManager;
 import Karyon.Collections.HashMap;
 import Karyon.Logging.ILogger;
 import Karyon.Utilities;
@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

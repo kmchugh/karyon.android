@@ -3,14 +3,14 @@ package karyon.Android;
 import Karyon.ISessionManager;
 import Karyon.SessionManager;
 import Karyon.Version;
-import com.xtremelabs.robolectric.Robolectric;
-import com.xtremelabs.robolectric.RobolectricConfig;
-import com.xtremelabs.robolectric.RobolectricTestRunner;
-import com.xtremelabs.robolectric.res.RobolectricPackageManager;
-import com.xtremelabs.robolectric.shadows.ShadowApplication;
 import karyon.Android.Applications.AndroidApplication;
 import karyon.Android.Applications.Application;
 import org.junit.runners.model.InitializationError;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricConfigs;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.res.builder.RobolectricPackageManager;
+import org.robolectric.shadows.ShadowApplication;
 
 import java.io.File;
 
@@ -42,7 +42,8 @@ public class CustomRoboTestRunner extends RobolectricTestRunner
         @Override
         public ISessionManager createSessionManager()
         {
-            return new SessionManager();
+            //return new SessionManager();
+            return null;
         }
     }
 
@@ -60,7 +61,8 @@ public class CustomRoboTestRunner extends RobolectricTestRunner
     public CustomRoboTestRunner(Class<?> toTestClass)
             throws InitializationError
     {
-        super(toTestClass, getManifestDirectory());
+        //super(toTestClass, getManifestDirectory());
+        super(toTestClass);
     }
 
     // Attempts to find the Karyon.Android Manifest file
@@ -78,6 +80,8 @@ public class CustomRoboTestRunner extends RobolectricTestRunner
         return new File(".");
     }
 
+    /*
+
     @Override
     protected android.app.Application createApplication()
     {
@@ -85,11 +89,12 @@ public class CustomRoboTestRunner extends RobolectricTestRunner
     }
 
     @Override
-    public void setupApplicationState(RobolectricConfig toConfig)
+    public void setupApplicationState(RobolectricConfigs toConfig)
     {
         super.setupApplicationState(toConfig);
         ShadowApplication loApp = Robolectric.shadowOf(Robolectric.application);
         loApp.setPackageName(toConfig.getPackageName());
         loApp.setPackageManager(new RobolectricPackageManager(Robolectric.application, toConfig));
     }
+    */
 }
