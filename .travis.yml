@@ -5,7 +5,7 @@ jdk: oraclejdk7
 env:
     matrix:
     - ANDROID_SDKS=android-8            ANDROID_TARGET=android-8   ANDROID_ABI=armeabi
-    - ANDROID_SDKS=android-17,sysimg-17 ANDROID_TARGET=android-17  ANDROID_ABI=armeabi-v7a
+    - ANDROID_SDKS=android-17,sysimg-17 ANDROID_TARGET=android-8  ANDROID_ABI=armeabi-v7a
 
 before_install:
    # Install base Android SDK
@@ -18,6 +18,14 @@ before_install:
 
    # Install required Android components.
    - android update sdk --filter platform-tools,android-16,extra-android-support,add-on,$ANDROID_SDKS --no-ui --obsolete --force --all > /dev/null
+
+branches:
+    only:
+        - master
+
+notifications:
+    email:
+        - kmchugh@icatalyst.co.uk
 
 
 
@@ -54,10 +62,3 @@ before_install:
 #
 
 
-branches:
-    only:
-        - master
-
-notifications:
-    email:
-        - kmchugh@icatalyst.co.uk
