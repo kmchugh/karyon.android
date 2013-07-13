@@ -35,8 +35,7 @@ public class AndroidApplicationTest
     public void testOnTerminate() throws Exception
     {
         startMarker();
-
-        CustomRoboTestRunner.TestApplication.terminate();
+        CustomRoboTestRunner.terminate();
         assertFalse(Application.getInstance().isRunning());
     }
 

@@ -1,9 +1,6 @@
 package karyon.Android;
 
-import Karyon.ISessionManager;
-import Karyon.Version;
-import karyon.Android.Applications.AndroidApplication;
-import karyon.Android.Applications.Application;
+import android.app.Application;
 import org.junit.runners.model.InitializationError;
 import org.robolectric.*;
 
@@ -14,6 +11,23 @@ import java.lang.reflect.Method;
  */
 public class CustomRoboTestRunner extends RobolectricTestRunner
 {
+    private static Application g_oApplication;
+
+    /**
+     * Forces termination of the android application
+     * @return true if termination was attempted, false if the application had not been created
+     */
+    public static boolean terminate()
+    {
+        if (g_oApplication != null)
+        {
+            g_oApplication.onTerminate();
+            return true;
+        }
+        return false;
+    }
+
+
     /**
      * LifeCycle Class to override the Application being executed during the tests
      */
@@ -23,62 +37,13 @@ public class CustomRoboTestRunner extends RobolectricTestRunner
         @Override
         public android.app.Application createApplication(Method toMethod, AndroidManifest toManifest)
         {
-            return new TestAndroidApp();
-        }
-    }
-
-    /**
-     * The Android Application Launcher hook.  this will create and execute TestApplication
-     */
-    public static class TestAndroidApp
-            extends AndroidApplication
-    {
-        @Override
-        protected Application createApplication(Version toVersion)
-        {
-            Application.clearApplication();
-            return new TestApplication(toVersion, this);
-        }
-    }
-
-
-    /**
-     * The Application Class that is used to test the functionality of Karyon.Android
-     */
-    public static class TestApplication
-            extends Application
-    {
-        private static AndroidApplication g_oApp;
-
-        private TestApplication(Version toVersion, AndroidApplication toApp)
-        {
-            super(toVersion, toApp);
-            g_oApp = toApp;
-        }
-
-        @Override
-        protected boolean onInit()
-        {
-            // Do nothing with the initialisation
-            return true;
-        }
-
-        @Override
-        protected boolean onStart()
-        {
-            // Do nothing with start
-            return true;
-        }
-
-        @Override
-        public ISessionManager createSessionManager()
-        {
-            return null;
-        }
-
-        public static void terminate()
-        {
-            g_oApp.onTerminate();
+            // If we are creating a new application we need to clear out the old one
+            if (Karyon.Applications.Application.isCreated())
+            {
+                Karyon.Applications.Application.clearApplication();
+            }
+            g_oApplication = new karyon.Android.Applications.Application.AndroidApplication(AndroidTestApplication.class);
+            return g_oApplication;
         }
     }
 
@@ -91,7 +56,6 @@ public class CustomRoboTestRunner extends RobolectricTestRunner
             throws InitializationError
     {
         super(toTestClass);
-
     }
 
     /**

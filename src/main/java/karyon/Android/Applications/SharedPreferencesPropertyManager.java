@@ -22,7 +22,7 @@ public class SharedPreferencesPropertyManager
      * Initialises the shared preferences, this will use a default separator of '.'
      * @param toAndroidApp the android application object
      */
-    public SharedPreferencesPropertyManager(AndroidApplication toAndroidApp)
+    public SharedPreferencesPropertyManager(Application.AndroidApplication toAndroidApp)
     {
         this(toAndroidApp, ".");
     }
@@ -31,7 +31,7 @@ public class SharedPreferencesPropertyManager
      * Initialises the shared preferences
      * @param toAndroidApp the android application object
      */
-    public SharedPreferencesPropertyManager(AndroidApplication toAndroidApp, String tcPathSeparator)
+    public SharedPreferencesPropertyManager(Application.AndroidApplication toAndroidApp, String tcPathSeparator)
     {
         m_oPreferences = toAndroidApp.getSharedPreferences("app.preferences", Activity.MODE_PRIVATE);
         m_cPathSeparator = tcPathSeparator;

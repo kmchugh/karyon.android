@@ -3,7 +3,10 @@ package karyon.Android.Applications;
 import Karyon.Applications.ICapabilitiesManager;
 import Karyon.Applications.PropertyManagers.IPropertyManager;
 import Karyon.Collections.HashMap;
+import Karyon.DynamicCode.Java;
+import Karyon.Exceptions.CriticalException;
 import Karyon.Logging.ILogger;
+import Karyon.Testing.KaryonTest;
 import Karyon.Utilities;
 import Karyon.Version;
 import android.app.Activity;
@@ -13,7 +16,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,11 +39,78 @@ import org.apache.http.params.HttpConnectionParams;
 
 /**
  * The Application class is the core Android Application Controller
- * @author kmchugh
+ * This is the class that should be overwritten in order to start a
+ * new Android Application
  */
 public abstract class Application<T extends Application>
     extends Karyon.Applications.Application<T>
 {
+    /**
+     * Wrapper class for the Android Application.  This is a helper
+     * class that links up the Android Framework Application class to the
+     * Karyon Application class
+     */
+    public static class AndroidApplication
+        extends android.app.Application
+    {
+        private Class<? extends Application> m_oApplicationClass;
+
+        public AndroidApplication()
+        {
+            m_oApplicationClass = Java.getCallingClass(1);
+        }
+
+        public <K extends Application> AndroidApplication(Class<K> toAppClass)
+        {
+            m_oApplicationClass = toAppClass;
+        }
+
+        @Override
+        public final void onCreate()
+        {
+            super.onCreate();
+            try
+            {
+                PackageInfo loInfo = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+
+                // Create the Karyon Application Instance
+                Java.createObject(m_oApplicationClass,
+                        new Version(m_oApplicationClass.getSimpleName() + " " + loInfo.versionName),
+                        this);
+
+            }
+            catch (PackageManager.NameNotFoundException ex)
+            {
+                // This should never be able to happen as it is the application package being used
+                // This means if it does happen something has gone horribly wrong
+                throw new CriticalException("Unable to create Android Application");
+            }
+
+            // Start up the Application
+            Application.getInstance().start();
+        }
+
+        @Override
+        public void onTerminate()
+        {
+            super.onTerminate();
+            Application.getInstance().stop();
+        }
+
+        @Override
+        public void onConfigurationChanged(Configuration toNewConfig)
+        {
+            super.onConfigurationChanged(toNewConfig);
+        }
+
+        @Override
+        public void onLowMemory()
+        {
+            super.onLowMemory();
+            Application.getInstance().notifyLowMemory();
+        }
+    }
+
     /**
      * Helper method to get the android application instance
      * @return the android application instance
@@ -54,8 +126,7 @@ public abstract class Application<T extends Application>
     /**
      * Creates a new instance of the Application, this can only be
      * created one time
-     * @param toVersion the version of the application 
-     * @param toApp the Android Application
+     * @param toVersion the version of the application
      */
     public Application(Version toVersion, AndroidApplication toApp)
     {
@@ -65,11 +136,24 @@ public abstract class Application<T extends Application>
     }
 
     /**
-     * Gets the host name of the web server
+     * Gets the Application Context
+     * @return the Application Context
      */
-    public String getWebServerHost()
+    public Context getApplicationContext()
     {
-        return getPropertyManager().<String>getProperty("application.webHost");
+        return m_oAndroidApp.getApplicationContext();
+    }
+
+    /**
+     * Gets the requested system service specific to the Application context
+     * @param tcService the service to get
+     * @param toReturnType the type of object that will be returned
+     * @param <K> the type of object that is being requested
+     * @return the object or null if unable to retrieve the requested service
+     */
+    public <K extends Object> K getSystemService(String tcService, Class<K>toReturnType)
+    {
+        return (K)getApplicationContext().getSystemService(tcService);
     }
 
     /**
@@ -80,6 +164,68 @@ public abstract class Application<T extends Application>
     protected IPropertyManager createPropertyManager()
     {
         return new SharedPreferencesPropertyManager(m_oAndroidApp);
+    }
+
+    @Override
+    protected ILogger createLogger()
+    {
+        return new AndroidLogger();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // TODO: Refactor below here
+
+    private Boolean m_lDebug;
+
+    /**
+     * Checks if the application is running in debug mode
+     *
+     * @return true if debug mode, otherwise false
+     */
+    // TODO: Move this to Environment
+    private boolean isDebuggable()
+    {
+        if (m_lDebug == null)
+        {
+            boolean llReturn = false;
+            PackageManager loPM = m_oAndroidApp.getApplicationContext().getPackageManager();
+            try
+            {
+                ApplicationInfo loInfo = loPM.getApplicationInfo(m_oAndroidApp.getApplicationContext().getPackageName(), 0);
+                llReturn = (0 != (loInfo.flags &= ApplicationInfo.FLAG_DEBUGGABLE));
+            }
+            catch (Throwable ex)
+            {
+            }
+            m_lDebug = llReturn;
+        }
+        return m_lDebug;
+    }
+
+
+    /**
+     * Gets the host name of the web server
+     */
+    public String getWebServerHost()
+    {
+        return getPropertyManager().<String>getProperty("application.webHost");
     }
 
     /**
@@ -142,26 +288,7 @@ public abstract class Application<T extends Application>
         return new AndroidCapabilitiesManager();
     }
 
-    /**
-     * Gets the Application Context
-     * @return the Application Context
-     */
-    public Context getApplicationContext()
-    {
-        return m_oAndroidApp.getApplicationContext();
-    }
 
-    /**
-     * Gets the requested system service specific to the Application context
-     * @param tcService the service to get
-     * @param toReturnType the type of object that will be returned
-     * @param <K> the type of object that is being requested
-     * @return the object or null if unable to retrieve the requested service
-     */
-    public <K extends Object> K getSystemService(String tcService, Class<K>toReturnType)
-    {
-        return (K)getApplicationContext().getSystemService(tcService);
-    }
 
     /**
      * Gets the string from the resource id
@@ -173,11 +300,7 @@ public abstract class Application<T extends Application>
         return m_oAndroidApp.getString(tnStringResourceID);
     }
 
-    @Override
-    protected ILogger createLogger()
-    {
-        return new AndroidLogger();
-    }
+
 
     // TODO: This should be refactored into a HTTP manager
 
@@ -278,34 +401,6 @@ public abstract class Application<T extends Application>
         NotificationManager loManager = getSystemService(Context.NOTIFICATION_SERVICE, NotificationManager.class);
         loManager.cancelAll();
     }
-    
-
-    
-    private Boolean m_lDebug;
-
-    /**
-     * Checks if the application is running in debug mode
-     *
-     * @return true if debug mode, otherwise false
-     */
-    private boolean isDebuggable()
-    {
-        if (m_lDebug == null)
-        {
-            boolean llReturn = false;
-            PackageManager loPM = m_oAndroidApp.getApplicationContext().getPackageManager();
-            try
-            {
-                ApplicationInfo loInfo = loPM.getApplicationInfo(m_oAndroidApp.getApplicationContext().getPackageName(), 0);
-                llReturn = (0 != (loInfo.flags &= ApplicationInfo.FLAG_DEBUGGABLE));
-            }
-            catch (Throwable ex)
-            {
-            }
-            m_lDebug = llReturn;
-        }
-        return m_lDebug;
-    }
 
     public final void showError(int tnResourceID)
     {
@@ -330,6 +425,8 @@ public abstract class Application<T extends Application>
     {
         return m_oAndroidApp.openFileInput(name);
     }
+
+    // TODO: Move the following to a FlurryManager (UserInfo Manager??)
 
     /**
      * Gets the flurry API key for this app
