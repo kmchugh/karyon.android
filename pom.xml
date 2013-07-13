@@ -13,7 +13,7 @@
     <description>Karyon Android Application Library</description>
 
     <properties>
-        <!-- github server corresponss to entry in ~/.m2/settings.xml -->
+        <!-- github server corresponds to entry in ~/.m2/settings.xml -->
         <github.global.server>github</github.global.server>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <uk.co.icatalyst.karyon.version>0.2-SNAPSHOT</uk.co.icatalyst.karyon.version>
