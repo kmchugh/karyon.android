@@ -56,7 +56,7 @@ public abstract class Application<T extends Application>
 
         public AndroidApplication()
         {
-            m_oApplicationClass = Java.getCallingClass(1);
+            m_oApplicationClass = (Class<? extends Application>)this.getClass().getEnclosingClass();
         }
 
         public <K extends Application> AndroidApplication(Class<K> toAppClass)
