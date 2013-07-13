@@ -74,7 +74,7 @@ public abstract class Application<T extends Application>
 
                 // Create the Karyon Application Instance
                 Java.createObject(m_oApplicationClass,
-                        new Version(m_oApplicationClass.getSimpleName() + " " + loInfo.versionName),
+                        new Version(getString(loInfo.applicationInfo.labelRes) + " " + (loInfo.versionName.replace("-SNAPSHOT", ""))),
                         this);
 
             }
