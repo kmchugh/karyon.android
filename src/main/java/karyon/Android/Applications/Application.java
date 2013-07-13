@@ -6,7 +6,6 @@ import Karyon.Collections.HashMap;
 import Karyon.DynamicCode.Java;
 import Karyon.Exceptions.CriticalException;
 import Karyon.Logging.ILogger;
-import Karyon.Testing.KaryonTest;
 import Karyon.Utilities;
 import Karyon.Version;
 import android.app.Activity;
