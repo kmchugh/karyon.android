@@ -71,10 +71,22 @@ public abstract class Application<T extends Application>
             try
             {
                 PackageInfo loInfo = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+                // During testing the manifext may not be available(therefore the resource lookup won't work)
+                String lcName = loInfo.packageName;
+                String lcVersion = loInfo.versionName;
+                try
+                {
+                    lcName = getString(loInfo.applicationInfo.labelRes);
+                }
+                catch (Throwable ex)
+                {
+                    // No need to do anything here.
+                }
+                lcVersion = lcVersion == null ? "0.0.0.1" : lcVersion.replace("-SNAPSHOT", "");
 
                 // Create the Karyon Application Instance
                 Java.createObject(m_oApplicationClass,
-                        new Version(getString(loInfo.applicationInfo.labelRes) + " " + (loInfo.versionName.replace("-SNAPSHOT", ""))),
+                        new Version(lcName + " " + lcVersion),
                         this);
 
             }
