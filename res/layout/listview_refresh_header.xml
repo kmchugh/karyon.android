@@ -22,7 +22,7 @@
             android:layout_margin="10dp"
             android:visibility="gone"/>
 
-    <karyon.android1.controls1.TextView
+    <karyon.android.controls.TextView
             android:id="@+id/pullToRefreshText"
             android:text="@string/pull_to_refresh"
             android:padding="5dp"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"/>
 
-    <karyon.android1.controls1.TextView
+    <karyon.android.controls.TextView
             android:id="@+id/lastUpdatedText"
             android:layout_below="@id/pullToRefreshText"
             android:layout_width="fill_parent"

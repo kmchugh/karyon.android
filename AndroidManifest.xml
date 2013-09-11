@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="karyon.android1"
+          package="karyon.android"
           android:versionCode="1"
           android:versionName="0.0.01">
 
@@ -23,7 +23,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application>
-        <activity android:name=".activities1.SplashActivity"/>
-        <activity android:name=".activities1.ErrorActivity"/>
+        <activity android:name=".activities.SplashActivity"/>
+        <activity android:name=".activities.ErrorActivity"/>
     </application>
 </manifest> 
