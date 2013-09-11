@@ -23,7 +23,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application>
-        <activity android:name=".Activities.SplashActivity"/>
-        <activity android:name=".Activities.ErrorActivity"/>
+        <activity android:name=".activities1.SplashActivity"/>
+        <activity android:name=".activities1.ErrorActivity"/>
     </application>
 </manifest> 

@@ -5,7 +5,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <karyon.android1.Controls.WebView
+    <karyon.android1.controls1.WebView
              android:id="@+id/webview"
              android:layout_height="fill_parent"
              android:layout_width="fill_parent"/>

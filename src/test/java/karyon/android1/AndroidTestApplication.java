@@ -2,7 +2,7 @@ package karyon.android1;
 
 import karyon.ISessionManager;
 import karyon.Version;
-import karyon.android1.Applications.Application;
+import karyon.android1.applications1.Application;
 
 /**
  * The AndroidTestApplication is the AndroidApplication that

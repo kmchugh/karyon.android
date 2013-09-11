@@ -4,7 +4,7 @@ import karyon.collections.HashMap;
 import karyon.dynamicCode.Java;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import karyon.android1.Applications.Application;
+import karyon.android1.applications1.Application;
 
 /**
  * Utility functions specifically related to the Android applications

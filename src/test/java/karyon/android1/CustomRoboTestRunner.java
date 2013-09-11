@@ -42,7 +42,7 @@ public class CustomRoboTestRunner extends RobolectricTestRunner
             {
                 karyon.applications.Application.clearApplication();
             }
-            g_oApplication = new karyon.android1.Applications.Application.AndroidApplication(AndroidTestApplication.class);
+            g_oApplication = new karyon.android1.applications1.Application.AndroidApplication(AndroidTestApplication.class);
             return g_oApplication;
         }
     }
