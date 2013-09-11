@@ -7,16 +7,16 @@
 
     <artifactId>karyon.android</artifactId>
     <groupId>uk.co.icatalyst</groupId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.3-SNAPSHOT</version>
     <packaging>apklib</packaging>
-    <name>Karyon.Android</name>
+    <name>karyon.android</name>
     <description>Karyon Android Application Library</description>
 
     <properties>
         <!-- github server corresponds to entry in ~/.m2/settings.xml -->
         <github.global.server>github</github.global.server>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <uk.co.icatalyst.karyon.version>0.2-SNAPSHOT</uk.co.icatalyst.karyon.version>
+        <uk.co.icatalyst.karyon.version>0.3-SNAPSHOT</uk.co.icatalyst.karyon.version>
         <uk.co.icatalyst.karyon.data.version>0.2-SNAPSHOT</uk.co.icatalyst.karyon.data.version>
         <com.google.android.android.version>2.2.1</com.google.android.android.version>
         <com.google.android.support-v4.version>r7</com.google.android.support-v4.version>
@@ -37,12 +37,14 @@
             <scope>compile</scope>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>uk.co.icatalyst</groupId>
             <artifactId>karyon.data</artifactId>
             <version>${uk.co.icatalyst.karyon.data.version}</version>
             <scope>compile</scope>
         </dependency>
+        -->
 
         <!-- Android Libraries -->
         <dependency>
@@ -86,24 +88,24 @@
 
     <repositories>
         <repository>
-            <id>Karyon-mvn-repo</id>
-            <url>https://raw.github.com/kmchugh/Karyon/mvn-repo</url>
+            <id>karyon-mvn-repo</id>
+            <url>https://raw.github.com/kmchugh/karyon/mvn-repo</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
         <repository>
-            <id>Karyon.Data-mvn-repo</id>
-            <url>https://raw.github.com/kmchugh/Karyon.Data/mvn-repo</url>
+            <id>karyon.data-mvn-repo</id>
+            <url>https://raw.github.com/kmchugh/karyon.data/mvn-repo</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
         <repository>
-            <id>Karyon.Android-mvn-repo</id>
-            <url>https://raw.github.com/kmchugh/Karyon.Android/mvn-repo</url>
+            <id>karyon.android-mvn-repo</id>
+            <url>https://raw.github.com/kmchugh/karyon.android/mvn-repo</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
@@ -119,9 +121,9 @@
     </repositories>
 
     <scm>
-        <connection>scm:git:git@github.com:kmchugh/Karyon.Android.git</connection>
-        <url>scm:git:git@github.com:kmchugh/Karyon.Android.git</url>
-        <developerConnection>scm:git:git@github.com:kmchugh/Karyon.Android.git</developerConnection>
+        <connection>scm:git:git@github.com:kmchugh/karyon.android.git</connection>
+        <url>scm:git:git@github.com:kmchugh/karyon.android.git</url>
+        <developerConnection>scm:git:git@github.com:kmchugh/karyon.android.git</developerConnection>
     </scm>
 
     <build>
