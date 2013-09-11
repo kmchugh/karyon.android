@@ -26,6 +26,7 @@
         <org.apache.maven.plugins.maven.compiler.plugin.version>3.0</org.apache.maven.plugins.maven.compiler.plugin.version>
         <org.apache.maven.plugins.maven.deploy.plugin.version>2.7</org.apache.maven.plugins.maven.deploy.plugin.version>
         <com.github.github.site.maven.plugin.version>0.8</com.github.github.site.maven.plugin.version>
+        <com.jayway.maven.plugins.android.generation2.version>3.6.0</com.jayway.maven.plugins.android.generation2.version>
     </properties>
 
     <dependencies>
@@ -141,7 +142,7 @@
                 <!-- See http://code.google.com/p/maven-android-plugin/ -->
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>${com.jayway.maven.plugins.android.generation2.version}</version>
                 <configuration>
                     <sdk>
                         <platform>8</platform>
