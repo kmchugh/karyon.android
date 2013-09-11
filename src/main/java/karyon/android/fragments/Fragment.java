@@ -1,4 +1,4 @@
-package karyon.android1.fragments;
+package karyon.android.fragments;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import karyon.android1.activities.IController;
+import karyon.android.activities.IController;
 
 
 // TODO : refactor Fragment to use an IMPL pattern, Fragment is different from FragmentController,

@@ -1,4 +1,4 @@
-package karyon.android1.activities;
+package karyon.android.activities;
 
 import android.graphics.Bitmap;
 import android.view.MotionEvent;
@@ -6,10 +6,10 @@ import android.view.View;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.widget.ProgressBar;
-import karyon.android1.applications.Application;
-import karyon.android1.controls.DefaultWebViewClient;
-import karyon.android1.controls.WebView;
-import karyon.android1.R;
+import karyon.android.applications.Application;
+import karyon.android.controls.DefaultWebViewClient;
+import karyon.android.controls.WebView;
+import karyon.android.R;
 
 /**
  * A web activity is an activity which opens a URL or displays a HTML snippet.

@@ -1,4 +1,4 @@
-package karyon.android1.controls;
+package karyon.android.controls;
 
 import karyon.collections.HashMap;
 import karyon.collections.List;
@@ -9,8 +9,8 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebViewClient;
-import karyon.android1.activities.WebActivity;
-import karyon.android1.applications.Application;
+import karyon.android.activities.WebActivity;
+import karyon.android.applications.Application;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;

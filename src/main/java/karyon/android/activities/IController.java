@@ -1,4 +1,4 @@
-package karyon.android1.activities;
+package karyon.android.activities;
 
 import android.content.Context;
 import android.content.res.Resources;

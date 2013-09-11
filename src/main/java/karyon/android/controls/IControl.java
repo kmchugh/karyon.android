@@ -1,4 +1,4 @@
-package karyon.android1.controls;
+package karyon.android.controls;
 
 import android.content.Context;
 import android.graphics.Typeface;

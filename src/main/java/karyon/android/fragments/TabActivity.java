@@ -4,14 +4,14 @@
  * moment because v13 isn't available through maven
  */
 
-package karyon.android1.fragments;
+package karyon.android.fragments;
 
 import karyon.collections.HashMap;
 import android.content.Context;
 //import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 import android.widget.TabHost;
-import karyon.android1.R;
+import karyon.android.R;
 
 import java.util.Map;
 
