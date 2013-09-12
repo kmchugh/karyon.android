@@ -1,25 +1,18 @@
 package karyon.android;
 
-import karyon.ISessionManager;
 import karyon.Version;
-import karyon.android.applications.Application;
+import karyon.applications.Application;
 
 /**
  * The AndroidTestApplication is the AndroidApplication that
  * is used for all of the Android Tests
  */
 public class AndroidTestApplication
-    extends Application
+    extends Application<AndroidTestApplication>
 {
-    public AndroidTestApplication(Version toVersion, AndroidApplication toApp)
+    public AndroidTestApplication(Version toVersion)
     {
-        super(toVersion, toApp);
-    }
-
-    @Override
-    public ISessionManager createSessionManager()
-    {
-        return null;
+        super(toVersion);
     }
 
     @Override

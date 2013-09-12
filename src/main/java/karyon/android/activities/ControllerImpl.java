@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.view.Window;
 import com.flurry.android.FlurryAgent;
-import karyon.android.applications.Application;
+import karyon.applications.Application;
 
 /**
  * The implementation rules of a Controller
@@ -231,11 +231,13 @@ public class ControllerImpl<T extends IController>
      */
     public final void onStart()
     {
+        /*
         // Start up Flurry
         if (Application.getInstance().usesFlurry())
         {
             FlurryAgent.onStartSession(m_oThis.getContext(), Application.getInstance().flurryAPIKey());
         }
+        */
         ControllerManager.getInstance().notifyStart(m_oThis);
     }
 
@@ -244,11 +246,13 @@ public class ControllerImpl<T extends IController>
      */
     public final void onStop()
     {
+        /*
         // Stop the Flurry session
         if (Application.getInstance().usesFlurry())
         {
             FlurryAgent.onEndSession(m_oThis.getContext());
         }
+        */
         ControllerManager.getInstance().notifyStop(m_oThis);
     }
 

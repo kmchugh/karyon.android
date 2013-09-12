@@ -1,11 +1,11 @@
 package karyon.android.data;
 
+import karyon.applications.Application;
 import karyon.data.DataConnector;
 import karyon.data.DataManager;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import karyon.android.applications.Application;
 
 /**
  * Data Manager for SQLite data stores on an Android Device

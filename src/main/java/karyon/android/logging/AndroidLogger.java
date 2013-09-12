@@ -1,9 +1,9 @@
 package karyon.android.logging;
 
+import karyon.applications.Application;
 import karyon.constants.LogType;
 import karyon.logging.Logger;
 import android.util.Log;
-import karyon.android.applications.Application;
 
 /**
  * Logging for the android

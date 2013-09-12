@@ -1,8 +1,8 @@
 package karyon.android.activities;
 
+import karyon.applications.Application;
 import karyon.collections.HashMap;
 import karyon.collections.List;
-import karyon.android.applications.Application;
 import karyon.android.behaviours.ControllerBehaviour;
 
 import java.lang.reflect.Method;
@@ -56,7 +56,7 @@ public class ControllerManager
      */
     public void start(Class<? extends  android.app.Activity> toActivityClass, android.app.Activity toParent)
     {
-        Application.getInstance().startActivity(toActivityClass, toParent);
+        //Application.getInstance().startActivity(toActivityClass, toParent);
     }
 
     /**
@@ -114,7 +114,7 @@ public class ControllerManager
                     Application.log(ex);
                 }
             }
-            addActivityBehaviour(toActivityClass, Application.getInstance(Application.class).getBehaviourFor((Class<Controller>)toActivityClass, loBehaviour));
+            //addActivityBehaviour(toActivityClass, Application.getInstance(Application.class).getBehaviourFor((Class<Controller>)toActivityClass, loBehaviour));
         }
         return m_oBehaviours.get(toActivityClass);
     }

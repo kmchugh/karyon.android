@@ -20,20 +20,18 @@ public class SharedPreferencesPropertyManager
 
     /**
      * Initialises the shared preferences, this will use a default separator of '.'
-     * @param toAndroidApp the android application object
      */
-    public SharedPreferencesPropertyManager(Application.AndroidApplication toAndroidApp)
+    public SharedPreferencesPropertyManager()
     {
-        this(toAndroidApp, ".");
+        this(".");
     }
 
     /**
      * Initialises the shared preferences
-     * @param toAndroidApp the android application object
      */
-    public SharedPreferencesPropertyManager(Application.AndroidApplication toAndroidApp, String tcPathSeparator)
+    public SharedPreferencesPropertyManager(String tcPathSeparator)
     {
-        m_oPreferences = toAndroidApp.getSharedPreferences("app.preferences", Activity.MODE_PRIVATE);
+        m_oPreferences = AndroidApplicationAdaptor.getInstance().getSharedPreferences("app.preferences", Activity.MODE_PRIVATE);
         m_cPathSeparator = tcPathSeparator;
         m_oPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override

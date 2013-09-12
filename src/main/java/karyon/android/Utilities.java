@@ -1,10 +1,10 @@
 package karyon.android;
 
+import karyon.android.applications.AndroidApplicationAdaptor;
 import karyon.collections.HashMap;
 import karyon.dynamicCode.Java;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import karyon.android.applications.Application;
 
 /**
  * Utility functions specifically related to the Android applications
@@ -59,7 +59,8 @@ public class Utilities
      */
     public static boolean isTablet()
     {
-        return (Application.getInstance().getApplicationContext().getResources().getConfiguration().screenLayout &
+        // TODO: refactor to capabilities
+        return (AndroidApplicationAdaptor.getInstance().getApplicationContext().getResources().getConfiguration().screenLayout &
                 Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
 
     }

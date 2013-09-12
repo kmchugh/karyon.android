@@ -6,10 +6,10 @@ import android.view.View;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.widget.ProgressBar;
-import karyon.android.applications.Application;
 import karyon.android.controls.DefaultWebViewClient;
 import karyon.android.controls.WebView;
 import karyon.android.R;
+import karyon.applications.Application;
 
 /**
  * A web activity is an activity which opens a URL or displays a HTML snippet.
@@ -68,8 +68,8 @@ public abstract class WebActivity<T extends WebActivity<T>>
             m_oWebView.getSettings().setJavaScriptEnabled(true);
             m_oWebView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
             m_oWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-            m_oSyncManager = CookieSyncManager.createInstance(Application.getInstance().getApplicationContext());
-            m_oSyncManager.sync();
+            //m_oSyncManager = CookieSyncManager.createInstance(Application.getInstance().getApplicationContext());
+            //m_oSyncManager.sync();
             String lcURL = getURL();
             Application.log("Opening Webview for " + lcURL);
             m_oWebView.loadUrl(lcURL);

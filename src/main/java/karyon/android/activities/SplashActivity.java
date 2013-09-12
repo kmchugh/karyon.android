@@ -3,8 +3,8 @@ package karyon.android.activities;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import karyon.android.applications.Application;
 import karyon.android.R;
+import karyon.applications.Application;
 
 /**
  * The splash screen activity for the application, by default this is the 

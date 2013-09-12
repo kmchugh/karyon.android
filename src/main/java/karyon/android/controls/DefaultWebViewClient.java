@@ -1,8 +1,9 @@
 package karyon.android.controls;
 
+import karyon.android.applications.AndroidApplicationAdaptor;
+import karyon.applications.Application;
 import karyon.collections.HashMap;
 import karyon.collections.List;
-import karyon.SessionManager;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.webkit.CookieManager;
@@ -10,7 +11,6 @@ import android.webkit.CookieSyncManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebViewClient;
 import karyon.android.activities.WebActivity;
-import karyon.android.applications.Application;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -38,13 +38,13 @@ public class DefaultWebViewClient
         m_oWebActivity = toWebActivity;
         m_cDomain = tcDomain;
         m_oCookies = new HashMap<String, String>();
-        DefaultHttpClient loClient = Application.getInstance().getDefaultHttpClient();
+        DefaultHttpClient loClient = null; //Application.getInstance().getDefaultHttpClient();
         if (loClient != null)
         {
             List<Cookie> loCookies = new List<Cookie>(loClient.getCookieStore().getCookies());
             if (loCookies.size()>0)
             {
-                CookieSyncManager.createInstance(Application.getInstance().getApplicationContext());
+                CookieSyncManager.createInstance(AndroidApplicationAdaptor.getInstance().getApplicationContext());
                 CookieManager loManager = CookieManager.getInstance();
                 loManager.removeAllCookie();
                 CookieSyncManager.getInstance().sync();
@@ -59,7 +59,7 @@ public class DefaultWebViewClient
                     // TODO: Make the session cookie identifier configurable
                     if (loCookie.getName().equalsIgnoreCase("phpsessid"))
                     {
-                        lcValue = SessionManager.getInstance().getCurrentSession().getSessionID();
+                        lcValue = Application.getInstance().getSessionManager().getCurrentSession().getSessionID();
                     }
 
                     String lcCookie = lcName + "=" + lcValue;// + "; domain=" + loCookie.getDomain();
@@ -146,7 +146,7 @@ public class DefaultWebViewClient
             loManager.setAcceptCookie(true);
             String lcCookieString = loManager.getCookie(m_cDomain);
             BasicHttpContext loContext = new BasicHttpContext();
-            DefaultHttpClient loClient = Application.getInstance().getDefaultHttpClient();
+            DefaultHttpClient loClient = null; //Application.getInstance().getDefaultHttpClient();
             loContext.setAttribute(ClientContext.COOKIE_STORE, loClient.getCookieStore());
             String[] laParts = null;
             String[] laCookies = null;
