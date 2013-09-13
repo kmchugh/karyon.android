@@ -43,6 +43,7 @@ public class ControllerImpl<T extends IController>
     public final void onCreate(Bundle toSavedInstanceState)
     {
         boolean llCustomTitle = false;
+        /*
         if (!m_oThis.canShowTitle())
         {
             m_oThis.setWindowFeature(Window.FEATURE_NO_TITLE);
@@ -54,10 +55,12 @@ public class ControllerImpl<T extends IController>
                 llCustomTitle = m_oThis.setWindowFeature(Window.FEATURE_CUSTOM_TITLE);
             }
         }
+        */
         initialise(toSavedInstanceState);
 
         if (llCustomTitle)
         {
+            /*
             m_oThis.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, m_oThis.getCustomTitleDrawable());
 
             try
@@ -74,6 +77,7 @@ public class ControllerImpl<T extends IController>
             {
                 // This may happen in future versions of the android sdk
             }
+            */
         }
     }
 
@@ -103,7 +107,7 @@ public class ControllerImpl<T extends IController>
         int lnContentID = getContentViewID();
         if (lnContentID != 0)
         {
-            m_oThis.setContentView(lnContentID);
+            //m_oThis.setContentView(lnContentID);
         }
     }
 
@@ -132,7 +136,7 @@ public class ControllerImpl<T extends IController>
                 {
                     try
                     {
-                        m_oThis.onUpdateUI();
+                        //m_oThis.onUpdateUI();
                     }
                     catch (Throwable ex)
                     {}
@@ -153,7 +157,7 @@ public class ControllerImpl<T extends IController>
     {
         if (ControllerManager.getInstance().notifyContentReady(m_oThis))
         {
-            m_oThis.onContentReady();
+            //m_oThis.onContentReady();
         }
     }
 

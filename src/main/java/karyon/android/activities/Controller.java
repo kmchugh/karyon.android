@@ -57,18 +57,6 @@ public abstract class Controller<T extends Controller<T>>
     }
 
     @Override
-    public int getCustomTitleDrawable()
-    {
-        return 0;
-    }
-
-    @Override
-    public boolean canShowTitle()
-    {
-        return true;
-    }
-
-    @Override
     public Context getContext()
     {
         return this;
@@ -84,8 +72,8 @@ public abstract class Controller<T extends Controller<T>>
         super.onConfigurationChanged(toConfig);
         m_oControllerImpl.updateContentView();
     }
-    
-    @Override
+
+    // @Override
     public final boolean setWindowFeature(int tnFeature)
     {
         return requestWindowFeature(tnFeature);
@@ -100,21 +88,10 @@ public abstract class Controller<T extends Controller<T>>
     }
 
     @Override
-    public void onUpdateUI()
-    {
-    }
-
-    @Override
     public final void onContentChanged()
     {
         super.onContentChanged();
         m_oControllerImpl.onContentChanged();
-    }
-
-    @Override
-    public void onContentReady()
-    {
-        invalidate();
     }
 
     @Override

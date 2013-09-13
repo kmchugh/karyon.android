@@ -17,10 +17,10 @@ public class ErrorActivity extends Controller
         return R.layout.error;
     }
 
-    @Override
+    //@Override
     public void onUpdateUI()
     {
-        super.onUpdateUI();
+        //super.onUpdateUI();
         String lcMessage = (String) getIntent().getExtras().getSerializable("com.youcommentate.message");
         String lcTitle = (String) getIntent().getExtras().getSerializable("com.youcommentate.title");
         if (lcTitle == null)

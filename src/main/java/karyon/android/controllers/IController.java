@@ -13,29 +13,10 @@ import android.view.Window;
 public interface IController
 {
     /**
-     * Pass through to requestWindowFeature()
-     * @param tnFeature the id of the feature to request
-     * @return true if the feature was successfully requested
-     */
-    boolean setWindowFeature(int tnFeature);
-
-    /**
-     * Gets the drawable id for the custom title if there is one
-     * @return the custom title drawable or 0 if there is not one
-     */
-    int getCustomTitleDrawable();
-
-    /**
      * Gets the window this control is current on
      * @return the window for this control
      */
     Window getWindow();
-
-    /**
-     * Sets the content view of the controller
-     * @param tnResourceViewID the content resource id
-     */
-    void setContentView(int tnResourceViewID);
 
     /**
      * Gets the resources associated with this controller
@@ -57,29 +38,6 @@ public interface IController
     int getLandscapeViewResourceID();
 
     /**
-     * Checks if this Controller should display a title or not
-     * @return true if a title should be shown
-     */
-    boolean canShowTitle();
-
-    /**
-     * Hook to interact with UI Updates, this will always be called in the UI Thread,
-     * this should not be called manually, to force this code call invalidate on the
-     * controller
-     */
-    void onUpdateUI();
-
-    /**
-     * Hook for when the content has been set on the activity
-     */
-    void onContentReady();
-
-    /**
-     * Occurs when the activity has been notified its content has changed
-     */
-    void onContentChanged();
-
-    /**
      * Notifies the activity that it should close.  The activity will check with the activity manager before
      * closing
      */
@@ -90,41 +48,6 @@ public interface IController
      * @return true if paused
      */
     boolean isPaused();
-
-    /**
-     * Notifies the ControllerManager that we are low on memory
-     */
-    void onLowMemory();
-
-    /**
-     * Notifies the controller manater that this activity has been paused
-     */
-    void onPause();
-
-    /**
-     * Notifies the controller manater that this activity has been restarted
-     */
-    void onRestart();
-
-    /**
-     * Notifies the controller manater that this activity has been resumed
-     */
-    void onResume();
-
-    /**
-     * Notifies the controller manater that this activity has been started
-     */
-    void onStart();
-
-    /**
-     * Notifies the controller manater that this activity has been stopped
-     */
-    void onStop();
-
-    /**
-     * Notifies the controller manater that this activity has been destroyed
-     */
-    void onDestroy();
 
     /**
      * Determines if this controller is in the process of finishing

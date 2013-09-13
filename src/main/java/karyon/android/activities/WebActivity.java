@@ -31,10 +31,10 @@ public abstract class WebActivity<T extends WebActivity<T>>
         return R.layout.webview;
     }
 
-    @Override
+    //@Override
     public void onContentReady()
     {
-        super.onContentReady();
+        //super.onContentReady();
 
         if (m_oCoverView == null)
         {

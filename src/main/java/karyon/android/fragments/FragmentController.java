@@ -64,16 +64,10 @@ public abstract class FragmentController<T extends FragmentController<T>>
         m_oControllerImpl.onCreate(toSavedInstanceState);
     }
 
-    @Override
+    //@Override
     public int getCustomTitleDrawable()
     {
         return 0;
-    }
-
-    @Override
-    public boolean canShowTitle()
-    {
-        return false;
     }
 
     /**
@@ -87,7 +81,7 @@ public abstract class FragmentController<T extends FragmentController<T>>
         m_oControllerImpl.updateContentView();
     }
 
-    @Override
+    //@Override
     public final boolean setWindowFeature(int tnFeature)
     {
         return requestWindowFeature(tnFeature);
@@ -102,21 +96,10 @@ public abstract class FragmentController<T extends FragmentController<T>>
     }
 
     @Override
-    public void onUpdateUI()
-    {
-    }
-
-    @Override
     public final void onContentChanged()
     {
         super.onContentChanged();
         m_oControllerImpl.onContentChanged();
-    }
-
-    @Override
-    public void onContentReady()
-    {
-        invalidate();
     }
 
     @Override

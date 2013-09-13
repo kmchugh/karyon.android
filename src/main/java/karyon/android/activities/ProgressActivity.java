@@ -32,7 +32,7 @@ public abstract class ProgressActivity<T extends ProgressActivity<T>>
         return true;
     }
 
-    @Override
+    //@Override
     public void onUpdateUI()
     {
         if (m_lProgressVisible)

@@ -1,5 +1,6 @@
 package karyon.android.controllers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -102,7 +103,7 @@ public abstract class Controller<T extends Controller<T>>
     @Override
     public final View onCreateView(LayoutInflater toInflater, ViewGroup toContainer, Bundle toSavedInstanceState)
     {
-        return toContainer == null ? null : toInflater.inflate(getContentViewID(), toContainer, false);
+        return toInflater.inflate(getContentViewID(), toContainer, false);
     }
 
     /**
@@ -144,231 +145,19 @@ public abstract class Controller<T extends Controller<T>>
     public final void onActivityCreated(Bundle toBundle)
     {
         super.onActivityCreated(toBundle);
-        onCreated(toBundle);
-    }
-
-    /**
-     * Hook method to allow interaction in the creation cycle.
-     * This will be called after the completion of fragment creation
-     * @param toBundle the bundle parameters
-     */
-    protected void onCreated(Bundle toBundle)
-    {
+        onContentReady(toBundle);
     }
 
     @Override
     public View findViewById(int tnID)
     {
-        return getActivity().findViewById(tnID);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Notifies the UI that it should be refreshed.
-     */
-    public final void invalidate()
-    {
-        updateUI();
+        return getView().findViewById(tnID);
     }
 
     /**
-     * Forces a UI update by calling onUpdateUI on the correct thread.  If this is called multiple times and there
-     * is still an outstanding update the additional calls will be considered a no op.
-     */
-    protected final void updateUI()
-    {
-        if (!m_lPaused && m_oOutstandingUpdate == null)
-        {
-            final Controller<T> loSelf = this;
-            m_oOutstandingUpdate = new Runnable()
-            {
-                public void run()
-                {
-                    try
-                    {
-                        loSelf.onUpdateUI();
-                    }
-                    catch (Throwable ex)
-                    {}
-                    finally
-                    {
-                        loSelf.m_oOutstandingUpdate = null;
-                    }
-                }
-            };
-            getActivity().runOnUiThread(m_oOutstandingUpdate);
-        }
-    }
-
-    @Override
-    public void runOnUiThread(Runnable toAction)
-    {
-        getActivity().runOnUiThread(toAction);
-    }
-
-    @Override
-    public boolean isFinishing()
-    {
-        return getActivity().isFinishing();
-    }
-
-    @Override
-    public void onUpdateUI()
-    {
-        // By default we do nothing here
-    }
-
-    @Override
-    public void onContentChanged()
-    {
-        // TODO: Implement activity manager for content changing?  May not need to do this depending on how fragments work
-        /*
-        super.onContentChanged();
-        if (ControllerManager.getInstance().notifyContentReady(this))
-        {
-            onContentReady();
-        }*/
-    }
-
-
-
-    @Override
-    public void onContentReady()
-    {
-        // TODO: implement this
-        //m_oFragmentControllerImpl.onContentReady();
-    }
-
-    /**
-     * Notifies the activity that it should close.  The activity will check with the activity manager before
-     * closing
-     */
-    public final void finish()
-    {
-        // TODO : Implement finishing with the activity manager
-        /*
-        if (ControllerManager.getInstance().notifyFinishing(this))
-        {
-            super.finish();
-        }*/
-        // For now just remove the Fragment
-        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-    }
-
-    /**
-     * Checks if this view is paused
-     * @return true if paused
-     */
-    public boolean isPaused()
-    {
-        // TODO: Test this, it may be possible to simply use isFinishing for this same data
-        return m_lPaused;
-    }
-
-    @Override
-    public final void onDestroy()
-    {
-        // TODO : Implement destory in ControllerManager for Fragments
-        // ControllerManager.getInstance().notifyDestroy(this);
-        super.onDestroy();
-    }
-
-    @Override
-    public final void onLowMemory()
-    {
-        notifyLowMemory();
-        super.onLowMemory();
-    }
-
-    /**
-     * Notifies the Controller manager that memory is low.
-     * If this is overridden, super should always be called.
-     */
-    public void notifyLowMemory()
-    {
-        // TODO: Implement notifications on ActvityManager for Fragments
-        //ControllerManager.getInstance().notifyLowMemory(this);
-    }
-
-    @Override
-    public final void onPause()
-    {
-        m_lPaused = true;
-        // TODO: Implement notifications on ActvityManager for Fragments
-        //ControllerManager.getInstance().notifyPause(this);
-        super.onPause();
-    }
-
-    //@Override
-    public final void onRestart()
-    {
-        // TODO: Implement notifications on ActvityManager for Fragments
-        //ControllerManager.getInstance().notifyRestart(this);
-        //super.onRestart();
-    }
-
-    @Override
-    public final void onResume()
-    {
-        m_lPaused = false;
-        // TODO: Implement notifications on ActvityManager for Fragments
-        //ControllerManager.getInstance().notifyResume(this);
-        super.onResume();
-    }
-
-    @Override
-    public final void onStart()
-    {
-        // TODO: Implement notifications on ActvityManager for Fragments
-        //ControllerManager.getInstance().notifyStart(this);
-        super.onStart();
-    }
-
-    @Override
-    public final void onStop()
-    {
-        notifyStop();
-        super.onStop();
-    }
-
-    /**
-     * Notifies the Controller manager that the view is stopping
-     * If this is overridden, super should always be called.
-     */
-    public void notifyStop()
-    {
-        // TODO: Implement notifications on ActvityManager for Fragments
-        //ControllerManager.getInstance().notifyStop(this);
-    }
-
-    /**
-     * Hook to allow overriding of the default view resources
-     * @return the integer ID of the layout resource to initialise the view with
-     */
+    * Hook to allow overriding of the default view resources
+    * @return the integer ID of the layout resource to initialise the view with
+    */
     public int getContentViewID()
     {
         return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
@@ -385,18 +174,45 @@ public abstract class Controller<T extends Controller<T>>
     }
 
     @Override
-    public boolean setWindowFeature(int tnFeature)
+    public void runOnUiThread(Runnable toAction)
     {
-        // TODO: Implement this using the controller container
-        // TODO: Implement a getContainer to get the parent controller container
-        return false;
+        getActivity().runOnUiThread(toAction);
     }
 
     @Override
-    public int getCustomTitleDrawable()
+    public boolean isFinishing()
     {
-        // TODO: Implement this using the controller container
-        return 0;
+        return this.getActivity() != null ? this.getActivity().isFinishing() : this.m_lInitialised && !this.isDetached();
+    }
+
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    /**
+     * This is called before onStart.  At this stage the view hierarchy is complete, the
+     * view is not made visible until onStart
+     * @param toBundle the bundle of parameters
+     */
+    protected void onContentReady(Bundle toBundle)
+    {
+    }
+
+    /**
+     * Notifies the activity that it should close.  The activity will check with the activity manager before
+     * closing
+     */
+    public final void finish()
+    {
+        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+    }
+
+    @Override
+    public Context getContext()
+    {
+        return getView().getContext();
     }
 
     @Override
@@ -405,23 +221,27 @@ public abstract class Controller<T extends Controller<T>>
         return getActivity().getWindow();
     }
 
-    @Override
-    public void setContentView(int tnResourceViewID)
+    /**
+     * Checks if this view is paused
+     * @return true if paused
+     */
+    public boolean isPaused()
     {
-        getActivity().setContentView(tnResourceViewID);
+        return m_lPaused;
+    }
+
+    // TODO: All of the on<Action> methods from the activity should fire events that we can listen to with an event manager
+    @Override
+    public final void onPause()
+    {
+        m_lPaused = true;
+        super.onPause();
     }
 
     @Override
-    public boolean canShowTitle()
+    public final void onResume()
     {
-        // TODO: Implement this using the controller container
-        return false;
-    }
-
-    @Override
-    public Context getContext()
-    {
-        // TODO: Implement this using the controller container
-        return null;
+        m_lPaused = false;
+        super.onResume();
     }
 }

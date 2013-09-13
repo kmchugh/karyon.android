@@ -13,10 +13,10 @@ import karyon.applications.Application;
  */
 public class SplashActivity extends Controller
 {
-    @Override
+    //@Override
     public void onContentReady()
     {
-        super.onContentReady();
+        //super.onContentReady();
         setVersionText(Application.getInstance().getVersion().toString());
         setIDText(Application.getInstance().getInstanceGUID());
     }
