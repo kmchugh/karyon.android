@@ -19,7 +19,7 @@
         <uk.co.icatalyst.karyon.version>0.3-SNAPSHOT</uk.co.icatalyst.karyon.version>
         <uk.co.icatalyst.karyon.data.version>0.2-SNAPSHOT</uk.co.icatalyst.karyon.data.version>
         <com.google.android.android.version>2.2.1</com.google.android.android.version>
-        <com.google.android.support-v4.version>r7</com.google.android.support-v4.version>
+        <com.google.android.support-v4.version>18</com.google.android.support-v4.version>
         <com.pivotallabs.robolectric.version>2.1.1</com.pivotallabs.robolectric.version>
         <junit.version>4.11</junit.version>
         <com.flurry.FlurryAgent.version>3.1.0</com.flurry.FlurryAgent.version>
@@ -56,8 +56,8 @@
 
         <!-- Android Support Libraries -->
         <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>support-v4</artifactId>
+            <groupId>uk.co.icatalyst</groupId>
+            <artifactId>android-support-v4</artifactId>
             <version>${com.google.android.support-v4.version}</version>
             <scope>compile</scope>
         </dependency>
@@ -109,6 +109,14 @@
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>android.support-mvn-repo</id>
+            <url>https://raw.github.com/kmchugh/android.support/mvn-repo</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
             </snapshots>
         </repository>
 
