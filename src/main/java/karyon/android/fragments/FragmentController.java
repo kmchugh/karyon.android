@@ -2,8 +2,8 @@ package karyon.android.fragments;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import karyon.android.activities.IController;
 import karyon.android.activities.ControllerImpl;
+import karyon.android.controllers.IController;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,7 +17,8 @@ public abstract class FragmentController<T extends FragmentController<T>>
       implements IController
 {
 
-    private ControllerImpl<T> m_oControllerImpl;
+    //private ControllerImpl<T> m_oControllerImpl;
+    private ControllerImpl m_oControllerImpl;
 
     /**
      * Creates a new instance of controller, controller
@@ -26,14 +27,15 @@ public abstract class FragmentController<T extends FragmentController<T>>
      */
     protected FragmentController()
     {
-        m_oControllerImpl = new ControllerImpl(this);
+        //m_oControllerImpl = new ControllerImpl(this);
     }
 
     /**
      * Allows customising the implementation classes
      * @param toImplementation the implementation of this controller
      */
-    protected FragmentController(ControllerImpl<T> toImplementation)
+    protected FragmentController(ControllerImpl toImplementation)
+    //protected FragmentController(ControllerImpl<T> toImplementation)
     {
         m_oControllerImpl = toImplementation;
     }
@@ -117,12 +119,6 @@ public abstract class FragmentController<T extends FragmentController<T>>
     public final void finish()
     {
        m_oControllerImpl.finish();
-    }
-
-    @Override
-    public boolean onInit(Bundle toSavedInstanceState)
-    {
-        return true;
     }
 
     @Override

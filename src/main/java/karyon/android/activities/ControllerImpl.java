@@ -4,8 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.view.Window;
-import com.flurry.android.FlurryAgent;
-import karyon.applications.Application;
+import karyon.android.controllers.IController;
 
 /**
  * The implementation rules of a Controller
@@ -85,7 +84,7 @@ public class ControllerImpl<T extends IController>
     private void initialise(Bundle toSavedInstanceState)
     {
         if (ControllerManager.getInstance().push(m_oThis) &&
-                m_oThis.onInit(toSavedInstanceState))
+                true) //m_oThis.onInit(toSavedInstanceState))
         {
             ControllerManager.getInstance().notifyInit(m_oThis);
             updateContentView();

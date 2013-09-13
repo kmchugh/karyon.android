@@ -6,6 +6,7 @@
 
 package karyon.android.fragments;
 
+import karyon.android.controllers.Controller;
 import karyon.collections.HashMap;
 import android.content.Context;
 //import android.support.v4.app.FragmentTabHost;
@@ -26,7 +27,7 @@ public abstract class TabActivity
         extends FragmentController
         implements TabHost.OnTabChangeListener
 {
-    protected class TabDefinition<T extends Fragment>
+    protected class TabDefinition<T extends Controller>
     {
         private String m_cID;
         private String m_cTitle;
@@ -143,12 +144,12 @@ public abstract class TabActivity
         return m_oTabs != null && m_oTabs.containsKey(lcTag) ? m_oTabs.get(lcTag) : null;
     }
 
-    public final <K extends Fragment> TabDefinition<K> addTab(String tcTabID, String tcTabText, int tnIcon, Class<K> toActivityClass)
+    public final <K extends Controller> TabDefinition<K> addTab(String tcTabID, String tcTabText, int tnIcon, Class<K> toActivityClass)
     {
         return this.addTab(tcTabID, tcTabText, tnIcon, toActivityClass, tcTabText, 0);
     }
 
-    public final <K extends Fragment> TabDefinition<K> addTab(String tcTabID, String tcTabText, int tnIcon, Class<K> toActivityClass, String tcTitleText, int tnTitleIcon)
+    public final <K extends Controller> TabDefinition<K> addTab(String tcTabID, String tcTabText, int tnIcon, Class<K> toActivityClass, String tcTitleText, int tnTitleIcon)
     {
         TabDefinition<K> loDef = new TabDefinition(tcTabID, tcTabText, toActivityClass, tnIcon, tcTitleText, tnTitleIcon);
         getTabs().put(tcTabID, loDef);

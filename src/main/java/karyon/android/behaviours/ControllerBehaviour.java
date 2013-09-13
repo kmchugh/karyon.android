@@ -1,7 +1,7 @@
 package karyon.android.behaviours;
 
 import android.widget.TextView;
-import karyon.android.activities.IController;
+import karyon.android.controllers.IController;
 
 /**
  * Class to contain the rules around the lifecycle of an activity

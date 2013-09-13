@@ -3,6 +3,7 @@ package karyon.android.activities;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import karyon.android.controllers.IController;
 
 /**
  * Core activity class.  All android activities should extend from this activity
@@ -12,7 +13,8 @@ public abstract class Controller<T extends Controller<T>>
     extends android.app.Activity
     implements IController
 {
-    private ControllerImpl<T> m_oControllerImpl;
+    //private ControllerImpl<T> m_oControllerImpl;
+    private ControllerImpl m_oControllerImpl;
 
     /**
      * Creates a new instance of controller, controller
@@ -21,14 +23,15 @@ public abstract class Controller<T extends Controller<T>>
      */
     protected Controller()
     {
-        m_oControllerImpl=new ControllerImpl(this);
+        //m_oControllerImpl=new ControllerImpl(this);
     }
 
     /**
      * Allows customising the implementation classes
      * @param toImplementation the implementation of this controller
      */
-    protected Controller(ControllerImpl<T> toImplementation)
+    //protected Controller(ControllerImpl<T> toImplementation)
+    protected Controller(ControllerImpl toImplementation)
     {
         m_oControllerImpl = toImplementation;
     }
@@ -130,12 +133,6 @@ public abstract class Controller<T extends Controller<T>>
 
     public void onFinish()
     {
-    }
-
-    @Override
-    public boolean onInit(Bundle toSavedInstanceState)
-    {
-        return true;
     }
 
     @Override

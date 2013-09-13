@@ -1,4 +1,4 @@
-package karyon.android.activities;
+package karyon.android.controllers;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -80,16 +80,6 @@ public interface IController
     void onContentChanged();
 
     /**
-     * Occurs when the activity is being created, at this stage the ControllerManager has already checked if the activity can be displayed.
-     * If toSavedInstanceState is null then this is a fresh instance, if it is not null then we are attempting to create the instance from stored data.
-     * If true is returned from this method then the content view will be updated and the activity manager will be notified of initialisation
-     * This should not be called manually
-     * @param toSavedInstanceState the instance date to restore from, or null if a clean instance
-     * @return true if initialisation was successful
-     */
-    boolean onInit(Bundle toSavedInstanceState);
-
-    /**
      * Notifies the activity that it should close.  The activity will check with the activity manager before
      * closing
      */
@@ -160,6 +150,4 @@ public interface IController
      * @return the context for the controller
      */
     public Context getContext();
-
-
 }

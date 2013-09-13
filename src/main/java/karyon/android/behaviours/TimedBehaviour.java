@@ -1,6 +1,6 @@
 package karyon.android.behaviours;
 
-import karyon.android.activities.IController;
+import karyon.android.controllers.IController;
 
 /**
  * A timed behaviour will cause timerEvent to occur after the specified timeout.  A tick notification will be

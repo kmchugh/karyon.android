@@ -1,5 +1,6 @@
 package karyon.android.activities;
 
+import karyon.android.controllers.IController;
 import karyon.applications.Application;
 import karyon.collections.HashMap;
 import karyon.collections.List;

@@ -19,15 +19,17 @@ public abstract class ProgressActivity<T extends ProgressActivity<T>>
     private ProgressDialog m_oDialog;
 
     
-    @Override
     public boolean onInit(Bundle toSavedInstanceState)
     {
+        /*
         boolean llReturn = super.onInit(toSavedInstanceState);
         if (llReturn)
         {
             getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         }
         return llReturn;
+        */
+        return true;
     }
 
     @Override
