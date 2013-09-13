@@ -17,6 +17,10 @@ public abstract class FragmentController<T extends FragmentController<T>>
       implements IController
 {
 
+
+    // Test to make sure onCreate gets called on fragments when they are added to an activity
+
+
     //private ControllerImpl<T> m_oControllerImpl;
     private ControllerImpl m_oControllerImpl;
 

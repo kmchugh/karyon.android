@@ -54,7 +54,7 @@ public abstract class Controller<T extends Controller<T>>
     /**
      * Initialises the activity with any parameters that were used to create the activity.
      * Initialisation occurs during the construction of the activity so the activity will
-     * not yet be attached or visible
+     * not yet be created or visible
      */
     private void initialise()
     {
@@ -62,8 +62,6 @@ public abstract class Controller<T extends Controller<T>>
         {
             m_lInitialised = true;
             Bundle loArgs = getArguments();
-            //setArguments(null);
-
             if (!onInit(loArgs))
             {
                 Application.log("Failed to initialise controller " + getClass().getName(), LogType.WARNING);
@@ -73,7 +71,7 @@ public abstract class Controller<T extends Controller<T>>
     }
 
     /**
-     * Occurs during the constructon of the controller.  The controller is not attached or visible
+     * Occurs during the constructon of the controller.  The controller is not created or visible
      * at this stage.  In most cases when overriding onInit, the return value from super.onInit should be
      * evaluated before attempting anything else
      * @param toArgs the arguments passed to the controller for creation, null if no arguments were passed
@@ -84,25 +82,6 @@ public abstract class Controller<T extends Controller<T>>
         return true;
     }
 
-    @Override
-    public void setArguments(Bundle toArguments)
-    {
-        super.setArguments(toArguments);
-        initialise();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Helper method to get this fragment from a callback
      * @return this object
@@ -111,11 +90,6 @@ public abstract class Controller<T extends Controller<T>>
     {
         return (T)this;
     }
-
-    /**
-
-     * @param toSavedInstanceState the saved instance state, or null if there is no saved state
-     */
 
     /**
      * Initialises the activity when it is being created, if this is the first initialisation, toSavedInstanceState will be
@@ -128,25 +102,58 @@ public abstract class Controller<T extends Controller<T>>
     @Override
     public final View onCreateView(LayoutInflater toInflater, ViewGroup toContainer, Bundle toSavedInstanceState)
     {
-        View loView = toContainer == null ? null : onCreate(toSavedInstanceState, toInflater, toContainer);
-        if (loView != null)
-        {
-            //this.initialise(toSavedInstanceState, loView);
-        }
-        return loView;
+        return toContainer == null ? null : toInflater.inflate(getContentViewID(), toContainer, false);
     }
 
     /**
      * Creates the view from a layout
-     * @param toSavedInstanceState the previously saved instance state
-     * @param toInflater The LayoutInflater object that can be used to inflate any views in the fragment
-     * @param toContainer If non-null, this is the parent view that the fragment's UI should be attached to. The fragment should not add the view itself, but this can be used to generate the LayoutParams of the view.
+     * @param toCreateArgs the previously saved instance state
      * @return the view for the fragments UI, or null if there is not view
      */
-    protected final View onCreate(Bundle toSavedInstanceState, LayoutInflater toInflater, ViewGroup toContainer)
+    @Override
+    public final void onCreate(Bundle toCreateArgs)
     {
-        // TODO: Load from toSavedInstanceState
-        return toInflater.inflate(getContentViewID(), toContainer, false);
+        initialise();
+        super.onCreate(toCreateArgs);
+        onCreating(toCreateArgs);
+    }
+
+    /**
+     * Hook to allow interaction with the view creation cycle.
+     * Called after onCreate but before onActivityCreated.  At this stage
+     * the view hierarchy is created but the view is not yet attached to it's parent
+     * @param toView the view that was inflated for this controller
+     * @param toBundle the bundle of arguments
+     * @return the view to be used by this controller
+     */
+    @Override
+    public void onViewCreated(View toView, Bundle toBundle)
+    {
+    }
+
+    /**
+     * Hook method to allow interaction with the create process
+     * @param toCreateArgs the saved instance state
+     * @return true if the view has been created correctly
+     */
+    protected void onCreating(Bundle toCreateArgs)
+    {
+    }
+
+    @Override
+    public final void onActivityCreated(Bundle toBundle)
+    {
+        super.onActivityCreated(toBundle);
+        onCreated(toBundle);
+    }
+
+    /**
+     * Hook method to allow interaction in the creation cycle.
+     * This will be called after the completion of fragment creation
+     * @param toBundle the bundle parameters
+     */
+    protected void onCreated(Bundle toBundle)
+    {
     }
 
     @Override
@@ -154,6 +161,29 @@ public abstract class Controller<T extends Controller<T>>
     {
         return getActivity().findViewById(tnID);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
