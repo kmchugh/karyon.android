@@ -108,7 +108,7 @@ public class ControllerManager
             {
                 try
                 {
-                    loBehaviour = (ControllerBehaviour)loMethod.invoke(toActivityClass, null);
+                    // loBehaviour = (ControllerBehaviour)loMethod.invoke(toActivityClass, null);
                 }
                 catch(Throwable ex)
                 {

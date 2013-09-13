@@ -48,7 +48,6 @@ public abstract class Controller<T extends Controller<T>>
         return loController;
     }
 
-    private Runnable m_oOutstandingUpdate;
     private boolean m_lPaused;
     private boolean m_lInitialised;
 

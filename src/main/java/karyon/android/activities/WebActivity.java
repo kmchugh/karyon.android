@@ -6,6 +6,7 @@ import android.view.View;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.widget.ProgressBar;
+import karyon.android.controllers.Controller;
 import karyon.android.controls.DefaultWebViewClient;
 import karyon.android.controls.WebView;
 import karyon.android.R;
@@ -16,7 +17,7 @@ import karyon.applications.Application;
  * @author kmchugh
  */
 public abstract class WebActivity<T extends WebActivity<T>>
-    extends Controller<T>
+    extends Controller<WebActivity<T>>
 {
     private ProgressBar m_oProgress;
     private WebView m_oWebView;
@@ -91,7 +92,6 @@ public abstract class WebActivity<T extends WebActivity<T>>
         super.onLowMemory();
     }
 
-    @Override
     public void onFinish()
     {
         if (m_oWebView != null)
@@ -129,8 +129,8 @@ public abstract class WebActivity<T extends WebActivity<T>>
         }
         else if (m_oProgress == null)
         {
-            m_oProgress = new ProgressBar(getApplicationContext());
-            addContentView(m_oProgress, m_oWebView.getLayoutParams());
+            //m_oProgress = new ProgressBar(getApplicationContext());
+            //addContentView(m_oProgress, m_oWebView.getLayoutParams());
         }
     }
 

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Window;
 import karyon.android.R;
+import karyon.android.controllers.Controller;
 
 /**
  * A progress Controller is an activity which has the ability
@@ -12,7 +13,7 @@ import karyon.android.R;
  * @author kmchugh
  */
 public abstract class ProgressActivity<T extends ProgressActivity<T>>
-    extends Controller<T>
+    extends Controller<ProgressActivity<T>>
 {
     private boolean m_lProgressVisible;
     private String m_cProgressMessage;
@@ -40,6 +41,7 @@ public abstract class ProgressActivity<T extends ProgressActivity<T>>
             // Display the progress
             if (m_oDialog == null)
             {
+                /*
                 m_oDialog = new ProgressDialog(this);
                 m_oDialog.setIndeterminate(true);
                 m_oDialog.setCancelable(true);
@@ -50,6 +52,7 @@ public abstract class ProgressActivity<T extends ProgressActivity<T>>
                             onProgressCancelled();
                         }
                     });
+                    */
             }
             m_oDialog.setMessage(m_cProgressMessage == null ? getString(R.string.please_wait) : m_cProgressMessage);
             m_oDialog.show();
@@ -93,7 +96,7 @@ public abstract class ProgressActivity<T extends ProgressActivity<T>>
         if (!m_lProgressVisible)
         {
             m_lProgressVisible = true;
-            invalidate();
+            //invalidate();
         }
     }
     
@@ -105,7 +108,7 @@ public abstract class ProgressActivity<T extends ProgressActivity<T>>
         if (m_lProgressVisible)
         {
             m_lProgressVisible = false;
-            invalidate();
+            //invalidate();
         }
     }
     

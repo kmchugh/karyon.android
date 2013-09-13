@@ -1,9 +1,11 @@
 package karyon.android.activities;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import karyon.android.R;
+import karyon.android.controllers.Controller;
 import karyon.applications.Application;
 
 /**
@@ -11,12 +13,13 @@ import karyon.applications.Application;
  * startup activity
  * @author kmchugh
  */
-public class SplashActivity extends Controller
+public class SplashActivity extends Controller<SplashActivity>
 {
-    //@Override
-    public void onContentReady()
+    @Override
+    protected void onContentReady(Bundle toBundle)
     {
-        //super.onContentReady();
+        super.onContentReady(toBundle);
+        setContentText(Application.getInstance().getName());
         setVersionText(Application.getInstance().getVersion().toString());
         setIDText(Application.getInstance().getInstanceGUID());
     }
@@ -71,6 +74,4 @@ public class SplashActivity extends Controller
     {
         finish();
     }
-
-
 }
