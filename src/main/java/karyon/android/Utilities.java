@@ -13,8 +13,7 @@ import android.os.Bundle;
 public class Utilities
 {
     /**
-     * Creates a Bundle from a parameter hashmap.  All of the keys
-     * of the hashmap will be converted to lower case in the returned bundle
+     * Creates a Bundle from a parameter hashmap.
      * @param toHashMap the hashmap to create the bundle from
      * @return the Bundle created or null if the hashmap was null or had no keys
      */
@@ -34,9 +33,34 @@ public class Utilities
                 }
                 else if (Java.isPrimitive(loValue))
                 {
-                    if (loValue.getClass().isAssignableFrom(String.class))
+                    Class loPrimitive = Java.getPrimitiveClass(loValue.getClass());
+                    if (loPrimitive == String.class)
                     {
                         loReturn.putString(lcKey, (String)loValue);
+                    }
+                    else if(loPrimitive == boolean.class)
+                    {
+                        loReturn.putBoolean(lcKey, ((Boolean)loValue).booleanValue());
+                    }
+                    else if(loPrimitive == double.class)
+                    {
+                        loReturn.putDouble(lcKey, ((Double)loValue).doubleValue());
+                    }
+                    else if(loPrimitive == float.class)
+                    {
+                        loReturn.putFloat(lcKey, ((Float)loValue).floatValue());
+                    }
+                    else if(loPrimitive == int.class)
+                    {
+                        loReturn.putInt(lcKey, ((Integer)loValue).intValue());
+                    }
+                    else if(loPrimitive == long.class)
+                    {
+                        loReturn.putLong(lcKey, ((Long)loValue).longValue());
+                    }
+                    else if(loPrimitive == short.class)
+                    {
+                        loReturn.putShort(lcKey, ((Short)loValue).shortValue());
                     }
                     else
                     {
@@ -45,6 +69,7 @@ public class Utilities
                 }
                 else
                 {
+                    // TODO: Support non primitives with JSON
                     throw new UnsupportedOperationException("Non primitives are not yet supported");
                 }
             }
@@ -52,19 +77,6 @@ public class Utilities
         }
         return null;
     }
-
-    /**
-     * Checks if we are running on a tablet or mobile device
-     * @return true if we are on a tablet, false otherwise
-     */
-    public static boolean isTablet()
-    {
-        // TODO: refactor to capabilities
-        return (AndroidApplicationAdaptor.getInstance().getApplicationContext().getResources().getConfiguration().screenLayout &
-                Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-
-    }
-    
     
     // Not createable
     private Utilities()

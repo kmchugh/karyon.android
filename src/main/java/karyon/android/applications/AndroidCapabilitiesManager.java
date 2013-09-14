@@ -2,6 +2,7 @@ package karyon.android.applications;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import karyon.applications.CapabilitiesManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -45,5 +46,16 @@ public class AndroidCapabilitiesManager extends CapabilitiesManager
             m_lDebuggable = llReturn;
         }
         return m_lDebuggable;
+    }
+
+    /**
+     * Checks if we are running on a tablet or mobile device
+     * @return true if we are on a tablet, false otherwise
+     */
+    public static boolean isTablet()
+    {
+        return (AndroidApplicationAdaptor.getInstance().getApplicationContext().getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+
     }
 }

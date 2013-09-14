@@ -12,4 +12,13 @@ public class ControllerContainer
     extends FragmentActivity
 {
 
+    /**
+     * Allows setting of window features
+     * @param tnFeature the feature to set
+     * @return true if the feature has been correctly set
+     */
+    public final boolean setWindowFeature(int tnFeature)
+    {
+        return requestWindowFeature(tnFeature);
+    }
 }

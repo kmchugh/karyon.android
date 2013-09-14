@@ -150,7 +150,7 @@ public abstract class Controller<T extends Controller<T>>
     @Override
     public View findViewById(int tnID)
     {
-        return getView().findViewById(tnID);
+        return getView() != null ? getView().findViewById(tnID) : null;
     }
 
     /**
