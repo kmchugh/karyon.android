@@ -19,6 +19,6 @@ public class ControllerContainer
      */
     public final boolean setWindowFeature(int tnFeature)
     {
-        return requestWindowFeature(tnFeature);
+        return getWindow().requestFeature(tnFeature);
     }
 }

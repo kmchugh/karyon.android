@@ -27,6 +27,7 @@ public class IControllerTest
     @Test
     public void testPolymorphism() throws Exception
     {
+        startMarker();
         IController loController = new TestController();
     }
 }

@@ -1,10 +1,13 @@
 package karyon.android;
 
+import android.view.Window;
 import karyon.android.applications.AndroidApplicationAdaptor;
 import karyon.collections.HashMap;
 import karyon.dynamicCode.Java;
 import android.content.res.Configuration;
 import android.os.Bundle;
+
+import java.lang.reflect.Method;
 
 /**
  * Utility functions specifically related to the Android applications
@@ -36,31 +39,31 @@ public class Utilities
                     Class loPrimitive = Java.getPrimitiveClass(loValue.getClass());
                     if (loPrimitive == String.class)
                     {
-                        loReturn.putString(lcKey, (String)loValue);
+                        loReturn.putString(lcKey, (String) loValue);
                     }
                     else if(loPrimitive == boolean.class)
                     {
-                        loReturn.putBoolean(lcKey, ((Boolean)loValue).booleanValue());
+                        loReturn.putBoolean(lcKey, ((Boolean) loValue).booleanValue());
                     }
                     else if(loPrimitive == double.class)
                     {
-                        loReturn.putDouble(lcKey, ((Double)loValue).doubleValue());
+                        loReturn.putDouble(lcKey, ((Double) loValue).doubleValue());
                     }
                     else if(loPrimitive == float.class)
                     {
-                        loReturn.putFloat(lcKey, ((Float)loValue).floatValue());
+                        loReturn.putFloat(lcKey, ((Float) loValue).floatValue());
                     }
                     else if(loPrimitive == int.class)
                     {
-                        loReturn.putInt(lcKey, ((Integer)loValue).intValue());
+                        loReturn.putInt(lcKey, ((Integer) loValue).intValue());
                     }
                     else if(loPrimitive == long.class)
                     {
-                        loReturn.putLong(lcKey, ((Long)loValue).longValue());
+                        loReturn.putLong(lcKey, ((Long) loValue).longValue());
                     }
                     else if(loPrimitive == short.class)
                     {
-                        loReturn.putShort(lcKey, ((Short)loValue).shortValue());
+                        loReturn.putShort(lcKey, ((Short) loValue).shortValue());
                     }
                     else
                     {
@@ -76,6 +79,35 @@ public class Utilities
             return loReturn;
         }
         return null;
+    }
+
+    /**
+     * Checks if a window has the specified feature flag set
+     * @param toWindow the window object to check
+     * @param tnFeatureID the ID of the feature to check for
+     * @return true if the feature flag is set, false otherwise
+     */
+    public static synchronized boolean hasFeature(Window toWindow, int tnFeatureID)
+    {
+        Method loMethod = Java.getMethod(toWindow.getClass(), "getFeatures", null);
+        boolean llAccessible = loMethod.isAccessible();
+        if (!llAccessible)
+        {
+            loMethod.setAccessible(true);
+        }
+        int lnFeatures = 0;
+        try
+        {
+            lnFeatures = ((Integer)loMethod.invoke(toWindow)).intValue();
+        }
+        catch (Throwable ex)
+        {
+            // Do nothing here
+        }
+
+        loMethod.setAccessible(llAccessible);
+
+        return (lnFeatures & (1 << tnFeatureID)) != 0;
     }
     
     // Not createable

@@ -1,11 +1,15 @@
 package karyon.android;
 
 import android.os.Bundle;
+import android.view.Window;
 import karyon.IRunnable;
+import karyon.android.controllers.ControllerContainer;
 import karyon.collections.HashMap;
 import karyon.testing.KaryonTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.util.ActivityController;
 
 import static org.junit.Assert.*;
 
@@ -84,14 +88,27 @@ public class UtilitiesTest
                     @Override
                     public void run() throws Throwable
                     {
-                        //To change body of implemented methods use File | Settings | File Templates.
                     }
                 });
 
                 Bundle loBundle = Utilities.createBundle(loMap);
             }
         });
+    }
 
+    @Test
+    public void testHasFeature() throws Exception
+    {
+        startMarker();
 
+        ActivityController<ControllerContainer> loActivity = Robolectric.buildActivity(ControllerContainer.class);
+
+        assertFalse(Utilities.hasFeature(loActivity.get().getWindow(), Window.FEATURE_NO_TITLE));
+
+        assertTrue(loActivity.get().setWindowFeature(Window.FEATURE_NO_TITLE));
+
+        // This is currently not testable with the robolectric shadow classes
+
+        // assertTrue(Utilities.hasFeature(loActivity.get().getWindow(), Window.FEATURE_NO_TITLE));
     }
 }

@@ -367,7 +367,6 @@ public class ControllerTest
             lnTime+=100;
             Thread.sleep(100);
         }
-
     }
 
     @Test
