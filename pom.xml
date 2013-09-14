@@ -27,7 +27,7 @@
         <org.apache.maven.plugins.maven.deploy.plugin.version>2.7</org.apache.maven.plugins.maven.deploy.plugin.version>
         <com.github.github.site.maven.plugin.version>0.8</com.github.github.site.maven.plugin.version>
         <com.jayway.maven.plugins.android.generation2.version>3.6.0</com.jayway.maven.plugins.android.generation2.version>
-        <android.platform.version>10</android.platform.version>
+        <android.platform.version>8</android.platform.version>
     </properties>
 
     <dependencies>
