@@ -1,14 +1,15 @@
 package karyon.android.behaviours;
 
-import karyon.android.controllers.IController;
+
+import karyon.android.activities.IActivity;
 
 /**
  * A timed behaviour will cause timerEvent to occur after the specified timeout.  A tick notification will be
  * given on the specified tick count
  * @author kmchugh
  */
-public abstract class TimedBehaviour<T extends IController>
-        extends ControllerBehaviour<T>
+public abstract class TimedBehaviour<T extends IActivity<T>>
+        extends Behaviour<T>
 {
     private long m_nTimeout;
     private long m_nTick;
@@ -54,17 +55,17 @@ public abstract class TimedBehaviour<T extends IController>
      */
     public abstract void timerEvent(T toActivity);
 
-    @Override
     public void onStop(T toActivity)
     {
         // Only stop the timer if we are actually finishing, not just pausing
+        /*
         if (toActivity.isFinishing())
         {
             stopTimer();
         }
+        */
     }
 
-    @Override
     public boolean onFinishing(T toActivity)
     {
         stopTimer();
@@ -80,13 +81,11 @@ public abstract class TimedBehaviour<T extends IController>
         m_oTimer = null;
     }
 
-    @Override
     public void onInit(T toActivity)
     {
         startTimer(toActivity);
     }
 
-    @Override
     public void onResume(T toActivity)
     {
         startTimer(toActivity);

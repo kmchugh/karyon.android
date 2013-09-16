@@ -1,11 +1,9 @@
 package karyon.android.activities;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import karyon.android.R;
-import karyon.android.controllers.Controller;
 import karyon.applications.Application;
 
 /**
@@ -13,12 +11,29 @@ import karyon.applications.Application;
  * startup activity
  * @author kmchugh
  */
-public class SplashActivity extends Controller<SplashActivity>
+public class SplashActivity
+        extends BaseActivity<SplashActivity>
 {
-    @Override
-    protected void onContentReady(Bundle toBundle)
+    /**
+     * Creates a new instance of the splash activity
+     */
+    public SplashActivity()
     {
-        super.onContentReady(toBundle);
+    }
+
+    /**
+     * Creates a new instance of the splash activity
+     * @param toImplementation the implementation to use
+     */
+    protected SplashActivity(ActivityImpl<SplashActivity> toImplementation)
+    {
+        super(toImplementation);
+    }
+
+    @Override
+    public void onContentReady()
+    {
+        super.onContentReady();
         setContentText(Application.getInstance().getName());
         setVersionText(Application.getInstance().getVersion().toString());
         setIDText(Application.getInstance().getInstanceGUID());

@@ -1,25 +1,26 @@
-package karyon.android.controllers;
+package karyon.android.activities;
 
+import karyon.android.R;
 import karyon.testing.KaryonTest;
 import org.junit.Test;
 
 /**
  * Created with IntelliJ IDEA.
  * User: kmchugh
- * Date: 13/9/13
- * Time: 9:45 AM
+ * Date: 16/9/13
+ * Time: 3:05 PM
  * To change this template use File | Settings | File Templates.
  */
-public class IControllerTest
+public class IActivityTest
     extends KaryonTest
 {
     private static class TestController
-        extends Controller<TestController>
+            extends BaseActivity<TestController>
     {
         @Override
         public int getPortraitViewResourceID()
         {
-            return 0;  //To change body of implemented methods use File | Settings | File Templates.
+            return R.id.splash_id;
         }
     }
 
@@ -28,6 +29,6 @@ public class IControllerTest
     public void testPolymorphism() throws Exception
     {
         startMarker();
-        IController loController = new TestController();
+        IActivity loActivity = new TestController();
     }
 }

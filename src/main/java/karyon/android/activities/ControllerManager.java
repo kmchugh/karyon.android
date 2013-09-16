@@ -1,10 +1,9 @@
 package karyon.android.activities;
 
-import karyon.android.controllers.IController;
+import karyon.android.behaviours.Behaviour;
 import karyon.applications.Application;
 import karyon.collections.HashMap;
 import karyon.collections.List;
-import karyon.android.behaviours.ControllerBehaviour;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -29,8 +28,8 @@ public class ControllerManager
     // TODO: Remove behaviours that have not been used in a while
     
     
-    private List<IController> m_oActivityHistory;
-    private HashMap<Class, ControllerBehaviour> m_oBehaviours;
+    private List<IActivity> m_oActivityHistory;
+    private HashMap<Class, Behaviour> m_oBehaviours;
     private int m_nActivityPointer;
     
     /**
@@ -68,11 +67,11 @@ public class ControllerManager
      * @param toBehaviour the behaviour to apply to the activity
      * @return true if the behaviour collection was changed as a result of this call
      */
-    public <K extends IController> boolean addActivityBehaviour(Class<K> toActivityClass, ControllerBehaviour<K> toBehaviour)
+    public <K extends IActivity<K>> boolean addActivityBehaviour(Class<K> toActivityClass, Behaviour<K> toBehaviour)
     {
         if (m_oBehaviours == null)
         {
-            m_oBehaviours = new HashMap<Class, ControllerBehaviour>();
+            m_oBehaviours = new HashMap<Class, Behaviour>();
         }
         if (!m_oBehaviours.containsKey(toActivityClass))
         {
@@ -88,12 +87,12 @@ public class ControllerManager
      * @param toActivityClass the activity class
      * @return the behaviour for the activity specified
      */
-    protected <K extends IController> ControllerBehaviour<K> getBehaviour(Class<K> toActivityClass)
+    protected <K extends IActivity<K>> Behaviour<K> getBehaviour(Class<K> toActivityClass)
     {
         // Check if we need to attempt a behaviour load
         if (m_oBehaviours == null || !m_oBehaviours.containsKey(toActivityClass))
         {
-            ControllerBehaviour<K> loBehaviour = null;
+            Behaviour<K> loBehaviour = null;
             Method loMethod = null;
             try
             {
@@ -130,7 +129,7 @@ public class ControllerManager
     {
         if (m_oActivityHistory != null && m_oActivityHistory.size() > 0)
         {
-            for (IController loActivity : m_oActivityHistory)
+            for (IActivity loActivity : m_oActivityHistory)
             {
                 if (loActivity.getClass().isAssignableFrom(toActivityClass))
                 {
@@ -148,7 +147,7 @@ public class ControllerManager
      * @param toActivity the activity to show
      * @return true if the activity is displayed after this call
      */
-    public boolean push(IController toActivity)
+    public boolean push(IActivity toActivity)
     {
        if (canShow(toActivity))
         {
@@ -162,7 +161,7 @@ public class ControllerManager
      * @param toActivity the activity to remove
      * @return true if the activity stack was adjusted as a result of this call
      */
-    private boolean remove(IController toActivity)
+    private boolean remove(IActivity toActivity)
     {
         if(m_oActivityHistory != null)
         {
@@ -190,12 +189,12 @@ public class ControllerManager
      * activity.
      * @param toActivity the activity that has initialised
      */
-    public void notifyInit(IController toActivity)
+    public void notifyInit(IActivity toActivity)
     {
-        ControllerBehaviour loBehaviour = getBehaviour(toActivity.getClass());
+        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
         if (loBehaviour != null)
         {
-            loBehaviour.onInit(toActivity);
+            //loBehaviour.onInit(toActivity);
         }
     }
     
@@ -205,31 +204,34 @@ public class ControllerManager
      * @param toActivity the activity that is preparing to finish
      * @return true to finish, false to interrupt the finish call
      */
-    public boolean notifyFinishing(IController toActivity)
+    public boolean notifyFinishing(IActivity toActivity)
     {
+        /*
         if (!toActivity.isFinishing())
         {
-            ControllerBehaviour loBehaviour = getBehaviour(toActivity.getClass());
+            Behaviour loBehaviour = getBehaviour(toActivity.getClass());
             if (loBehaviour != null)
             {
-                return loBehaviour.onFinishing(toActivity);
+                //return loBehaviour.onFinishing(toActivity);
             }
         }
+        */
         return true;
+
     }
     
     /**
      * The specified activity has been destroyed and should be removed from the stack
      * @param toActivity the activity
      */
-    public void notifyDestroy(IController toActivity)
+    public void notifyDestroy(IActivity toActivity)
     {
         if (remove(toActivity))
         {
-            ControllerBehaviour loBehaviour = getBehaviour(toActivity.getClass());
+            Behaviour loBehaviour = getBehaviour(toActivity.getClass());
             if (loBehaviour != null)
             {
-                loBehaviour.onDestroy(toActivity);
+                //loBehaviour.onDestroy(toActivity);
             }
         }
     }
@@ -239,12 +241,12 @@ public class ControllerManager
      * the screen has turned off
      * @param toActivity the activity that has been paused
      */
-    public void notifyPause(IController toActivity)
+    public void notifyPause(IActivity toActivity)
     {
-        ControllerBehaviour loBehaviour = getBehaviour(toActivity.getClass());
+        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
         if (loBehaviour != null)
         {
-            loBehaviour.onPause(toActivity);
+            //loBehaviour.onPause(toActivity);
         }
     }
     
@@ -252,12 +254,12 @@ public class ControllerManager
      * The specified activity has been made the active activity
      * @param toActivity the activity that has been started
      */
-    public void notifyStart(IController toActivity)
+    public void notifyStart(IActivity toActivity)
     {
-        ControllerBehaviour loBehaviour = getBehaviour(toActivity.getClass());
+        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
         if (loBehaviour != null)
         {
-            loBehaviour.onStart(toActivity);
+            //loBehaviour.onStart(toActivity);
         }
     }
     
@@ -266,12 +268,12 @@ public class ControllerManager
      * has been removed and this activity has become the focus again
      * @param toActivity the activity that has been resumed
      */
-    public void notifyResume(IController toActivity)
+    public void notifyResume(IActivity toActivity)
     {
-        ControllerBehaviour loBehaviour = getBehaviour(toActivity.getClass());
+        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
         if (loBehaviour != null)
         {
-            loBehaviour.onResume(toActivity);
+            //loBehaviour.onResume(toActivity);
         }
     }
     
@@ -279,14 +281,14 @@ public class ControllerManager
      * The specified activity has been stopped, the activity has finished
      * @param toActivity the activity that has been finished
      */
-    public void notifyStop(IController toActivity)
+    public void notifyStop(IActivity toActivity)
     {
         if (remove(toActivity))
         {
-            ControllerBehaviour loBehaviour = getBehaviour(toActivity.getClass());
+            Behaviour loBehaviour = getBehaviour(toActivity.getClass());
             if (loBehaviour != null)
             {
-                loBehaviour.onStop(toActivity);
+                //loBehaviour.onStop(toActivity);
             }
         }
     }
@@ -296,12 +298,12 @@ public class ControllerManager
      * before the GC destroyed it
      * @param toActivity the activity that is restarted
      */
-    public void notifyRestart(IController toActivity)
+    public void notifyRestart(IActivity toActivity)
     {
-        ControllerBehaviour loBehaviour = getBehaviour(toActivity.getClass());
+        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
         if (loBehaviour != null)
         {
-            loBehaviour.onRestart(toActivity);
+            //loBehaviour.onRestart(toActivity);
         }
     }
     
@@ -309,12 +311,12 @@ public class ControllerManager
      * The activity has been told the system is running low on memory.
      * @param toActivity the activity that is being informed memory is getting low
      */
-    public void notifyLowMemory(IController toActivity)
+    public void notifyLowMemory(IActivity toActivity)
     {
-        ControllerBehaviour loBehaviour = getBehaviour(toActivity.getClass());
+        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
         if (loBehaviour != null)
         {
-            loBehaviour.onLowMemory(toActivity);
+            //loBehaviour.onLowMemory(toActivity);
         }
     }
     
@@ -322,12 +324,12 @@ public class ControllerManager
      * Occurs when the view has been set on an activity
      * @param toActivity the activity the view has been set for
      */
-    public boolean notifyContentReady(IController toActivity)
+    public boolean notifyContentReady(IActivity toActivity)
     {
-        ControllerBehaviour loBehaviour = getBehaviour(toActivity.getClass());
+        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
         if (loBehaviour != null)
         {
-            return loBehaviour.onContentReady(toActivity);
+            //return loBehaviour.onContentReady(toActivity);
         }
         return true;
     }
@@ -337,23 +339,24 @@ public class ControllerManager
      * @param toActivity the activity to display
      * @return true if it is okay to display the activity
      */
-    private boolean canShow(IController toActivity)
+    private boolean canShow(IActivity toActivity)
     {
-        ControllerBehaviour loBehaviour = getBehaviour(toActivity.getClass());
-        return loBehaviour == null || loBehaviour.canShow(toActivity);
+        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
+        ///return loBehaviour == null || loBehaviour.canShow(toActivity);
+        return true;
     }
     
     /**
      * Add the specified activity to the Controller Stack
      * @param toActivity the activity to add to the stack
      */
-    private void show(IController toActivity)
+    private void show(IActivity toActivity)
     {
 
         // If passed all the rules, push the activity to the stack
         if (m_oActivityHistory == null)
         {
-            m_oActivityHistory = new List<IController>();
+            m_oActivityHistory = new List<IActivity>();
         }
         if (!m_oActivityHistory.contains(toActivity))
         {

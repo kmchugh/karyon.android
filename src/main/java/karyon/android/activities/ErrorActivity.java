@@ -9,7 +9,8 @@ import karyon.android.controllers.Controller;
  *
  * @author admin
  */
-public class ErrorActivity extends Controller<ErrorActivity>
+public class ErrorActivity
+        extends BaseActivity<ErrorActivity>
 {
 
     @Override

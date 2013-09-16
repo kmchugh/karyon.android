@@ -1,6 +1,9 @@
 package karyon.android;
 
 import karyon.Version;
+import karyon.android.activities.SplashActivity;
+import karyon.android.behaviours.TimedBehaviour;
+import karyon.android.controllers.ControllerManager;
 import karyon.applications.Application;
 
 /**

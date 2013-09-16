@@ -39,7 +39,7 @@ public abstract class WebActivity<T extends WebActivity<T>>
 
         if (m_oCoverView == null)
         {
-            m_oCoverView = this.findViewById(R.id.fadeCover);
+            //m_oCoverView = this.findViewById(R.id.fadeCover);
             m_oCoverView.setOnTouchListener(new View.OnTouchListener()
             {
                 @Override
@@ -52,12 +52,12 @@ public abstract class WebActivity<T extends WebActivity<T>>
         }
         if (m_oProgress == null)
         {
-            m_oProgress = (ProgressBar)this.findViewById(R.id.progressBar);
+            //m_oProgress = (ProgressBar)this.findViewById(R.id.progressBar);
         }
 
         if (m_oWebView == null)
         {
-            m_oWebView = (WebView)this.findViewById(R.id.webview);
+            //m_oWebView = (WebView)this.findViewById(R.id.webview);
             if (m_oWebView == null)
             {
                 // Web View control is required
