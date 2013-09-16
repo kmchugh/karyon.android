@@ -1,19 +1,9 @@
 package karyon.android.activities;
 
-import android.support.v4.app.FragmentActivity;
-import android.widget.ImageView;
-import android.widget.TextView;
 import karyon.android.CustomRoboTestRunner;
-import karyon.android.R;
-import karyon.android.controllers.Controller;
-import karyon.applications.Application;
 import karyon.testing.KaryonTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.util.ActivityController;
-
-import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA.

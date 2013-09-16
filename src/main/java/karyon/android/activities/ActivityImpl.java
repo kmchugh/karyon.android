@@ -197,7 +197,7 @@ public class ActivityImpl<T extends IActivity>
      */
     private boolean initialise(Bundle toSavedState)
     {
-        if (ActivityManager.getInstance().push(m_oThis) &&
+        if (ActivityManager.getInstance().add(m_oThis) &&
                 m_oThis.onInit(toSavedState))
         {
             ActivityManager.getInstance().notify(NotificationType.INIT, m_oThis);

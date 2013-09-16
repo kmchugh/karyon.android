@@ -249,10 +249,7 @@ public abstract class BaseActivity<T extends IActivity>
     {
     }
 
-    /**
-     * Helper method for those who forget what the context is
-     * @return gets this activity as a context reference
-     */
+    @Override
     public Context getContext()
     {
         return this;

@@ -1,13 +1,18 @@
 package karyon.android.applications;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import karyon.Version;
+import karyon.android.activities.IActivity;
 import karyon.android.logging.AndroidLogger;
 import karyon.applications.ApplicationOptions;
 import karyon.applications.ICapabilitiesManager;
 import karyon.applications.propertyManagers.IPropertyManager;
+import karyon.collections.HashMap;
 import karyon.dynamicCode.Java;
 import karyon.exceptions.CriticalException;
 import karyon.logging.ILogger;
@@ -162,6 +167,44 @@ public abstract class AndroidApplicationAdaptor<T extends karyon.applications.Ap
         return m_oApplication;
     }
 
+    /**
+    * Starts an activity of the specified type
+    * @param toActivityClass the activity class to start
+    * @param toParent the parent activity to use
+    */
+    public void startActivity(Class<? extends IActivity>toActivityClass, IActivity toParent)
+    {
+        this.startActivity(toActivityClass, toParent, null);
+    }
+
+    /**
+     * Starts an activity of the specified type
+     * @param toActivityClass the activity class to start
+     * @param toParent the parent activity to use
+     * @param toParameters the parameters to pass to the activity
+     */
+    public void startActivity(Class<? extends IActivity>toActivityClass, IActivity toParent, HashMap<String, ?> toParameters)
+    {
+        Intent loIntent = new Intent(toParent == null ? getApplicationContext() : toParent.getContext(), toActivityClass);
+        if (toParent == null)
+        {
+            loIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        Bundle loParameters = karyon.android.Utilities.createBundle(toParameters);
+        if (loParameters != null)
+        {
+            loIntent.putExtras(loParameters);
+        }
+        if (toParent != null)
+        {
+            ((Activity)toParent).startActivity(loIntent);
+        }
+        else
+        {
+            getApplicationContext().startActivity(loIntent);
+        }
+    }
+
 
     // TODO: Determine where everything below here should be implemented
 //    private DefaultHttpClient m_oHTTPClient;
@@ -187,43 +230,7 @@ public abstract class AndroidApplicationAdaptor<T extends karyon.applications.Ap
 //        return toCurrent;
 //    }
 //
-//    /**
-//     * Starts an activity of the specified type
-//     * @param toActivityClass the activity class to start
-//     * @param toParent the parent activity to use
-//     */
-//    public void startActivity(Class<? extends Activity>toActivityClass, Activity toParent)
-//    {
-//        this.startActivity(toActivityClass, toParent, null);
-//    }
 //
-//    /**
-//     * Starts an activity of the specified type
-//     * @param toActivityClass the activity class to start
-//     * @param toParent the parent activity to use
-//     * @param toParameters the parameters to pass to the activity
-//     */
-//    public void startActivity(Class<? extends Activity>toActivityClass, Activity toParent, HashMap<String, ?> toParameters)
-//    {
-//        Intent loIntent = new Intent(toParent == null ? getApplicationContext() : toParent.getBaseContext(), toActivityClass);
-//        if (toParent == null)
-//        {
-//            loIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        }
-//        Bundle loParameters = karyon.android.Utilities.createBundle(toParameters);
-//        if (loParameters != null)
-//        {
-//            loIntent.putExtras(loParameters);
-//        }
-//        if (toParent != null)
-//        {
-//            toParent.startActivity(loIntent);
-//        }
-//        else
-//        {
-//            getApplicationContext().startActivity(loIntent);
-//        }
-//    }
 
     // TODO: This should be refactored into a HTTP manager
 

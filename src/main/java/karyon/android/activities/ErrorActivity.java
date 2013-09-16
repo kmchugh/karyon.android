@@ -1,9 +1,7 @@
 package karyon.android.activities;
 
 import android.view.View;
-import android.widget.TextView;
 import karyon.android.R;
-import karyon.android.controllers.Controller;
 
 /**
  *

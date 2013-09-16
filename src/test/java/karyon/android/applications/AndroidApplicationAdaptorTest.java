@@ -87,4 +87,22 @@ public class AndroidApplicationAdaptorTest
 
         assertSame(Application.getInstance(), AndroidApplicationAdaptor.getInstance().getApplicationInstance());
     }
+
+    @Test
+    public void testStartActivity_activityclass_parent() throws Exception
+    {
+        startMarker();
+
+        // TODO: Full lifecycle test here
+
+    }
+
+    @Test
+    public void testStartActivity_activityclass_parent_parameters() throws Exception
+    {
+        startMarker();
+
+        // TODO: Full lifecycle test here
+
+    }
 }

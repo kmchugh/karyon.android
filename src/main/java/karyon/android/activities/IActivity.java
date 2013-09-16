@@ -1,5 +1,6 @@
 package karyon.android.activities;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Window;
@@ -141,4 +142,10 @@ public interface IActivity<T extends IActivity>
      * @param toAction the action to execute
      */
     void runOnUiThread(Runnable toAction);
+
+    /**
+     * Helper method for those who forget what the context is
+     * @return gets this activity as a context reference
+     */
+    Context getContext();
 }

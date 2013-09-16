@@ -1,11 +1,8 @@
 package karyon.android.activities;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Window;
 import karyon.android.R;
-import karyon.android.controllers.Controller;
 
 /**
  * A progress Controller is an activity which has the ability
@@ -13,7 +10,7 @@ import karyon.android.controllers.Controller;
  * @author kmchugh
  */
 public abstract class ProgressActivity<T extends ProgressActivity<T>>
-    extends Controller<ProgressActivity<T>>
+    extends BaseActivity<ProgressActivity<T>>
 {
     private boolean m_lProgressVisible;
     private String m_cProgressMessage;
