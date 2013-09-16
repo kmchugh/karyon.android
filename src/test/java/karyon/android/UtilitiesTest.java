@@ -3,7 +3,7 @@ package karyon.android;
 import android.os.Bundle;
 import android.view.Window;
 import karyon.IRunnable;
-import karyon.android.controllers.ControllerContainer;
+import karyon.android.activities.SplashActivity;
 import karyon.collections.HashMap;
 import karyon.testing.KaryonTest;
 import org.junit.Test;
@@ -101,7 +101,7 @@ public class UtilitiesTest
     {
         startMarker();
 
-        ActivityController<ControllerContainer> loActivity = Robolectric.buildActivity(ControllerContainer.class);
+        ActivityController<SplashActivity> loActivity = Robolectric.buildActivity(SplashActivity.class);
 
         assertFalse(Utilities.hasFeature(loActivity.get().getWindow(), Window.FEATURE_NO_TITLE));
 

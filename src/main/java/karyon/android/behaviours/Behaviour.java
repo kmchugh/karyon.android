@@ -38,4 +38,41 @@ public class Behaviour<T extends IActivity<T>>
     {
         return true;
     }
+
+    /*
+
+    // TODO: This all needs to be pushed in to a behaviour
+
+    protected boolean authenticationRequired(boolean tlRequire)
+    {
+        if (tlRequire && !SessionManager.getInstance().getCurrentSession().isAuthenticated())
+        {
+            finish();
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public boolean startActivityWhenAuthenticated(Intent toIntent)
+    {
+        if (!SessionManager.getInstance().getCurrentSession().isAuthenticated())
+        {
+            // TODO: This code exists more than once, needs to be refactored
+            Intent loIntent = new Intent(getBaseContext(), WebActivity.class);
+            loIntent.putExtra("com.youcommentate.authenticationURL", YouCommentate.getInstance().getURL("AUTHENTICATEURL"));
+            startActivity(loIntent);
+        }
+
+        if (SessionManager.getInstance().getCurrentSession().isAuthenticated())
+        {
+            startActivity(toIntent);
+            return true;
+        }
+        return false;
+    }
+    *
+    */
 }

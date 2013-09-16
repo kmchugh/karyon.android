@@ -54,7 +54,7 @@ public class ActivityImpl<T extends IActivity>
      * @param toSavedState if restoring from a previous state this will be populated,
      *                        otherwise null
      */
-    public final void onCreate(Bundle toSavedState)
+    public void onCreate(Bundle toSavedState)
     {
         // Custom title and window features must come before the user does anything
         boolean llCustomTitle = false;
@@ -215,7 +215,7 @@ public class ActivityImpl<T extends IActivity>
      * Called to update the content view, sets the view in the
      * activity to the specified resource
      */
-    public final void updateContentView()
+    public void updateContentView()
     {
         int lnContentID = getContentViewID();
         if (lnContentID != 0)
@@ -228,7 +228,7 @@ public class ActivityImpl<T extends IActivity>
      * Hook to allow overriding of the default view resources
      * @return the integer ID of the layout resource to initialise the view with
      */
-    public final int getContentViewID()
+    public int getContentViewID()
     {
         return m_oThis.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
                 m_oThis.getLandscapeViewResourceID() : m_oThis.getPortraitViewResourceID();
@@ -238,7 +238,7 @@ public class ActivityImpl<T extends IActivity>
      * Notifies the activity that it should close.  The activity will check with the activity manager before
      * closing
      */
-    public final void finish()
+    public void finish()
     {
         if (!m_lIsFinishing)
         {
@@ -263,7 +263,7 @@ public class ActivityImpl<T extends IActivity>
      * Checks if this view is paused
      * @return true if paused
      */
-    public final boolean isPaused()
+    public boolean isPaused()
     {
         return m_lPaused;
     }
@@ -273,7 +273,7 @@ public class ActivityImpl<T extends IActivity>
      * by a call to start
      * @return true if this activity is visible
      */
-    public final boolean isVisible()
+    public boolean isVisible()
     {
         return m_lVisible;
     }
@@ -282,7 +282,7 @@ public class ActivityImpl<T extends IActivity>
      * Occurs when the activity has been notified its content has changed.
      * This happens directly after the system call to onContentChanged
      */
-    public final void onContentChanged()
+    public void onContentChanged()
     {
         if (ActivityManager.getInstance().notify(NotificationType.CONTENT_READY, m_oThis) && isVisible())
         {
@@ -294,7 +294,7 @@ public class ActivityImpl<T extends IActivity>
      * Forces a UI update by calling onUpdateUI on the correct thread.  If this is called multiple times and there
      * is still an outstanding update the additional calls will be considered a no op.
      */
-    public final void updateUI()
+    public void updateUI()
     {
         if (!m_lPaused && m_oOutstandingUpdate == null)
         {
@@ -324,7 +324,7 @@ public class ActivityImpl<T extends IActivity>
      * be set once.  This is a helper method for custom implementations
      * @param toActivity the activity
      */
-    protected final void setActivity(T toActivity)
+    protected void setActivity(T toActivity)
     {
         if (m_oThis != null)
         {

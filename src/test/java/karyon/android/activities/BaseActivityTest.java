@@ -414,4 +414,14 @@ public class BaseActivityTest
 
         assertTrue(loActivity.get().isLowMemory());
     }
+
+    @Test
+    public void testGetContext() throws Exception
+    {
+        startMarker();
+        ActivityController<TestActivity> loActivity = Robolectric.buildActivity(TestActivity.class);
+
+
+        assertSame(loActivity.get(), loActivity.get().getContext());
+    }
 }

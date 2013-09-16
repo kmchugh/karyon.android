@@ -1,6 +1,7 @@
 package karyon.android.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
@@ -246,5 +247,37 @@ public abstract class BaseActivity<T extends IActivity>
     @Override
     public void onUpdateUI()
     {
+    }
+
+    /**
+     * Helper method for those who forget what the context is
+     * @return gets this activity as a context reference
+     */
+    public Context getContext()
+    {
+        return this;
+    }
+
+    /**
+     * Called by the system when the device configuration changes while the activity is running.  This will only
+     * be called if you have selected configurations you would like to handle with the configChanges attribute in your
+     * manifest.  If any configuration change occurs that is not selected to be reported, then the system will instead
+     * stop the activity and restart it with the new configuration
+     * @param toConfig the new configuration
+     */
+    @Override
+    public void onConfigurationChanged(Configuration toConfig)
+    {
+        super.onConfigurationChanged(toConfig);
+        m_oImpl.updateContentView();
+    }
+
+    /**
+     * Checks if this activity is currently paused
+     * @return true if the activity is paused.  False otherwise
+     */
+    public boolean isPaused()
+    {
+        return m_oImpl.isPaused();
     }
 }
