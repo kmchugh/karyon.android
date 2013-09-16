@@ -572,19 +572,6 @@ public class ActivityImplTest
         assertFalse(loActivity.isUIUpdated());
 
         loActivityCon.create();
-        loActivityCon.start();
-
-        assertFalse(loActivity.isUIUpdated());
-
-        loActivityCon.pause();
-
-        loActivity.invalidate();
-
-        assertFalse(loActivity.isUIUpdated());
-
-        loActivityCon.resume();
-
-        loActivity.invalidate();
 
         assertTrue(loActivity.isUIUpdated());
     }

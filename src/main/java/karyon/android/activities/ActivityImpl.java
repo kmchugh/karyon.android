@@ -284,7 +284,7 @@ public class ActivityImpl<T extends IActivity>
      */
     public void onContentChanged()
     {
-        if (ActivityManager.getInstance().notify(NotificationType.CONTENT_READY, m_oThis) && isVisible())
+        if (ActivityManager.getInstance().notify(NotificationType.CONTENT_READY, m_oThis))
         {
             m_oThis.onContentReady();
         }

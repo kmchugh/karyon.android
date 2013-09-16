@@ -47,7 +47,10 @@ public class SplashActivity
     public void setVersionText(String tcText)
     {
         TextView loTextView = (TextView)findViewById(R.id.splash_version);
-        loTextView.setText(tcText);
+        if (loTextView != null)
+        {
+            loTextView.setText(tcText);
+        }
     }
     
     /**
@@ -57,14 +60,19 @@ public class SplashActivity
     public void setContentText(String tcText)
     {
         TextView loTextView = (TextView)findViewById(R.id.splash_content);
-        loTextView.setText(tcText);
+        if (loTextView != null)
+        {
+            loTextView.setText(tcText);
+        }
     }
 
     public void setIDText(String tcText)
     {
         TextView loTextView = (TextView)findViewById(R.id.splash_id);
-        loTextView.setText(tcText);
-
+        if (loTextView != null)
+        {
+            loTextView.setText(tcText);
+        }
     }
     
     /**
