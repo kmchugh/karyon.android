@@ -1,8 +1,10 @@
 package karyon.android.activities;
 
+import karyon.android.CustomRoboTestRunner;
 import karyon.android.R;
 import karyon.testing.KaryonTest;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,6 +13,7 @@ import org.junit.Test;
  * Time: 3:05 PM
  * To change this template use File | Settings | File Templates.
  */
+@RunWith(CustomRoboTestRunner.class)
 public class IActivityTest
     extends KaryonTest
 {
