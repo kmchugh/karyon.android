@@ -127,7 +127,10 @@ public class ActivityImpl<T extends IActivity>
             FlurryAgent.onStartSession(m_oThis.getContext(), Application.getInstance().flurryAPIKey());
         }
         */
+
+        onContentChanged();
         ActivityManager.getInstance().notify(NotificationType.START, m_oThis);
+        m_oThis.onContentReady();
         m_oThis.onStarted();
     }
 
@@ -284,7 +287,7 @@ public class ActivityImpl<T extends IActivity>
      */
     public void onContentChanged()
     {
-        if (ActivityManager.getInstance().notify(NotificationType.CONTENT_READY, m_oThis))
+        if (ActivityManager.getInstance().notify(NotificationType.CONTENT_READY, m_oThis) && isVisible())
         {
             m_oThis.onContentReady();
         }

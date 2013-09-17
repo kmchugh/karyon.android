@@ -573,6 +573,10 @@ public class ActivityImplTest
 
         loActivityCon.create();
 
+        assertFalse(loActivity.isUIUpdated());
+
+        loActivityCon.start();
+
         assertTrue(loActivity.isUIUpdated());
     }
 

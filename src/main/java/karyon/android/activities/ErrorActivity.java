@@ -1,6 +1,7 @@
 package karyon.android.activities;
 
 import android.view.View;
+import android.widget.TextView;
 import karyon.android.R;
 
 /**
@@ -17,26 +18,33 @@ public class ErrorActivity
         return R.layout.error;
     }
 
-    //@Override
-    public void onUpdateUI()
+    @Override
+    public void onContentReady()
     {
-        /*
-        //super.onUpdateUI();
-        String lcMessage = (String) getIntent().getExtras().getSerializable("com.youcommentate.message");
-        String lcTitle = (String) getIntent().getExtras().getSerializable("com.youcommentate.title");
+        super.onContentReady();
+
+        String lcMessage = (String) getIntent().getExtras().getSerializable("error.message");
+        String lcTitle = (String) getIntent().getExtras().getSerializable("error.title");
         if (lcTitle == null)
         {
             lcTitle = getResources().getString(R.string.error);
         }
-        
+
         TextView loMessage = (TextView)findViewById(R.id.error_message);
         TextView loTitle = (TextView)findViewById(R.id.error_title);
-        loMessage.setText(lcMessage);
-        loTitle.setTag(lcTitle);
-        */
+
+        if (loMessage != null)
+        {
+            loMessage.setText(lcMessage);
+        }
+        if (loTitle != null)
+        {
+            loTitle.setText(lcTitle);
+            loTitle.setTag(lcTitle);
+        }
     }
-    
-    public void onOkayClicked(View toView) 
+
+    public void onOkayClicked(View toView)
     {
         finish();
     }
