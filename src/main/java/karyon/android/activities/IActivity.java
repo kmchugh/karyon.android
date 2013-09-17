@@ -148,4 +148,16 @@ public interface IActivity<T extends IActivity>
      * @return gets this activity as a context reference
      */
     Context getContext();
+
+    /**
+     * Checks if this activity is currently paused
+     * @return true if the activity is paused
+     */
+    boolean isPaused();
+
+    /**
+     * Checks if this activity is currently finishing
+     * @return true if the activity is finishing
+     */
+    boolean isFinishing();
 }

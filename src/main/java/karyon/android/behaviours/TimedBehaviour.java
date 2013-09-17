@@ -55,23 +55,6 @@ public abstract class TimedBehaviour<T extends IActivity<T>>
      */
     public abstract void timerEvent(T toActivity);
 
-    public void onStop(T toActivity)
-    {
-        // Only stop the timer if we are actually finishing, not just pausing
-        /*
-        if (toActivity.isFinishing())
-        {
-            stopTimer();
-        }
-        */
-    }
-
-    public boolean onFinishing(T toActivity)
-    {
-        stopTimer();
-        return !m_lRunning;
-    }
-
     /**
      * Stops the timer task
      */
@@ -81,14 +64,35 @@ public abstract class TimedBehaviour<T extends IActivity<T>>
         m_oTimer = null;
     }
 
-    public void onInit(T toActivity)
+    @Override
+    public boolean onInit(T toActivity)
     {
         startTimer(toActivity);
+        return true;
     }
 
-    public void onResume(T toActivity)
+    @Override
+    public boolean onResume(T toActivity)
     {
         startTimer(toActivity);
+        return true;
+    }
+
+    @Override
+    public boolean onStop(T toActivity)
+    {
+        if (toActivity.isFinishing())
+        {
+            stopTimer();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onFinish(T toActivity)
+    {
+        stopTimer();
+        return !m_lRunning;
     }
 
     /**
@@ -120,6 +124,7 @@ public abstract class TimedBehaviour<T extends IActivity<T>>
                             }
                             catch (InterruptedException ex)
                             {
+                                // Nothing to do here
                             }
 
                             lnProgress+=m_nTick;

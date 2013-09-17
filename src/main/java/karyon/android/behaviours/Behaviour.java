@@ -45,7 +45,161 @@ public class Behaviour<T extends IActivity>
      * @param toActivity the activity that is being notified
      * @return true if everything worked correctly
      */
-    public boolean notify(NotificationType toType, T toActivity)
+    public final boolean notify(NotificationType toType, T toActivity)
+    {
+        if (toType == NotificationType.FINISH)
+        {
+            return onFinish(toActivity);
+        }
+        else if (toType == NotificationType.INIT)
+        {
+            return onInit(toActivity);
+        }
+        else if (toType == NotificationType.CONTENT_READY)
+        {
+            return onContentReady(toActivity);
+        }
+        else if (toType == NotificationType.DESTROY)
+        {
+            return onDestroy(toActivity);
+        }
+        else if (toType == NotificationType.LOW_MEMORY)
+        {
+            return onLowMemory(toActivity);
+        }
+        else if (toType == NotificationType.PAUSE)
+        {
+            return onPause(toActivity);
+        }
+        else if (toType == NotificationType.RESTART)
+        {
+            return onRestart(toActivity);
+        }
+        else if (toType == NotificationType.RESUME)
+        {
+            return onResume(toActivity);
+        }
+        else if (toType == NotificationType.START)
+        {
+            return onStart(toActivity);
+        }
+        else if (toType == NotificationType.STOP)
+        {
+            return onStop(toActivity);
+        }
+        else
+        {
+            return onUnknownNotification(toType, toActivity);
+        }
+    }
+
+    /**
+     * Occurs when an activity is finishing
+     * @param toActivity the activity that we are acting upon
+     * @return true if everything was successful, false otherwise
+     */
+    public boolean onFinish(T toActivity)
+    {
+        return true;
+    }
+
+    /**
+     * Occurs when an activity is initialising
+     * @param toActivity the activity that we are acting upon
+     * @return true if everything was successful, false otherwise
+     */
+    public boolean onInit(T toActivity)
+    {
+        return true;
+    }
+
+    /**
+     * Occurs when an activitys content is ready
+     * @param toActivity the activity that we are acting upon
+     * @return true if everything was successful, false otherwise
+     */
+    public boolean onContentReady(T toActivity)
+    {
+        return true;
+    }
+
+    /**
+     * Occurs when an activity is being destroyed
+     * @param toActivity the activity that we are acting upon
+     * @return true if everything was successful, false otherwise
+     */
+    public boolean onDestroy(T toActivity)
+    {
+        return true;
+    }
+
+    /**
+     * Occurs when an activity is low on memory
+     * @param toActivity the activity that we are acting upon
+     * @return true if everything was successful, false otherwise
+     */
+    public boolean onLowMemory(T toActivity)
+    {
+        return true;
+    }
+
+    /**
+     * Occurs when an activity is pausing
+     * @param toActivity the activity that we are acting upon
+     * @return true if everything was successful, false otherwise
+     */
+    public boolean onPause(T toActivity)
+    {
+        return true;
+    }
+
+    /**
+     * Occurs when an activity is restarting
+     * @param toActivity the activity that we are acting upon
+     * @return true if everything was successful, false otherwise
+     */
+    public boolean onRestart(T toActivity)
+    {
+        return true;
+    }
+
+    /**
+     * Occurs when an activity is resuming
+     * @param toActivity the activity that we are acting upon
+     * @return true if everything was successful, false otherwise
+     */
+    public boolean onResume(T toActivity)
+    {
+        return true;
+    }
+
+    /**
+     * Occurs when an activity is starting
+     * @param toActivity the activity that we are acting upon
+     * @return true if everything was successful, false otherwise
+     */
+    public boolean onStart(T toActivity)
+    {
+        return true;
+    }
+
+    /**
+     * Occurs when an activity is stopping
+     * @param toActivity the activity that we are acting upon
+     * @return true if everything was successful, false otherwise
+     */
+    public boolean onStop(T toActivity)
+    {
+        return true;
+    }
+
+    /**
+     * Occurs when a notification happens that the system does not know about
+     * @param toType the notification that occurred
+     * @param toActivity the activity that we are acting upon
+     * @return true if everything was successful, false otherwise
+     */
+    public boolean onUnknownNotification(NotificationType toType, T toActivity)
     {
         return true;
     }
@@ -86,155 +240,4 @@ public class Behaviour<T extends IActivity>
     }
     *
     */
-
-
-//       /**
-//     * Used to notify the activity manager that an Controller has been initialised, generally called by the
-//     * activity.
-//     * @param toActivity the activity that has initialised
-//     */
-//    public void notifyInit(IActivity toActivity)
-//    {
-//        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
-//        if (loBehaviour != null)
-//        {
-//            //loBehaviour.onInit(toActivity);
-//        }
-//    }
-//
-//    /**
-//     * Occurs before finish on an activity, if false is returned, the activity will not finish, if true is returned
-//     * finish will eventually occur
-//     * @param toActivity the activity that is preparing to finish
-//     * @return true to finish, false to interrupt the finish call
-//     */
-//    public boolean notifyFinishing(IActivity toActivity)
-//    {
-//        /*
-//        if (!toActivity.isFinishing())
-//        {
-//            Behaviour loBehaviour = getBehaviour(toActivity.getClass());
-//            if (loBehaviour != null)
-//            {
-//                //return loBehaviour.onFinishing(toActivity);
-//            }
-//        }
-//        */
-//        return true;
-//
-//    }
-//
-//    /**
-//     * The specified activity has been destroyed and should be removed from the stack
-//     * @param toActivity the activity
-//     */
-//    public void notifyDestroy(IActivity toActivity)
-//    {
-//        if (remove(toActivity))
-//        {
-//            Behaviour loBehaviour = getBehaviour(toActivity.getClass());
-//            if (loBehaviour != null)
-//            {
-//                //loBehaviour.onDestroy(toActivity);
-//            }
-//        }
-//    }
-//
-//    /**
-//     * The specified activity has been paused which means it is still active, but there is another activity above or
-//     * the screen has turned off
-//     * @param toActivity the activity that has been paused
-//     */
-//    public void notifyPause(IActivity toActivity)
-//    {
-//        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
-//        if (loBehaviour != null)
-//        {
-//            //loBehaviour.onPause(toActivity);
-//        }
-//    }
-//
-//    /**
-//     * The specified activity has been made the active activity
-//     * @param toActivity the activity that has been started
-//     */
-//    public void notifyStart(IActivity toActivity)
-//    {
-//        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
-//        if (loBehaviour != null)
-//        {
-//            //loBehaviour.onStart(toActivity);
-//        }
-//    }
-//
-//    /**
-//     * The specified activity has been resumed, the screen has been turned back on, or the partial view
-//     * has been removed and this activity has become the focus again
-//     * @param toActivity the activity that has been resumed
-//     */
-//    public void notifyResume(IActivity toActivity)
-//    {
-//        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
-//        if (loBehaviour != null)
-//        {
-//            //loBehaviour.onResume(toActivity);
-//        }
-//    }
-//
-//    /**
-//     * The specified activity has been stopped, the activity has finished
-//     * @param toActivity the activity that has been finished
-//     */
-//    public void notifyStop(IActivity toActivity)
-//    {
-//        if (remove(toActivity))
-//        {
-//            Behaviour loBehaviour = getBehaviour(toActivity.getClass());
-//            if (loBehaviour != null)
-//            {
-//                //loBehaviour.onStop(toActivity);
-//            }
-//        }
-//    }
-//
-//    /**
-//     * The activity has been restarted, which means it was stopped and the user has navigated back to it
-//     * before the GC destroyed it
-//     * @param toActivity the activity that is restarted
-//     */
-//    public void notifyRestart(IActivity toActivity)
-//    {
-//        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
-//        if (loBehaviour != null)
-//        {
-//            //loBehaviour.onRestart(toActivity);
-//        }
-//    }
-//
-//    /**
-//     * The activity has been told the system is running low on memory.
-//     * @param toActivity the activity that is being informed memory is getting low
-//     */
-//    public void notifyLowMemory(IActivity toActivity)
-//    {
-//        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
-//        if (loBehaviour != null)
-//        {
-//            //loBehaviour.onLowMemory(toActivity);
-//        }
-//    }
-//
-//    /**
-//     * Occurs when the view has been set on an activity
-//     * @param toActivity the activity the view has been set for
-//     */
-//    public boolean notifyContentReady(IActivity toActivity)
-//    {
-//        Behaviour loBehaviour = getBehaviour(toActivity.getClass());
-//        if (loBehaviour != null)
-//        {
-//            //return loBehaviour.onContentReady(toActivity);
-//        }
-//        return true;
-//    }
 }
