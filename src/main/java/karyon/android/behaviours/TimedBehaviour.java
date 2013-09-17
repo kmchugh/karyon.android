@@ -98,7 +98,7 @@ public abstract class TimedBehaviour<T extends IActivity<T>>
     /**
      * Starts up the timer if it has not already been started
      */
-    public final void startTimer(final T toActivity)
+    protected final void startTimer(final T toActivity)
     {
         if (!m_lRunning && (m_oTimer == null || !m_oTimer.isAlive()))
         {
