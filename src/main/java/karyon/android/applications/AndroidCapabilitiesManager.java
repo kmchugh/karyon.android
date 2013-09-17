@@ -52,10 +52,9 @@ public class AndroidCapabilitiesManager extends CapabilitiesManager
      * Checks if we are running on a tablet or mobile device
      * @return true if we are on a tablet, false otherwise
      */
-    public static boolean isTablet()
+    public boolean isTablet()
     {
         return (AndroidApplicationAdaptor.getInstance().getApplicationContext().getResources().getConfiguration().screenLayout &
                 Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-
     }
 }

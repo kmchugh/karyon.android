@@ -10,7 +10,6 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebViewClient;
-import karyon.android.activities.WebActivity;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -23,16 +22,12 @@ import org.apache.http.protocol.BasicHttpContext;
 public class DefaultWebViewClient
     extends WebViewClient
 {
-    private WebActivity m_oWebActivity;
+    //private WebActivity m_oWebActivity;
     private boolean m_lUpdateCookies;
     private String m_cDomain;
     private HashMap<String, String> m_oCookies;
 
-    /**
-     * Creates a new instance of the WebViewClient and copies cookies
-     * from the DefaultHTTPClient
-     * @param toWebActivity
-     */
+    /*
     public DefaultWebViewClient(WebActivity toWebActivity, String tcDomain)
     {
         m_oWebActivity = toWebActivity;
@@ -72,33 +67,34 @@ public class DefaultWebViewClient
             }
         }
     }
+    */
 
     @Override
     public void onLoadResource(android.webkit.WebView toView, String tcUrl)
     {
         m_lUpdateCookies = true;
-        m_oWebActivity.onLoadedResource((WebView)toView, tcUrl);
+        //m_oWebActivity.onLoadedResource((WebView)toView, tcUrl);
     }
 
     @Override
     public void onPageFinished(android.webkit.WebView toView, String tcUrl)
     {
         m_lUpdateCookies = true;
-        m_oWebActivity.onFinishedPage((WebView)toView, tcUrl);
-        m_oWebActivity.hideProgress();
+        //m_oWebActivity.onFinishedPage((WebView)toView, tcUrl);
+        //m_oWebActivity.hideProgress();
     }
 
     @Override
     public void onPageStarted(android.webkit.WebView toView, String tcUrl, Bitmap toFavIcon)
     {
-        m_oWebActivity.showProgress();
-        m_oWebActivity.onStartedPage((WebView)toView, tcUrl, toFavIcon);
+        //m_oWebActivity.showProgress();
+        //m_oWebActivity.onStartedPage((WebView)toView, tcUrl, toFavIcon);
     }
 
     @Override
     public void onReceivedError(android.webkit.WebView toView, int tnError, String tcDescription, String tcUrl)
     {
-        m_oWebActivity.onErrorReceived((WebView)toView, tnError, tcDescription, tcUrl);
+        //m_oWebActivity.onErrorReceived((WebView)toView, tnError, tcDescription, tcUrl);
     }
 
     @Override
@@ -110,7 +106,8 @@ public class DefaultWebViewClient
     @Override
     public boolean shouldOverrideUrlLoading(android.webkit.WebView toView, String tcURL)
     {
-        return m_oWebActivity.onOverrideUrlLoading((WebView)toView, tcURL);
+        //return m_oWebActivity.onOverrideUrlLoading((WebView)toView, tcURL);
+        return false;
     }
 
     /**

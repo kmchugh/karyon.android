@@ -99,9 +99,13 @@ public class SharedPreferencesPropertyManager
         Map<String, ?> loValues = getValues();
         for (String lcProperty : toValues.keySet())
         {
-            llReturn = setProperty(tcPath+m_cPathSeparator+lcProperty, toValues.get(toValues), loEditor, loValues) != null || llReturn;
+            llReturn = (setProperty(
+                    ((tcPath == null || tcPath.length() == 0) ? "" : tcPath+m_cPathSeparator) + lcProperty,
+                    toValues.get(lcProperty),
+                    loEditor, loValues) != null) || llReturn;
         }
         loEditor.commit();
+        m_oValues = null;
         return llReturn;
     }
 

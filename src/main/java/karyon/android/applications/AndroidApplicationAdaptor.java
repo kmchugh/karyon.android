@@ -218,17 +218,7 @@ public abstract class AndroidApplicationAdaptor<T extends karyon.applications.Ap
 //        return getPropertyManager().<String>getProperty("application.webHost");
 //    }
 //
-//    /**
-//     * Gets a behaviour for the specified activity, should be overridden in
-//     * @param toActivityClass the class that we are attempting to get a behaviour for
-//     * @param toCurrent the system selected behaviour if any
-//     * @param <K> the type of activity that the behaviour is for
-//     * @return the behaviour to use, or null for no behaviour
-//     */
-//    public <L extends Controller, K extends ControllerBehaviour<L>> K getBehaviourFor(Class<L> toActivityClass, K toCurrent)
-//    {
-//        return toCurrent;
-//    }
+//
 //
 //
 

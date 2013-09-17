@@ -41,106 +41,6 @@ public class ActivityManagerTest
     }
 
     @Test
-    public void testAdd_activityclass_behaviour() throws Exception
-    {
-        startMarker();
-
-        ActivityManager.getInstance().clearBehaviours();
-
-        Behaviour<SplashActivity> loBehaviour = new Behaviour<SplashActivity>(){};
-
-        ActivityManager.getInstance().add(SplashActivity.class, loBehaviour);
-
-        assertSame(loBehaviour, ActivityManager.getInstance().getBehaviour(new SplashActivity()));
-    }
-
-    @Test
-    public void testGetBehaviour() throws Exception
-    {
-        startMarker();
-
-        ActivityManager.getInstance().clearBehaviours();
-
-        Behaviour<SplashActivity> loBehaviour = new Behaviour<SplashActivity>(){
-            @Override
-            public boolean isValid(SplashActivity toController)
-            {
-                return false;
-            }
-        };
-
-        Behaviour<SplashActivity> loBehaviour1 = new Behaviour<SplashActivity>(){};
-
-        ActivityManager.getInstance().add(SplashActivity.class, loBehaviour);
-
-        assertNull(ActivityManager.getInstance().getBehaviour(new SplashActivity()));
-
-        ActivityManager.getInstance().add(SplashActivity.class, loBehaviour1);
-
-        assertSame(loBehaviour1, ActivityManager.getInstance().getBehaviour(new SplashActivity()));
-    }
-
-    @Test
-    public void testClearBehaviours() throws Exception
-    {
-        startMarker();
-
-        ActivityManager.getInstance().clearBehaviours();
-
-        Behaviour<SplashActivity> loBehaviour = new Behaviour<SplashActivity>(){
-            @Override
-            public boolean isValid(SplashActivity toController)
-            {
-                return false;
-            }
-        };
-
-        Behaviour<SplashActivity> loBehaviour1 = new Behaviour<SplashActivity>(){};
-
-        ActivityManager.getInstance().add(SplashActivity.class, loBehaviour);
-
-        assertNull(ActivityManager.getInstance().getBehaviour(new SplashActivity()));
-
-        ActivityManager.getInstance().add(SplashActivity.class, loBehaviour1);
-
-        assertSame(loBehaviour1, ActivityManager.getInstance().getBehaviour(new SplashActivity()));
-
-        ActivityManager.getInstance().clearBehaviours();
-
-        assertNull(ActivityManager.getInstance().getBehaviour(new SplashActivity()));
-    }
-
-    @Test
-    public void testRemove_class_behaviour() throws Exception
-    {
-        startMarker();
-
-        ActivityManager.getInstance().clearBehaviours();
-
-        Behaviour<SplashActivity> loBehaviour = new Behaviour<SplashActivity>(){
-            @Override
-            public boolean isValid(SplashActivity toController)
-            {
-                return false;
-            }
-        };
-
-        Behaviour<SplashActivity> loBehaviour1 = new Behaviour<SplashActivity>(){};
-
-        ActivityManager.getInstance().add(SplashActivity.class, loBehaviour);
-
-        assertNull(ActivityManager.getInstance().getBehaviour(new SplashActivity()));
-
-        ActivityManager.getInstance().add(SplashActivity.class, loBehaviour1);
-
-        assertSame(loBehaviour1, ActivityManager.getInstance().getBehaviour(new SplashActivity()));
-
-        ActivityManager.getInstance().remove(SplashActivity.class, loBehaviour1);
-
-        assertNull(ActivityManager.getInstance().getBehaviour(new SplashActivity()));
-    }
-
-    @Test
     public void testRemove() throws Exception
     {
         startMarker();
@@ -186,7 +86,6 @@ public class ActivityManagerTest
         startMarker();
 
         ActivityManager.getInstance().clearActivities();
-        ActivityManager.getInstance().clearBehaviours();
 
         SplashActivity loAct1 = Robolectric.buildActivity(SplashActivity.class).get();
         ActivityImplTest.Splash2Activity loAct2 = Robolectric.buildActivity(ActivityImplTest.Splash2Activity.class).get();

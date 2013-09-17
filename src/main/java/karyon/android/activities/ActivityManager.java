@@ -3,6 +3,7 @@ package karyon.android.activities;
 import karyon.Utilities;
 import karyon.android.applications.AndroidApplicationAdaptor;
 import karyon.android.behaviours.Behaviour;
+import karyon.android.behaviours.BehaviourManager;
 import karyon.collections.HashMap;
 import karyon.collections.List;
 import karyon.dynamicCode.Java;
@@ -35,7 +36,6 @@ public class ActivityManager
     }
 
     private List<IActivity> m_oActivities;
-    private HashMap<Class<? extends IActivity>, List<Behaviour<? extends IActivity>>> m_oBehavours;
     private int m_nActivityPointer;
 
     /**
@@ -62,44 +62,13 @@ public class ActivityManager
     }
 
     /**
-     * Registers the specified behaviour so it will be used with the controller class
-     * @param toActivityClass the class to use this behaviour with
-     * @param toBehaviour the behaviour to use
-     * @param <K> the type of the controller
-     * @return true if the list of controllers changed as a result of this call
-     */
-    public final <K extends IActivity<K>> boolean add(Class<K> toActivityClass, Behaviour<K> toBehaviour)
-    {
-        Utilities.checkParameterNotNull("toControllerClass", toActivityClass);
-        Utilities.checkParameterNotNull("toBehaviour", toBehaviour);
-
-        if (m_oBehavours == null)
-        {
-            m_oBehavours = new HashMap<Class<? extends IActivity>, List<Behaviour<? extends IActivity>>>();
-        }
-
-        if (!m_oBehavours.containsKey(toActivityClass))
-        {
-            m_oBehavours.put(toActivityClass, new List<Behaviour<? extends IActivity>>());
-        }
-
-        if (!m_oBehavours.get(toActivityClass).contains(toBehaviour))
-        {
-            return m_oBehavours.get(toActivityClass).add(toBehaviour);
-        }
-        return false;
-    }
-
-
-
-    /**
      * Checks if it is okay to display the activity
      * @param toActivity the activity to display
      * @return true if it is okay to display the activity
      */
     private boolean canShow(IActivity toActivity)
     {
-        Behaviour loBehaviour = getBehaviour(toActivity);
+        Behaviour loBehaviour = BehaviourManager.getInstance().getBehaviourFor(toActivity);
         return loBehaviour == null || loBehaviour.canShow(toActivity);
     }
 
@@ -121,64 +90,6 @@ public class ActivityManager
                 m_nActivityPointer = m_oActivities.size()-1;
             }
         }
-    }
-
-    /**
-     * Gets the behaviour for the controller specified
-     * @param toActivity the controller to get the behaviour for
-     * @param <K> the type of the controller
-     * @return the behaviour for the controller
-     */
-    protected final <K extends IActivity<K>> Behaviour<K> getBehaviour(K toActivity)
-    {
-        if (m_oBehavours == null)
-        {
-            return null;
-        }
-
-        Class loClass = toActivity.getClass();
-        while (loClass != null && Java.isEqualOrAssignable(IActivity.class, loClass))
-        {
-            if (m_oBehavours.containsKey(loClass))
-            {
-                List<Behaviour<? extends IActivity>> loBehaviours = m_oBehavours.get(loClass);
-                for (Behaviour loBehaviour : loBehaviours)
-                {
-                    if (loBehaviour.isValid(toActivity))
-                    {
-                        return (Behaviour<K>)loBehaviour;
-                    }
-                }
-            }
-            loClass = loClass.getSuperclass();
-        }
-        return null;
-    }
-
-
-    /**
-     * Clears out all of the behaviours from the manager
-     */
-    protected final void clearBehaviours()
-    {
-        m_oBehavours = null;
-    }
-
-    /**
-     * Removes the specified behaviour from the behaviour list.
-     * @param toClass the class the behaviour is registered to
-     * @param toBehaviour the behaviour to remove
-     * @param <K> the type of the controller
-     * @return true if the behaviour collections were changed as a result of this call
-     */
-    protected final <K extends IActivity<K>> boolean remove(Class<K> toClass, Behaviour<K> toBehaviour)
-    {
-        if (m_oBehavours == null || !m_oBehavours.containsKey(toClass))
-        {
-            return false;
-        }
-
-        return m_oBehavours.get(toClass).remove(toBehaviour);
     }
 
     /**
@@ -302,7 +213,7 @@ public class ActivityManager
      */
     public <K extends IActivity> boolean notify(NotificationType toType, K toActivity)
     {
-        Behaviour loBehaviour = getBehaviour(toActivity);
+        Behaviour loBehaviour = BehaviourManager.getInstance().getBehaviourFor(toActivity);
         if (loBehaviour != null)
         {
             return loBehaviour.notify(toType, toActivity);

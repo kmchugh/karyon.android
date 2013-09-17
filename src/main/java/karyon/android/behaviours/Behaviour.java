@@ -9,7 +9,7 @@ import karyon.android.activities.NotificationType;
  * a controller
  * @param <T>
  */
-public class Behaviour<T extends IActivity<T>>
+public class Behaviour<T extends IActivity>
     extends karyon.Object
 {
     /**
@@ -22,9 +22,9 @@ public class Behaviour<T extends IActivity<T>>
     /**
      * Determines if this behaviour is okay to use with the
      * controller specified
-     * @param toController the controller that we are finding a behaviour for
+     * @param toActivity the controller that we are finding a behaviour for
      */
-    public boolean isValid(T toController)
+    public boolean isValid(T toActivity)
     {
         return true;
     }
