@@ -247,7 +247,7 @@ public class BaseActivityTest
     {
         startMarker();
         ActivityController<TestActivity> loActivity = Robolectric.buildActivity(TestActivity.class);
-        assertTrue(loActivity.get().canShowTitle());
+        assertFalse(loActivity.get().canShowTitle());
     }
 
     @Test
