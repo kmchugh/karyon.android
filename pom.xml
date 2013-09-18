@@ -18,8 +18,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <uk.co.icatalyst.karyon.version>0.3-SNAPSHOT</uk.co.icatalyst.karyon.version>
         <uk.co.icatalyst.karyon.data.version>0.2-SNAPSHOT</uk.co.icatalyst.karyon.data.version>
-        <com.google.android.android.version>2.2.1</com.google.android.android.version>
-        <com.google.android.support-v4.version>18</com.google.android.support-v4.version>
+        <com.google.android.android.version>4.1.1.4</com.google.android.android.version>
+        <com.google.android.support-v4.version>18.0.0</com.google.android.support-v4.version>
+        <com.google.android.appcompat-v7.version>18.0.0</com.google.android.appcompat-v7.version>
         <com.pivotallabs.robolectric.version>2.1.1</com.pivotallabs.robolectric.version>
         <junit.version>4.11</junit.version>
         <com.flurry.FlurryAgent.version>3.1.0</com.flurry.FlurryAgent.version>
@@ -27,7 +28,7 @@
         <org.apache.maven.plugins.maven.deploy.plugin.version>2.7</org.apache.maven.plugins.maven.deploy.plugin.version>
         <com.github.github.site.maven.plugin.version>0.8</com.github.github.site.maven.plugin.version>
         <com.jayway.maven.plugins.android.generation2.version>3.6.0</com.jayway.maven.plugins.android.generation2.version>
-        <android.platform.version>8</android.platform.version>
+        <android.platform.version>17</android.platform.version>
     </properties>
 
     <dependencies>
@@ -56,8 +57,8 @@
 
         <!-- Android Support Libraries -->
         <dependency>
-            <groupId>uk.co.icatalyst</groupId>
-            <artifactId>android-support-v4</artifactId>
+            <groupId>com.android.support</groupId>
+            <artifactId>support-v4</artifactId>
             <version>${com.google.android.support-v4.version}</version>
             <scope>compile</scope>
         </dependency>

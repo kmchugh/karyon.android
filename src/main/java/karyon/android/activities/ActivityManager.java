@@ -1,12 +1,9 @@
 package karyon.android.activities;
 
-import karyon.Utilities;
 import karyon.android.applications.AndroidApplicationAdaptor;
 import karyon.android.behaviours.Behaviour;
 import karyon.android.behaviours.BehaviourManager;
-import karyon.collections.HashMap;
 import karyon.collections.List;
-import karyon.dynamicCode.Java;
 
 /**
  * The Activity Manager is the workflow controller

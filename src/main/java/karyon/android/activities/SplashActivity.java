@@ -21,6 +21,12 @@ public class SplashActivity
     {
     }
 
+    @Override
+    public boolean canShowTitle()
+    {
+        return false;
+    }
+
     /**
      * Creates a new instance of the splash activity
      * @param toImplementation the implementation to use

@@ -17,13 +17,15 @@
         v3.23.17 -> 32317
         v99.3.34 -> 990334
     -->
-    <uses-sdk android:minSdkVersion="4"  android:targetSdkVersion="10"/>
+    <uses-sdk android:minSdkVersion="7"
+              android:targetSdkVersion="17"/>
 
     <!-- Required in order to determine if we are online or offline -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application>
-        <activity android:name=".activities.SplashActivity"/>
+        <activity android:name=".activities.SplashActivity"
+                />
         <activity android:name=".activities.ErrorActivity"/>
     </application>
 </manifest> 
