@@ -50,6 +50,31 @@ public class BehaviourManagerTest
 
         BehaviourManager.getInstance().addBehaviour(SplashActivity.class, TestBehaviour.class);
 
-        assertEquals(TestBehaviour.class, BehaviourManager.getInstance().getBehaviourFor(new SplashActivity()).getClass());
+        SplashActivity loActivity = new SplashActivity();
+
+        Behaviour loBehaviour = BehaviourManager.getInstance().getBehaviourFor(loActivity);
+
+        assertEquals(TestBehaviour.class, loBehaviour.getClass());
+        assertSame(loBehaviour, BehaviourManager.getInstance().getBehaviourFor(loActivity));
+    }
+
+    @Test
+    public void testRemoveBehaviourFor() throws Exception
+    {
+        startMarker();
+
+        BehaviourManager.getInstance().addBehaviour(SplashActivity.class, TestBehaviour.class);
+
+        SplashActivity loActivity = new SplashActivity();
+        assertFalse(BehaviourManager.getInstance().removeBehaviourFor(loActivity));
+
+        Behaviour loBehaviour = BehaviourManager.getInstance().getBehaviourFor(loActivity);
+
+        assertEquals(TestBehaviour.class, loBehaviour.getClass());
+        assertSame(loBehaviour, BehaviourManager.getInstance().getBehaviourFor(loActivity));
+
+        assertTrue(BehaviourManager.getInstance().removeBehaviourFor(loActivity));
+
+        assertNotSame(loBehaviour, BehaviourManager.getInstance().getBehaviourFor(loActivity));
     }
 }

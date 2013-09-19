@@ -211,10 +211,17 @@ public class ActivityManager
     public <K extends IActivity> boolean notify(NotificationType toType, K toActivity)
     {
         Behaviour loBehaviour = BehaviourManager.getInstance().getBehaviourFor(toActivity);
+        boolean llReturn = true;
         if (loBehaviour != null)
         {
-            return loBehaviour.notify(toType, toActivity);
+            llReturn = loBehaviour.notify(toType, toActivity);
         }
-        return true;
+
+        // If the return type is to destroy then also clean out the behaviour
+        if (toType == NotificationType.DESTROY)
+        {
+            BehaviourManager.getInstance().removeBehaviourFor(toActivity);
+        }
+        return llReturn;
     }
 }

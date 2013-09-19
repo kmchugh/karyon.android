@@ -7,7 +7,7 @@ import karyon.collections.List;
 
 /**
  * The behaviour factory is used to control which
- * behaviours are created for which activityies
+ * behaviours are created for which activities
  */
 public class BehaviourManager
     extends karyon.Object
@@ -28,7 +28,7 @@ public class BehaviourManager
     }
 
     private HashMap<Class<? extends IActivity>, List<Class<? extends Behaviour<? extends IActivity>>>> m_oBehaviourMap;
-    private HashMap<? extends IActivity, Behaviour<? extends IActivity>> m_oActivityMap;
+    private HashMap<IActivity, Behaviour<? extends IActivity>> m_oActivityMap;
 
     /**
      * Not publicly creatable
@@ -61,6 +61,11 @@ public class BehaviourManager
                     Behaviour<K> loBehaviour = (Behaviour<K>)loBehaviourClass.newInstance();
                     if (loBehaviour.isValid(toActivity))
                     {
+                        if (m_oActivityMap == null)
+                        {
+                            m_oActivityMap = new HashMap<IActivity, Behaviour<? extends IActivity>>();
+                        }
+                        m_oActivityMap.put(toActivity, loBehaviour);
                         return loBehaviour;
                     }
                 }
@@ -101,5 +106,15 @@ public class BehaviourManager
             return m_oBehaviourMap.get(toActivityClass).add(toBehaviourClass);
         }
         return false;
+    }
+
+    /**
+     * Removes the behaviour that has been attached to the specified activity
+     * @param toActivity the activity to remove the behaviour for
+     * @return true if a behaviour was removed, false otherwise
+     */
+    public boolean removeBehaviourFor(IActivity toActivity)
+    {
+        return m_oActivityMap != null && m_oActivityMap.remove(toActivity) != null;
     }
 }

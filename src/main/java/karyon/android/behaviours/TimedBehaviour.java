@@ -130,8 +130,8 @@ public abstract class TimedBehaviour<T extends IActivity<T>>
                             lnProgress+=m_nTick;
                             if (m_nTimeout > 0 && lnProgress >= m_nTimeout && m_lRunning)
                             {
-                                timerEvent(toActivity);
                                 m_lRunning = false;
+                                timerEvent(toActivity);
                             }
                         }
                     }
