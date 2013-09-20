@@ -8,7 +8,7 @@ import karyon.android.activities.IActivity;
  * given on the specified tick count
  * @author kmchugh
  */
-public abstract class TimedBehaviour<T extends IActivity<T>>
+public abstract class TimedBehaviour<T extends IActivity>
         extends Behaviour<T>
 {
     private long m_nTimeout;
