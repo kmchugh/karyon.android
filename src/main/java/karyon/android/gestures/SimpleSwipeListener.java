@@ -19,6 +19,9 @@ public abstract class SimpleSwipeListener
         private int m_nSwipeThreshold;
         private int m_nVelocityThreshold;
 
+        /**
+         * Creates a new instance of the gesture listener
+         */
         private GestureListener()
         {
             m_nSwipeThreshold = 100;
@@ -76,21 +79,37 @@ public abstract class SimpleSwipeListener
         }
     }
 
+    /**
+     * Override for the swipe right action
+     * @return true to indicate the event has been handled
+     */
     public boolean onSwipeRight()
     {
         return false;
     }
 
+    /**
+     * Override for the swipe left action
+     * @return true to indicate the event has been handled
+     */
     public boolean onSwipeLeft()
     {
         return false;
     }
 
+    /**
+     * Override for the swipe down action
+     * @return true to indicate the event has been handled
+     */
     public boolean onSwipeDown()
     {
         return false;
     }
 
+    /**
+     * Override for the swipe up action
+     * @return true to indicate the event has been handled
+     */
     public boolean onSwipeUp()
     {
         return false;

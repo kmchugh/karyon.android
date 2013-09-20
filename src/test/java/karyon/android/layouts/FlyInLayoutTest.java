@@ -152,9 +152,9 @@ public class FlyInLayoutTest
 
         loActivity.get().setContentView(loLayout);
 
-        assertTrue(loLayout.addItem(R.id.error_icon, R.string.error, R.layout.splash));
-        assertFalse(loLayout.addItem(R.id.error_icon, R.string.error, R.layout.splash));
-        assertTrue(loLayout.addItem(R.id.error_icon, R.string.app_name, R.layout.splash));
+        assertTrue(loLayout.addItem(R.drawable.attention, R.string.error, R.layout.splash));
+        assertFalse(loLayout.addItem(R.drawable.attention, R.string.error, R.layout.splash));
+        assertTrue(loLayout.addItem(R.drawable.attention, R.string.app_name, R.layout.splash));
 
         // Test the buttons exist on the menu
         ViewGroup loMenu = (ViewGroup)loLayout.getChildAt(0);
@@ -177,8 +177,8 @@ public class FlyInLayoutTest
 
         loActivity.get().setContentView(loLayout);
 
-        assertTrue(loLayout.addItem(R.id.error_icon, R.string.error, R.layout.splash));
-        assertTrue(loLayout.addItem(R.id.error_icon, R.string.app_name, R.layout.splash));
+        assertTrue(loLayout.addItem(R.drawable.attention, R.string.error, R.layout.splash));
+        assertTrue(loLayout.addItem(R.drawable.attention, R.string.app_name, R.layout.splash));
 
         assertEquals(View.VISIBLE, loLayout.getChildAt(2).getVisibility());
         assertEquals(View.GONE, loLayout.getChildAt(3).getVisibility());
@@ -188,5 +188,76 @@ public class FlyInLayoutTest
 
         assertEquals(View.GONE, loLayout.getChildAt(2).getVisibility());
         assertEquals(View.VISIBLE, loLayout.getChildAt(3).getVisibility());
+    }
+
+    @Test
+    public void testAddView() throws Exception
+    {
+        startMarker();
+
+        ActivityController<SplashActivity> loActivity = Robolectric.buildActivity(SplashActivity.class);
+        FlyInLayout loLayout = new FlyInLayout(AndroidApplicationAdaptor.getInstance().getApplicationContext());
+
+        loActivity.create();
+        loActivity.start();
+
+        loActivity.get().setContentView(loLayout);
+
+        assertTrue(loLayout.addItem(R.drawable.attention, R.string.error, R.layout.splash));
+        assertFalse(loLayout.addItem(R.drawable.attention, R.string.error, R.layout.splash));
+        assertTrue(loLayout.addItem(R.drawable.attention, R.string.app_name, R.layout.splash));
+
+        // Test the buttons exist on the menu
+        ViewGroup loMenu = (ViewGroup)loLayout.getChildAt(0);
+        assertEquals(2, loMenu.getChildCount());
+
+        // Test the views exist, 4 views, menu, empty + 2 added views
+        assertEquals(4, loLayout.getChildCount());
+
+        assertFalse(loLayout.addView(R.string.error, new View(loMenu.getContext())));
+        assertTrue(loLayout.addView(R.string.cancel, new View(loMenu.getContext())));
+
+        assertEquals(2, loMenu.getChildCount());
+        assertEquals(5, loLayout.getChildCount());
+    }
+
+    @Test
+    public void testSetFlyInHelper() throws Exception
+    {
+        startMarker();
+
+        ActivityController<SplashActivity> loActivity = Robolectric.buildActivity(SplashActivity.class);
+        FlyInLayout loLayout = new FlyInLayout(AndroidApplicationAdaptor.getInstance().getApplicationContext());
+
+        loActivity.create();
+        loActivity.start();
+
+        loActivity.get().setContentView(loLayout);
+
+        assertTrue(loLayout.addItem(R.drawable.attention, R.string.error, R.layout.splash));
+        assertTrue(loLayout.addItem(R.drawable.attention, R.string.app_name, R.layout.splash));
+
+        ViewGroup loMenu = (ViewGroup)loLayout.getChildAt(0);
+
+        assertTrue(loLayout.addView(R.string.cancel, new View(loMenu.getContext())));
+
+        loLayout.setCurrentView(R.string.app_name);
+        assertEquals(View.VISIBLE, loLayout.getChildAt(3).getVisibility());
+
+        loLayout.setCurrentView(R.string.error);
+        assertEquals(View.VISIBLE, loLayout.getChildAt(2).getVisibility());
+
+        loLayout.setFlyInHelper(new FlyInLayout.FlyInHelper()
+        {
+            @Override
+            protected int translateView(int tnStringID)
+            {
+                return R.string.cancel;
+            }
+        });
+
+        loLayout.setCurrentView(R.string.app_name);
+        assertEquals(View.VISIBLE, loLayout.getChildAt(4).getVisibility());
+        assertFalse(loLayout.setCurrentView(R.string.app_name));
     }
 }
