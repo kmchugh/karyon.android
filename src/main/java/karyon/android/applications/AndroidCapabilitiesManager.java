@@ -8,20 +8,40 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.io.File;
+
 public class AndroidCapabilitiesManager extends CapabilitiesManager
 {
     private Boolean m_lDebuggable;
 
-    /**
-     * Checks if the application is capable of going online
-     * @return true if capable of going online
-     */
-    public boolean isOnline()
+    @Override
+    public boolean isInternetReachable()
     {
-        // TODO: Refactor this to the karyon capabilities manager
         ConnectivityManager loManager = AndroidApplicationAdaptor.getSystemService(Context.CONNECTIVITY_SERVICE, ConnectivityManager.class);
-        NetworkInfo loInfo = loManager.getActiveNetworkInfo();
-        return loInfo != null && loInfo.isConnected();
+        if (loManager != null)
+        {
+            NetworkInfo[] laInfo = loManager.getAllNetworkInfo();
+            for (int i=0, lnLength = laInfo.length; i<lnLength; i++)
+            {
+                if (laInfo[i].getState() == NetworkInfo.State.CONNECTED)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public File getTempFileDirectory()
+    {
+        return AndroidApplicationAdaptor.getInstance().getApplicationContext().getCacheDir();
+    }
+
+    @Override
+    public File getFileStoreDirectory()
+    {
+        return AndroidApplicationAdaptor.getInstance().getApplicationContext().getFilesDir();
     }
 
     /**

@@ -1,5 +1,7 @@
 package karyon.android.applications;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import karyon.android.AndroidTestApplication;
 import karyon.android.CustomRoboTestRunner;
@@ -7,6 +9,8 @@ import karyon.testing.KaryonTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.File;
 
 import static  org.junit.Assert.*;
 
@@ -29,13 +33,29 @@ public class AndroidCapabilitiesManagerTest
     }
 
     @Test
-    public void testIsOnline() throws Exception
+    public void testIsInternetReachable() throws Exception
     {
         startMarker();
 
-        assertTrue(new AndroidCapabilitiesManager().isOnline());
+        assertTrue(new AndroidCapabilitiesManager().isInternetReachable());
 
-        // TODO: Figure out how to turn of wifi to test for false result
+        // TODO: Figure out how to turn off wifi to test for false result
+    }
+
+    @Test
+    public void testGetTempFileDirectory() throws Exception
+    {
+        startMarker();
+
+        assertEquals(AndroidApplicationAdaptor.getInstance().getApplicationContext().getCacheDir(), new AndroidCapabilitiesManager().getTempFileDirectory());
+    }
+
+    @Test
+    public void testGetFileStoreDirectory() throws Exception
+    {
+        startMarker();
+
+        assertEquals(AndroidApplicationAdaptor.getInstance().getApplicationContext().getFilesDir(), new AndroidCapabilitiesManager().getFileStoreDirectory());
     }
 
     @Test
@@ -43,9 +63,10 @@ public class AndroidCapabilitiesManagerTest
     {
         startMarker();
 
-        assertTrue(new AndroidCapabilitiesManager().isOnline());
-
-        // TODO: See if it is possible to switch the debug flag on the fly
+        PackageManager loPM = AndroidApplicationAdaptor.getInstance().getApplicationContext().getPackageManager();
+        ApplicationInfo loInfo = loPM.getApplicationInfo(AndroidApplicationAdaptor.getInstance().getApplicationContext().getPackageName(), 0);
+        assertEquals(0 != (loInfo.flags &= ApplicationInfo.FLAG_DEBUGGABLE),
+                     new AndroidCapabilitiesManager().isDebuggable());
     }
 
     @Test
