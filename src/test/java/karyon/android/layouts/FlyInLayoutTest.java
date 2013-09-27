@@ -191,6 +191,50 @@ public class FlyInLayoutTest
     }
 
     @Test
+    public void testGetCurrentViewID() throws Exception
+    {
+        startMarker();
+
+        ActivityController<SplashActivity> loActivity = Robolectric.buildActivity(SplashActivity.class);
+        FlyInLayout loLayout = new FlyInLayout(AndroidApplicationAdaptor.getInstance().getApplicationContext());
+
+        loActivity.create();
+        loActivity.start();
+
+        loActivity.get().setContentView(loLayout);
+
+        assertTrue(loLayout.addItem(R.drawable.attention, R.string.error, R.layout.splash));
+        assertTrue(loLayout.addItem(R.drawable.attention, R.string.app_name, R.layout.splash));
+
+        ViewGroup loMenu = (ViewGroup)loLayout.getChildAt(0);
+
+        assertTrue(loLayout.addView(R.string.cancel, new View(loMenu.getContext())));
+
+        loLayout.setCurrentView(R.string.app_name);
+        assertEquals(R.string.app_name, loLayout.getCurrentViewID());
+        assertEquals(View.VISIBLE, loLayout.getChildAt(3).getVisibility());
+
+        loLayout.setCurrentView(R.string.error);
+        assertEquals(R.string.error, loLayout.getCurrentViewID());
+        assertEquals(View.VISIBLE, loLayout.getChildAt(2).getVisibility());
+
+        loLayout.setFlyInHelper(new FlyInLayout.FlyInHelper()
+        {
+            @Override
+            protected int translateView(int tnStringID)
+            {
+                return R.string.cancel;
+            }
+        });
+
+        loLayout.setCurrentView(R.string.app_name);
+        assertEquals(View.VISIBLE, loLayout.getChildAt(4).getVisibility());
+        assertEquals(R.string.cancel, loLayout.getCurrentViewID());
+
+        assertFalse(loLayout.setCurrentView(R.string.app_name));
+    }
+
+    @Test
     public void testAddView() throws Exception
     {
         startMarker();

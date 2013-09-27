@@ -190,6 +190,19 @@ public class FlyInLayout
     }
 
     /**
+     * Gets the id of the view that is currently being displayed as the content
+     * @return the content view id
+     */
+    public int getCurrentViewID()
+    {
+        if (m_oViews.size() == 0)
+        {
+            getCurrentView();
+        }
+        return m_nCurrentView;
+    }
+
+    /**
      * Calculates teh content and menu dimensions
      */
     private void calculateChildDimensions()
