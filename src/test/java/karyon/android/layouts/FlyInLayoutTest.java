@@ -25,6 +25,26 @@ import static org.junit.Assert.*;
 public class FlyInLayoutTest
     extends KaryonTest
 {
+    public static class TestLayoutHelper
+        extends FlyInLayout.FlyInHelper
+    {
+        private int m_nLastView;
+        private View m_oLastView;
+
+        @Override
+        protected int translateView(int tnStringID)
+        {
+            return R.string.cancel;
+        }
+
+        @Override
+        protected void onViewChanged(int tnViewID, View toView)
+        {
+            m_nLastView = tnViewID;
+            m_oLastView = toView;
+        }
+    }
+
     @Test
     public void testToggleMenu() throws Exception
     {
@@ -291,17 +311,15 @@ public class FlyInLayoutTest
         loLayout.setCurrentView(R.string.error);
         assertEquals(View.VISIBLE, loLayout.getChildAt(2).getVisibility());
 
-        loLayout.setFlyInHelper(new FlyInLayout.FlyInHelper()
-        {
-            @Override
-            protected int translateView(int tnStringID)
-            {
-                return R.string.cancel;
-            }
-        });
+        TestLayoutHelper loHelper = new TestLayoutHelper();
+
+        loLayout.setFlyInHelper(loHelper);
 
         loLayout.setCurrentView(R.string.app_name);
         assertEquals(View.VISIBLE, loLayout.getChildAt(4).getVisibility());
         assertFalse(loLayout.setCurrentView(R.string.app_name));
+
+        assertEquals(R.string.cancel, loHelper.m_nLastView);
+        assertEquals(loLayout.getChildAt(4), loHelper.m_oLastView);
     }
 }

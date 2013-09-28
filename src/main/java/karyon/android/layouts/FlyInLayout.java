@@ -30,6 +30,15 @@ public class FlyInLayout
          * @return the view id that we are going to display
          */
         protected abstract int translateView(int tnStringID);
+
+        /**
+         * When the content view is changed, this method is called.
+         * @param tnViewID the new view ID that is in place
+         * @param toView the actual content view
+         */
+        protected void onViewChanged(int tnViewID, View toView)
+        {
+        }
     }
 
     /**
@@ -411,6 +420,10 @@ public class FlyInLayout
             m_nCurrentView = tnStringID;
             getCurrentView().setVisibility(View.VISIBLE);
             onLayout(true, getLeft(), getTop(), getRight(), getBottom());
+            if (m_oHelper != null)
+            {
+                m_oHelper.onViewChanged(m_nCurrentView, getCurrentView());
+            }
             return true;
         }
         return false;
