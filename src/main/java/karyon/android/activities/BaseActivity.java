@@ -1,16 +1,16 @@
 package karyon.android.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * Base Activity is the base activity class.  All
  * pure activities should inherit from this class
  */
 public abstract class BaseActivity<T extends IActivity>
-    extends Activity
+    extends FragmentActivity
     implements IActivity<T>
 {
     /**
