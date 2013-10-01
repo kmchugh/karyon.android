@@ -287,10 +287,13 @@ public class ActivityImpl<T extends IActivity>
      */
     public void onContentChanged()
     {
+        // TODO: Look at implementing this using a CONTENT_CHANGED notification instead
+        /*
         if (ActivityManager.getInstance().notify(NotificationType.CONTENT_READY, m_oThis) && isVisible())
         {
-            m_oThis.onContentReady();
+
         }
+        */
     }
 
     /**

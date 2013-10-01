@@ -3,7 +3,6 @@ package karyon.android;
 import android.app.Application;
 import org.junit.runners.model.InitializationError;
 import org.robolectric.*;
-import org.robolectric.res.FsFile;
 
 import java.lang.reflect.Method;
 
