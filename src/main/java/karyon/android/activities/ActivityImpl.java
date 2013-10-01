@@ -1,5 +1,6 @@
 package karyon.android.activities;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -297,6 +298,16 @@ public class ActivityImpl<T extends IActivity>
     }
 
     /**
+     * Called when a fragment is first associated with an activity.
+     * onCreate is called after this
+     * @param toView
+     */
+    public void onAttach(Activity toView)
+    {
+        // TODO: Look at implementing this
+    }
+
+    /**
      * Forces a UI update by calling onUpdateUI on the correct thread.  If this is called multiple times and there
      * is still an outstanding update the additional calls will be considered a no op.
      */
@@ -338,5 +349,4 @@ public class ActivityImpl<T extends IActivity>
         }
         m_oThis = toActivity;
     }
-
 }
