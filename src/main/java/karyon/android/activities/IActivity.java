@@ -3,6 +3,8 @@ package karyon.android.activities;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.view.View;
 import android.view.Window;
 
 /**
@@ -160,4 +162,22 @@ public interface IActivity<T extends IActivity>
      * @return true if the activity is finishing
      */
     boolean isFinishing();
+
+    /**
+     * Finds a view that was identified by the id attribute from the XML that was processed in onCreate
+     * @param tnID the id of the view to find
+     * @return the view, or null if no view could be found
+     */
+    View findViewById(int tnID);
+
+    /**
+     * Gets the Fragment Manager for interacting with fragments associated with this activity
+     * @return the fragment manger
+     */
+    FragmentManager getSupportFragmentManager();
+
+    /**
+     * Invalidates the entire activity.
+     */
+    void invalidate();
 }

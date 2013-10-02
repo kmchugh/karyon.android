@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -316,5 +317,18 @@ public abstract class BaseFragment<T extends IActivity>
     {
         Activity loActivity = getActivity();
         return loActivity != null ? loActivity.isFinishing() : false;
+    }
+
+    @Override
+    public View findViewById(int tnID)
+    {
+        View loView = getView();
+        return loView != null ? loView.findViewById(tnID) : getActivity().findViewById(tnID);
+    }
+
+    @Override
+    public FragmentManager getSupportFragmentManager()
+    {
+        return getFragmentManager();
     }
 }
