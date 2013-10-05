@@ -58,10 +58,13 @@ public class Alert
         public Dialog build()
         {
             AlertDialog.Builder loBuilder = new AlertDialog.Builder(m_oContext != null ? m_oContext : getActivity());
-            View loView = getActivity().getLayoutInflater().inflate(R.layout.view_dialog_alert, null);
-            loBuilder.setView(loView);
-            m_oTitle = (android.widget.TextView)loView.findViewById(R.id.txtContent);
-            m_oTitle.setText(m_nTitle);;
+            if (getActivity() != null)
+            {
+                View loView = getActivity().getLayoutInflater().inflate(R.layout.view_dialog_alert, null);
+                loBuilder.setView(loView);
+                m_oTitle = (android.widget.TextView)loView.findViewById(R.id.txtContent);
+                m_oTitle.setText(m_nTitle);;
+            }
 
             if (m_oPositive != null)
             {
