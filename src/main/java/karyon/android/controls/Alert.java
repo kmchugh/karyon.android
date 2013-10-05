@@ -8,9 +8,10 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
+import android.view.View;
 import karyon.Utilities;
-import karyon.android.activities.BaseActivity;
-import karyon.applications.Application;
+import karyon.android.R;
+import karyon.android.activities.IActivity;
 
 /**
  * The alert class allows gathering of feedback from the user
@@ -57,8 +58,10 @@ public class Alert
         public Dialog build()
         {
             AlertDialog.Builder loBuilder = new AlertDialog.Builder(m_oContext != null ? m_oContext : getActivity());
-
-            loBuilder.setMessage(m_nTitle);
+            View loView = getActivity().getLayoutInflater().inflate(R.layout.view_dialog_alert, null);
+            loBuilder.setView(loView);
+            m_oTitle = (android.widget.TextView)loView.findViewById(R.id.txtContent);
+            m_oTitle.setText(m_nTitle);;
 
             if (m_oPositive != null)
             {
@@ -151,6 +154,8 @@ public class Alert
     private ButtonInfo m_oNegative;
     private ButtonInfo m_oNeutral;
     private Class<? extends DialogBuilder> m_oBuilderClass;
+    private android.widget.TextView m_oTitle;
+    private String m_cTag;
 
 
     private Alert()
@@ -191,11 +196,26 @@ public class Alert
      * @param toParentActivity the activity that is creating this dialog
      * @return the tag assigned to the dialog
      */
-    public String show(BaseActivity toParentActivity)
+    public String show(final IActivity toParentActivity)
     {
-        m_oContext = toParentActivity;
-        String lcReturn = Utilities.generateGUID();
-        show(toParentActivity.getSupportFragmentManager(), lcReturn);
-        return lcReturn;
+        if (m_cTag == null)
+        {
+            m_oContext = toParentActivity.getContext();
+            m_cTag = Utilities.generateGUID();
+            show(toParentActivity.getSupportFragmentManager(), m_cTag);
+        }
+        return m_cTag;
+    }
+
+    /**
+     * Updates the text for the dialog
+     * @param tcText the text to update to
+     */
+    public void setText(String tcText)
+    {
+        if (m_oTitle != null)
+        {
+            m_oTitle.setText(tcText);
+        }
     }
 }

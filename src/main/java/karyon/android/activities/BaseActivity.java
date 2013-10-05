@@ -101,6 +101,13 @@ public abstract class BaseActivity<T extends IActivity>
     }
 
     @Override
+    protected void onRestoreInstanceState(Bundle toPreviousState)
+    {
+        super.onRestoreInstanceState(toPreviousState);
+        m_oImpl.onRestoreInstanceState(toPreviousState);
+    }
+
+    @Override
     public boolean onInit(Bundle toSavedState)
     {
         return true;

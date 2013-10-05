@@ -50,6 +50,21 @@ public class ActivityImpl<T extends IActivity>
     }
 
     /**
+     * This method is called after onStart() when the activity is being re-initialized
+     * from a previously saved state, given here in savedInstanceState. Most implementations
+     * will simply use onCreate(Bundle) to restore their state, but it is sometimes convenient
+     * to do it here after all of the initialization has been done or to allow subclasses
+     * to decide whether to use your default implementation. The default implementation
+     * of this method performs a restore of any view state that had previously been
+     * frozen by onSaveInstanceState(Bundle).
+     * @param toSavedState
+     */
+    public void onRestoreInstanceState(Bundle toSavedState)
+    {
+        // TODO: Look to see if we need to implement anything here
+    }
+
+    /**
      * This is always called when the activity is first created.
      * This is the "entry point" to the activity life cycle
      * @param toSavedState if restoring from a previous state this will be populated,
