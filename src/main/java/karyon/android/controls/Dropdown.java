@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import karyon.applications.Application;
@@ -69,7 +70,6 @@ public class Dropdown
             return m_oWrappedAdapter.getView(tnPosition, toView, toParent);
         }
     }
-
 
     public Dropdown(Context toContext)
     {
