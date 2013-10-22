@@ -19,6 +19,23 @@ import static org.junit.Assert.*;
 public class SharedPreferencesPropertyManagerTest
     extends KaryonTest
 {
+    private static class TestValue
+    {
+        int m_nValue;
+
+        public TestValue()
+        {}
+
+        public TestValue(int tnValue)
+        {
+            m_nValue = tnValue;
+        }
+
+        public int getValue()
+        {
+            return m_nValue;
+        }
+    }
 
     @Test
     public void testGetProperty_string() throws Exception
@@ -83,6 +100,10 @@ public class SharedPreferencesPropertyManagerTest
         assertEquals("test", loPM.getProperty("Test", "test"));
         loPM.setProperty("Test", "TEST1");
         assertEquals("TEST1", loPM.getProperty("Test", "test"));
+
+        loPM.setProperty("Test2", new TestValue(999));
+
+        assertEquals(999, loPM.<TestValue>getProperty("Test2", TestValue.class).getValue());
     }
 
     @Test

@@ -1,10 +1,14 @@
 package karyon.android.applications;
 
+import karyon.applications.Application;
 import karyon.applications.propertyManagers.IPropertyManager;
+import karyon.json.exceptions.InvalidJSONStringException;
+import karyon.json.exceptions.JSONMappingException;
 import karyon.text.Utilities;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
+import java.io.InvalidClassException;
 import java.util.Map;
 
 /**
@@ -63,6 +67,35 @@ public class SharedPreferencesPropertyManager
         if (loValues.containsKey(tcPath))
         {
             return (K)loValues.get(tcPath);
+        }
+        return null;
+    }
+
+    @Override
+    public <K> K getProperty(String tcPath, Class<K> toClass)
+    {
+        tcPath = Utilities.normalise(tcPath);
+        Map<String, ?> loValues = getValues();
+        if (loValues.containsKey(tcPath))
+        {
+            Object loValue = loValues.get(tcPath);
+            if (loValue != null)
+            {
+                try
+                {
+                    return (K)(loValue.getClass() == String.class ?
+                        karyon.json.Utilities.toObject((String)loValue, toClass) :
+                        loValue);
+                }
+                catch (InvalidJSONStringException ex)
+                {
+                    Application.log(ex);
+                }
+                catch (InvalidClassException ex)
+                {
+                    Application.log(ex);
+                }
+            }
         }
         return null;
     }
@@ -151,9 +184,20 @@ public class SharedPreferencesPropertyManager
             {
                 loEditor.putLong(tcPath, (Long) toValue);
             }
+            else if (toValue.getClass().equals(String.class))
+            {
+                loEditor.putString(tcPath, (String) toValue);
+            }
             else
             {
-                loEditor.putString(tcPath, toValue.toString());
+                try
+                {
+                    loEditor.putString(tcPath, karyon.json.Utilities.toJSONString(toValue));
+                }
+                catch (JSONMappingException ex)
+                {
+                    Application.log(ex);
+                }
             }
         }
         // Need to commit if this was a single set
