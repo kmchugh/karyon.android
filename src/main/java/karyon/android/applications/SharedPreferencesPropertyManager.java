@@ -83,7 +83,7 @@ public class SharedPreferencesPropertyManager
             {
                 try
                 {
-                    return (K)(loValue.getClass() == String.class ?
+                    return (K)(loValue.getClass() == String.class && toClass != String.class ?
                         karyon.json.Utilities.toObject((String)loValue, toClass) :
                         loValue);
                 }
