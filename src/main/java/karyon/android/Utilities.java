@@ -1,5 +1,6 @@
 package karyon.android;
 
+import android.content.Context;
 import android.view.Window;
 import karyon.android.applications.AndroidApplicationAdaptor;
 import karyon.collections.HashMap;
@@ -109,8 +110,20 @@ public class Utilities
 
         return (lnFeatures & (1 << tnFeatureID)) != 0;
     }
+
+
+    /**
+     * Converts the pixel measurement provided to density pixels
+     * @param toContext the context we are in
+     * @param tnPixels the pixel measurement
+     * @return the measurement adjusted for density
+     */
+    public static int getPixels(Context toContext, int tnPixels)
+    {
+        return (int)(tnPixels * toContext.getResources().getDisplayMetrics().density);
+    }
     
-    // Not createable
+    // Not creatable
     private Utilities()
     {}
     
