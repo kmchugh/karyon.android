@@ -34,6 +34,7 @@ public abstract class BaseFragment<T extends IActivity>
     }
 
     private ActivityImpl<T> m_oImpl;
+    private ViewGroup m_oRootContainer;
 
     /**
      * Creates a new instance of the base activity
@@ -109,13 +110,23 @@ public abstract class BaseFragment<T extends IActivity>
     @Override
     public View onCreateView(LayoutInflater toInflater, ViewGroup toContainer, Bundle toSavedInstanceState)
     {
-        return toInflater.inflate(getContentViewID(), toContainer, false);
+        m_oRootContainer = toContainer;
+        return toInflater.inflate(getContentViewID(), m_oRootContainer, false);
     }
 
     @Override
     public boolean onInit(Bundle toSavedState)
     {
         return true;
+    }
+
+    /**
+     * Gets the root container for this fragment
+     * @return the root container
+     */
+    protected final ViewGroup getRootContainer()
+    {
+        return m_oRootContainer;
     }
 
     /**

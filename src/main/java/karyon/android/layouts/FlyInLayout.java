@@ -1,6 +1,7 @@
 package karyon.android.layouts;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -79,6 +80,7 @@ public class FlyInLayout
 
     private View m_oMenu;
     private HashMap<Integer, View> m_oViews;
+    private HashMap<Integer, Integer> m_oIDMap;
     private int m_nCurrentView;
     private int m_nMenuMargin;
     private int m_nContentOffset;
@@ -124,7 +126,10 @@ public class FlyInLayout
         m_nAnimationDuration = 500;
         m_nPollingInterval = 16;
         m_oViews = new HashMap<Integer, View>();
+        m_oIDMap = new HashMap<Integer, Integer>();
     }
+
+
 
     /**
      * Toggles the menu opened or closed
@@ -217,12 +222,18 @@ public class FlyInLayout
     private void calculateChildDimensions()
     {
         View loContent = getCurrentView();
-        loContent.getLayoutParams().height = getHeight();
-        loContent.getLayoutParams().width = getWidth();
+        if (loContent != null && loContent.getLayoutParams() != null)
+        {
+            loContent.getLayoutParams().height = getHeight();
+            loContent.getLayoutParams().width = getWidth();
+        }
 
         View loMenu = getMenu();
-        loMenu.getLayoutParams().width = getWidth() - m_nMenuMargin;
-        loMenu.getLayoutParams().height = getHeight();
+        if (loMenu != null && loMenu.getLayoutParams() != null)
+        {
+            loMenu.getLayoutParams().width = getWidth() - m_nMenuMargin;
+            loMenu.getLayoutParams().height = getHeight();
+        }
     }
 
     /**
@@ -231,12 +242,16 @@ public class FlyInLayout
      */
     private void adjustContentPosition(boolean tlIsOngoing)
     {
-        int lnOffset = m_oMenuScroller.getCurrX();
-        getCurrentView().offsetLeftAndRight(lnOffset - m_nContentOffset);
+        View lnCurrentView = getCurrentView();
+        if (lnCurrentView != null)
+        {
+            int lnOffset = m_oMenuScroller.getCurrX();
+            lnCurrentView.offsetLeftAndRight(lnOffset - m_nContentOffset);
 
-        m_nContentOffset = lnOffset;
+            m_nContentOffset = lnOffset;
 
-        this.invalidate();
+            this.invalidate();
+        }
 
         if (tlIsOngoing)
         {
@@ -277,11 +292,14 @@ public class FlyInLayout
      * @param tnLayoutID the layout to inflate and add
      * @return true if the list of views has changed as a result of this call
      */
-    public boolean addView(int tnViewIdentifier, int tnLayoutID)
+    public final boolean addView(int tnViewIdentifier, int tnLayoutID)
     {
         LayoutInflater loInflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        m_oIDMap.put(tnViewIdentifier, tnLayoutID);
         return addView(tnViewIdentifier, loInflater.inflate(tnLayoutID, null, false));
     }
+
+
 
     /**
      * Adds a view to be available for the content area.  This will not add a menu item
@@ -292,7 +310,7 @@ public class FlyInLayout
      * @param toView the view that we are adding
      * @return true if the list of views has changed as a result of this call
      */
-    public boolean addView(int tnViewIdentifier, View toView)
+    protected boolean addView(int tnViewIdentifier, View toView)
     {
         if (!m_oViews.containsKey(tnViewIdentifier))
         {
@@ -311,7 +329,7 @@ public class FlyInLayout
      * @param tnViewID the view to display
      * @return true if the item is actually added.
      */
-    public boolean addItem(int tnIconResourceID, int tnStringID, int tnViewID)
+    public final boolean addItem(int tnIconResourceID, int tnStringID, int tnViewID)
     {
         // Adds a menu item for the view specified
         if (!m_oViews.containsKey(tnStringID))
@@ -333,7 +351,6 @@ public class FlyInLayout
                             loChild.setVisibility(lnVisibility);
                         }
                     }
-                    setCurrentView(tnStringID);
                 }
 
                 Button loButton = new Button(getContext());
@@ -345,8 +362,16 @@ public class FlyInLayout
                     @Override
                     public void onClick(View toView)
                     {
-                        FlyInLayout.this.setCurrentView(toView.getId());
-                        FlyInLayout.this.toggleMenu();
+                        ViewGroup loParent = (ViewGroup)toView.getParent();
+                        while (loParent != null && loParent.getClass() != FlyInLayout.class)
+                        {
+                            loParent = (ViewGroup)loParent.getParent();
+                        }
+                        if (loParent != null)
+                        {
+                            ((FlyInLayout)loParent).setCurrentView(toView.getId());
+                            ((FlyInLayout)loParent).toggleMenu();
+                        }
                     }
                 });
                 ((ViewGroup)loMenu).addView(loButton);
@@ -390,19 +415,38 @@ public class FlyInLayout
             calculateChildDimensions();
         }
 
-        getMenu().layout(tnLeft, tnTop, tnRight - m_nMenuMargin, tnBottom);
+        View loMenu = getMenu();
+        if (loMenu != null)
+        {
+            loMenu.layout(tnLeft, tnTop, tnRight - m_nMenuMargin, tnBottom);
+        }
 
-        getCurrentView().layout(tnLeft + m_nContentOffset, tnTop, tnRight + m_nContentOffset, tnBottom);
+        View loCurrentView = getCurrentView();
+        if (loCurrentView != null)
+        {
+            loCurrentView.layout(tnLeft + m_nContentOffset, tnTop, tnRight + m_nContentOffset, tnBottom);
+        }
     }
 
     /**
      * Sets the current view to the view specified by the string id.
-     * This is the same string id that was used to add the view
+     * This is the same string id that was used to add the view.
+     * Use 0 to clear the view, this allows for "resetting" if needed, such as for configuration changes
      * @param tnStringID the id of the string the view maps to
      * @return true if the view was changed, false otherwise
      */
     public boolean setCurrentView(int tnStringID)
     {
+        if (tnStringID == 0)
+        {
+            if (m_nCurrentView != 0)
+            {
+                getCurrentView().setVisibility(View.GONE);
+            }
+            m_nCurrentView = tnStringID;
+            return true;
+        }
+
         if (m_oHelper != null)
         {
             int lnTranslatedID = m_oHelper.translateView(tnStringID);
@@ -418,11 +462,16 @@ public class FlyInLayout
                 getCurrentView().setVisibility(View.GONE);
             }
             m_nCurrentView = tnStringID;
-            getCurrentView().setVisibility(View.VISIBLE);
-            onLayout(true, getLeft(), getTop(), getRight(), getBottom());
-            if (m_oHelper != null)
+            View loCurrentView = getCurrentView();
+            loCurrentView.setVisibility(View.VISIBLE);
+            if (getParent() != null)
             {
-                m_oHelper.onViewChanged(m_nCurrentView, getCurrentView());
+                onLayout(true, getLeft(), getTop(), getRight(), getBottom());
+                if (m_oHelper != null)
+                {
+                    m_oHelper.onViewChanged(m_nCurrentView, loCurrentView);
+                }
+                adjustContentPosition(false);
             }
             return true;
         }
