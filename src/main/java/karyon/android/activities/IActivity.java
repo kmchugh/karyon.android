@@ -123,6 +123,12 @@ public interface IActivity<T extends IActivity>
     int getPortraitViewResourceID();
 
     /**
+     * Sets the orientation of the device to the specified orientation
+     * @param tnOrientation the new orientation
+     */
+    void setRequestedOrientation(int tnOrientation);
+
+    /**
      * This should be called when the activity is complete
       */
     void finish();

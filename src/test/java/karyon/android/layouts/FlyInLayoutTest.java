@@ -200,9 +200,10 @@ public class FlyInLayoutTest
         assertTrue(loLayout.addItem(R.drawable.attention, R.string.error, R.layout.splash));
         assertTrue(loLayout.addItem(R.drawable.attention, R.string.app_name, R.layout.splash));
 
-        assertEquals(View.VISIBLE, loLayout.getChildAt(2).getVisibility());
+        assertEquals(View.GONE, loLayout.getChildAt(2).getVisibility());
         assertEquals(View.GONE, loLayout.getChildAt(3).getVisibility());
 
+        assertTrue(loLayout.setCurrentView(R.string.error));
         assertFalse(loLayout.setCurrentView(R.string.error));
         assertTrue(loLayout.setCurrentView(R.string.app_name));
 

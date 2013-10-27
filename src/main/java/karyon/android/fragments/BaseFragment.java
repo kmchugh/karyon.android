@@ -342,4 +342,13 @@ public abstract class BaseFragment<T extends IActivity>
     {
         return getFragmentManager();
     }
+
+    @Override
+    public void setRequestedOrientation(int tnOrientation)
+    {
+        if (getActivity() != null)
+        {
+            getActivity().setRequestedOrientation(tnOrientation);
+        }
+    }
 }
