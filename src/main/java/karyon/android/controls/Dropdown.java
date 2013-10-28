@@ -49,19 +49,9 @@ public class Dropdown
         {
             try
             {
-                if (toMethod.equals(m_oGetView) && (Integer)(taArgs[0]) < 0)
-                {
-                    return getView((Integer) taArgs[0], (View) taArgs[1], (ViewGroup) taArgs[2]);
-                }
-                else if (toMethod.equals(m_oSetSelection)  && (Integer)(taArgs[0]) < 0)
-                {
-                    setSelection((Integer)taArgs[0]);
-                    return null;
-                }
-                else
-                {
-                    return toMethod.invoke(m_oWrappedAdapter, taArgs);
-                }
+                return toMethod.equals(m_oGetView) && (Integer)(taArgs[0]) <0 ?
+                        getView((Integer) taArgs[0], (View) taArgs[1], (ViewGroup) taArgs[2]) :
+                        toMethod.invoke(m_oWrappedAdapter, taArgs);
             }
             catch (InvocationTargetException ex)
             {
@@ -80,11 +70,6 @@ public class Dropdown
                 return loView;
             }
             return m_oWrappedAdapter.getView(tnPosition, toView, toParent);
-        }
-
-        private void setSelection(int tnPosition)
-        {
-            forceClear();
         }
     }
 
@@ -111,6 +96,26 @@ public class Dropdown
     public Dropdown(Context toContext, AttributeSet toAttributes, int tnStyle, int tnMode)
     {
         super(toContext, toAttributes, tnStyle, tnMode);
+    }
+
+    @Override
+    public void setSelection(int tnPosition, boolean tlAnimate)
+    {
+        if (tnPosition < 0)
+        {
+            forceClear();
+        }
+        super.setSelection(tnPosition, tlAnimate);
+    }
+
+    @Override
+    public void setSelection(int tnPosition)
+    {
+        if (tnPosition < 0)
+        {
+            forceClear();
+        }
+        super.setSelection(tnPosition);
     }
 
     private void forceClear()
