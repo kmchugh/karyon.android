@@ -78,6 +78,11 @@ public abstract class BaseActivity<T extends IActivity>
     }
 
     @Override
+    public void onAttached()
+    {
+    }
+
+    @Override
     public int getCustomTitleDrawable()
     {
         return 0;

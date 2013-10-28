@@ -319,7 +319,7 @@ public class ActivityImpl<T extends IActivity>
      */
     public void onAttach(Activity toView)
     {
-        // TODO: Look at implementing this
+        m_oThis.onAttached();
     }
 
     /**

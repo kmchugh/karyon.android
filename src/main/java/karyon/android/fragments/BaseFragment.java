@@ -141,6 +141,15 @@ public abstract class BaseFragment<T extends IActivity>
         super.onAttach(toActivity);
     }
 
+    /**
+     * This is called when the fragment is attached to an
+     * activity
+     */
+    @Override
+    public void onAttached()
+    {
+    }
+
     @Override
     public void onRestarted()
     {

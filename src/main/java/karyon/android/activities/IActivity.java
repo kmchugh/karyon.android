@@ -22,6 +22,11 @@ public interface IActivity<T extends IActivity>
     boolean canShowTitle();
 
     /**
+     * Occurs when view is attached to an activity
+     */
+    void onAttached();
+
+    /**
      * Sets the flag for the specified window feature
      * @param tnFeature the feature to turn on
      * @return true if the feature is supported and enabled after this call

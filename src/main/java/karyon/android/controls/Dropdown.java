@@ -28,6 +28,7 @@ public class Dropdown
     {
         protected SpinnerAdapter m_oWrappedAdapter;
         protected Method m_oGetView;
+        protected Method m_oSetSelection;
 
         private SpinnerAdapterProxy(SpinnerAdapter toWrappedAdapter)
         {
@@ -35,6 +36,7 @@ public class Dropdown
             try
             {
                 m_oGetView = SpinnerAdapter.class.getMethod("getView", int.class, View.class, ViewGroup.class);
+                m_oSetSelection = SpinnerAdapter.class.getMethod("setSelection", int.class);
             }
             catch (NoSuchMethodException ex)
             {
@@ -47,9 +49,19 @@ public class Dropdown
         {
             try
             {
-                return toMethod.equals(m_oGetView) && (Integer)(taArgs[0]) <0 ?
-                        getView((Integer) taArgs[0], (View) taArgs[1], (ViewGroup) taArgs[2]) :
-                        toMethod.invoke(m_oWrappedAdapter, taArgs);
+                if (toMethod.equals(m_oGetView) && (Integer)(taArgs[0]) < 0)
+                {
+                    return getView((Integer) taArgs[0], (View) taArgs[1], (ViewGroup) taArgs[2]);
+                }
+                else if (toMethod.equals(m_oSetSelection)  && (Integer)(taArgs[0]) < 0)
+                {
+                    setSelection((Integer)taArgs[0]);
+                    return null;
+                }
+                else
+                {
+                    return toMethod.invoke(m_oWrappedAdapter, taArgs);
+                }
             }
             catch (InvocationTargetException ex)
             {
@@ -68,6 +80,11 @@ public class Dropdown
                 return loView;
             }
             return m_oWrappedAdapter.getView(tnPosition, toView, toParent);
+        }
+
+        private void setSelection(int tnPosition)
+        {
+            forceClear();
         }
     }
 
@@ -96,6 +113,36 @@ public class Dropdown
         super(toContext, toAttributes, tnStyle, tnMode);
     }
 
+    private void forceClear()
+    {
+        SpinnerAdapter loAdaptor = getAdapter();
+        if (loAdaptor != null)
+        {
+            try
+            {
+                Method loMethod = AdapterView.class.getDeclaredMethod("setNextSelectedPositionInt",int.class);
+                loMethod.setAccessible(true);
+                loMethod.invoke(this,-1);
+
+                loMethod = AdapterView.class.getDeclaredMethod("setSelectedPositionInt",int.class);
+                loMethod.setAccessible(true);
+                loMethod.invoke(this,-1);
+            }
+            catch (NoSuchMethodException ex)
+            {
+                Application.log(ex);
+            }
+            catch (IllegalAccessException ex)
+            {
+                Application.log(ex);
+            }
+            catch (InvocationTargetException ex)
+            {
+                Application.log(ex);
+            }
+        }
+    }
+
     @Override
     public final void setAdapter(SpinnerAdapter toAdapter)
     {
@@ -103,28 +150,7 @@ public class Dropdown
 
         super.setAdapter(loProxy);
 
-        try
-        {
-            Method loMethod = AdapterView.class.getDeclaredMethod("setNextSelectedPositionInt",int.class);
-            loMethod.setAccessible(true);
-            loMethod.invoke(this,-1);
-
-            loMethod = AdapterView.class.getDeclaredMethod("setSelectedPositionInt",int.class);
-            loMethod.setAccessible(true);
-            loMethod.invoke(this,-1);
-        }
-        catch (NoSuchMethodException ex)
-        {
-            Application.log(ex);
-        }
-        catch (IllegalAccessException ex)
-        {
-            Application.log(ex);
-        }
-        catch (InvocationTargetException ex)
-        {
-            Application.log(ex);
-        }
+        forceClear();
     }
 
     private SpinnerAdapter createProxyAdapter(SpinnerAdapter toAdapter)
