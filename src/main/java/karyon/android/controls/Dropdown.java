@@ -28,7 +28,6 @@ public class Dropdown
     {
         protected SpinnerAdapter m_oWrappedAdapter;
         protected Method m_oGetView;
-        protected Method m_oSetSelection;
 
         private SpinnerAdapterProxy(SpinnerAdapter toWrappedAdapter)
         {
@@ -36,7 +35,6 @@ public class Dropdown
             try
             {
                 m_oGetView = SpinnerAdapter.class.getMethod("getView", int.class, View.class, ViewGroup.class);
-                m_oSetSelection = SpinnerAdapter.class.getMethod("setSelection", int.class);
             }
             catch (NoSuchMethodException ex)
             {
