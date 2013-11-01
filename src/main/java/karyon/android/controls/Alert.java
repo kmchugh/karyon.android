@@ -12,6 +12,7 @@ import android.view.View;
 import karyon.Utilities;
 import karyon.android.R;
 import karyon.android.activities.IActivity;
+import karyon.applications.Application;
 
 /**
  * The alert class allows gathering of feedback from the user
@@ -161,7 +162,7 @@ public class Alert
     private String m_cTag;
 
 
-    private Alert()
+    public Alert()
     {
     }
 
@@ -219,6 +220,20 @@ public class Alert
         if (m_oTitle != null)
         {
             m_oTitle.setText(tcText);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle toInstance)
+    {
+        try
+        {
+            super.onActivityCreated(toInstance);
+        }
+        catch (Throwable ex)
+        {
+            // Seems to throw a null pointer exception on 2.2
+            Application.log(ex);
         }
     }
 }
