@@ -134,6 +134,12 @@ public interface IActivity<T extends IActivity>
     void setRequestedOrientation(int tnOrientation);
 
     /**
+     * Gets the orientation that was requested for this activity
+     * @return the requested orientation
+     */
+    int getRequestedOrientation();
+
+    /**
      * This should be called when the activity is complete
       */
     void finish();

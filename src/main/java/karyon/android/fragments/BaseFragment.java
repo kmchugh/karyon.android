@@ -91,6 +91,13 @@ public abstract class BaseFragment<T extends IActivity>
     }
 
     @Override
+    public int getRequestedOrientation()
+    {
+        return getActivity() != null ?
+                getActivity().getRequestedOrientation() : -1;
+    }
+
+    @Override
     public final boolean setWindowFeature(int tnFeature)
     {
         return getActivity().requestWindowFeature(tnFeature);
