@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>karyon.android</artifactId>
+    <groupId>uk.co.icatalyst</groupId>
+    <version>0.3-SNAPSHOT</version>
+    <packaging>apklib</packaging>
+    <name>karyon.android</name>
+    <description>Karyon Android Application Library</description>
+
+    <properties>
+        <!-- github server corresponds to entry in ~/.m2/settings.xml -->
+        <github.global.server>github</github.global.server>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <uk.co.icatalyst.karyon.version>0.3.70</uk.co.icatalyst.karyon.version>
+        <uk.co.icatalyst.karyon.data.version>0.2-SNAPSHOT</uk.co.icatalyst.karyon.data.version>
+        <com.google.android.android.version>4.1.1.4</com.google.android.android.version>
+        <com.google.android.support-v4.version>18.0.0</com.google.android.support-v4.version>
+        <com.google.android.appcompat-v7.version>18.0.0</com.google.android.appcompat-v7.version>
+        <com.pivotallabs.robolectric.version>2.1.1</com.pivotallabs.robolectric.version>
+        <junit.version>4.11</junit.version>
+        <com.flurry.FlurryAgent.version>3.1.0</com.flurry.FlurryAgent.version>
+        <org.apache.maven.plugins.maven.compiler.plugin.version>3.0</org.apache.maven.plugins.maven.compiler.plugin.version>
+        <org.apache.maven.plugins.maven.deploy.plugin.version>2.7</org.apache.maven.plugins.maven.deploy.plugin.version>
+        <com.github.github.site.maven.plugin.version>0.9</com.github.github.site.maven.plugin.version>
+        <com.jayway.maven.plugins.android.generation2.version>3.8.2</com.jayway.maven.plugins.android.generation2.version>
+        <android.platform.version>17</android.platform.version>
+    </properties>
+
+    <dependencies>
+        <!-- Core libraries -->
+        <dependency>
+            <groupId>uk.co.icatalyst</groupId>
+            <artifactId>karyon</artifactId>
+            <version>${uk.co.icatalyst.karyon.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>uk.co.icatalyst</groupId>
+            <artifactId>karyon.data</artifactId>
+            <version>${uk.co.icatalyst.karyon.data.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Android Libraries -->
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>${com.google.android.android.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Android Support Libraries -->
+        <dependency>
+            <groupId>com.android.support</groupId>
+            <artifactId>support-v4</artifactId>
+            <version>${com.google.android.support-v4.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Required for Flurry -->
+        <dependency>
+            <groupId>com.flurry</groupId>
+            <artifactId>FlurryAgent</artifactId>
+            <version>${com.flurry.FlurryAgent.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Make sure this is below the android dependencies -->
+        <dependency>
+            <groupId>org.robolectric</groupId>
+            <artifactId>robolectric</artifactId>
+            <version>${com.pivotallabs.robolectric.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>karyon-mvn-repo</id>
+            <url>https://raw.github.com/kmchugh/karyon/mvn-repo</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>karyon.data-mvn-repo</id>
+            <url>https://raw.github.com/kmchugh/karyon.data/mvn-repo</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>karyon.android-mvn-repo</id>
+            <url>https://raw.github.com/kmchugh/karyon.android/mvn-repo</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>android.support-mvn-repo</id>
+            <url>https://raw.github.com/kmchugh/android.support/mvn-repo</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </repository>
+
+
+        <!-- Required for the flurry analytics -->
+        <repository>
+            <id>Local File Repository</id>
+            <url>file://${basedir}/libs</url>
+        </repository>
+    </repositories>
+
+    <scm>
+        <connection>scm:git:git@github.com:kmchugh/karyon.android.git</connection>
+        <url>scm:git:git@github.com:kmchugh/karyon.android.git</url>
+        <developerConnection>scm:git:git@github.com:kmchugh/karyon.android.git</developerConnection>
+    </scm>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${org.apache.maven.plugins.maven.compiler.plugin.version}</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <source>${java.specification.version}</source>
+                    <target>${java.specification.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <!-- See http://code.google.com/p/maven-android-plugin/ -->
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>${com.jayway.maven.plugins.android.generation2.version}</version>
+                <configuration>
+                    <sdk>
+                        <platform>${android.platform.version}</platform>
+                    </sdk>
+                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                </configuration>
+                <extensions>true</extensions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${org.apache.maven.plugins.maven.deploy.plugin.version}</version>
+                <configuration>
+                    <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>${com.github.github.site.maven.plugin.version}</version>
+                <configuration>
+                    <message>Maven artifacts for ${project.version}</message>
+                    <noJekyll>true</noJekyll>
+                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+                    <branch>refs/heads/mvn-repo</branch>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                    <repositoryName>karyon.android</repositoryName>
+                    <repositoryOwner>kmchugh</repositoryOwner>
+                    <merge>true</merge>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>deploy</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub ${project.artifactId} Repository</name>
+            <url>https://raw.github.com/kmchugh/${project.name}/mvn-repo</url>
+        </repository>
+    </distributionManagement>
+
+</project>
