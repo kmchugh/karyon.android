@@ -1,3 +1,6 @@
+.gradle
+local.properties
+.idea/
 private.xml
 build/
 dist/
