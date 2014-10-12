@@ -1,1 +1,1 @@
-include ':karyon.android'
+include ':karyon.android.core'
