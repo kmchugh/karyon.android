@@ -1,0 +1,81 @@
+apply plugin: 'com.android.library'
+
+repositories {
+    maven {url "https://raw.github.com/kmchugh/karyon/mvn-repo"}
+    maven {url "https://raw.github.com/kmchugh/karyon.data/mvn-repo"}
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+
+        testApplicationId 'uk.co.icatalyst.android.test'
+        testInstrumentationRunner 'android.test.InstrumentationTestRunner'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+apply plugin: 'android-unit-test'
+
+dependencies {
+    compile "uk.co.icatalyst:karyon:${karyon_version}"
+    compile "uk.co.icatalyst:karyon.data:${karyon_data_version}"
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:appcompat-v7:${appcompat_version}"
+
+    testCompile "org.robolectric:robolectric:${robolectric_version}"
+    testCompile "junit:junit:${junit_version}"
+}
+
+//
+//apply plugin: 'jacoco'
+//
+//jacoco {
+//    toolVersion = "0.7.1.201405082137"
+//}
+//
+//def coverageSourceDirs = [
+//        '../app/src/main/java'
+//]
+//
+//task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
+//    group = "Reporting"
+//
+//    description = "Generate Jacoco coverage reports"
+//
+//    classDirectories = fileTree(
+//            dir: '../app/build/intermediates/classes/debug',
+//            excludes: ['**/R.class',
+//                       '**/R$*.class',
+//                       '**/*$ViewInjector*.*',
+//                       '**/BuildConfig.*',
+//                       '**/Manifest*.*']
+//    )
+//
+//    additionalSourceDirs = files(coverageSourceDirs)
+//    sourceDirectories = files(coverageSourceDirs)
+//    executionData = files('../app/build/jacoco/testDebug.exec')
+//
+//    reports {
+//        xml.enabled = true
+//        html.enabled = true
+//    }
+//
+//}
+//
