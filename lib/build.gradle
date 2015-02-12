@@ -1,3 +1,6 @@
+// Imports for any code used within the build
+import java.util.regex.Pattern
+
 apply plugin: 'com.android.library'
 
 repositories {
@@ -6,23 +9,30 @@ repositories {
 }
 
 android {
-    compileSdkVersion 21
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+    }
+
+    compileSdkVersion 18
     buildToolsVersion "21.1.2"
 
     defaultConfig {
         minSdkVersion 11
-        targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
-
-        testApplicationId 'uk.co.icatalyst.android.test'
-        testInstrumentationRunner 'android.test.InstrumentationTestRunner'
+        // Must stick to robolectric supported versions
+        targetSdkVersion 18
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            jniDebuggable true
+            renderscriptDebuggable true
         }
     }
     compileOptions {
@@ -33,49 +43,73 @@ android {
 
 apply plugin: 'android-unit-test'
 
+androidUnitTest {
+
+    testTasks {
+        all {
+            debug = true
+        }
+    }
+}
+
+
 dependencies {
     compile "uk.co.icatalyst:karyon:${karyon_version}"
     compile "uk.co.icatalyst:karyon.data:${karyon_data_version}"
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:appcompat-v7:${appcompat_version}"
-
     testCompile "org.robolectric:robolectric:${robolectric_version}"
     testCompile "junit:junit:${junit_version}"
+    androidTestCompile "org.robolectric:robolectric:${robolectric_version}"
+    androidTestCompile "junit:junit:${junit_version}"
 }
 
-//
-//apply plugin: 'jacoco'
-//
-//jacoco {
-//    toolVersion = "0.7.1.201405082137"
-//}
-//
-//def coverageSourceDirs = [
-//        '../app/src/main/java'
-//]
-//
-//task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
-//    group = "Reporting"
-//
-//    description = "Generate Jacoco coverage reports"
-//
-//    classDirectories = fileTree(
-//            dir: '../app/build/intermediates/classes/debug',
-//            excludes: ['**/R.class',
-//                       '**/R$*.class',
-//                       '**/*$ViewInjector*.*',
-//                       '**/BuildConfig.*',
-//                       '**/Manifest*.*']
-//    )
-//
-//    additionalSourceDirs = files(coverageSourceDirs)
-//    sourceDirectories = files(coverageSourceDirs)
-//    executionData = files('../app/build/jacoco/testDebug.exec')
-//
-//    reports {
-//        xml.enabled = true
-//        html.enabled = true
-//    }
-//
-//}
-//
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+}
+
+def coverageSourceDirs = [
+        './src/main/java'
+]
+
+gradle.taskGraph.whenReady { taskGraph ->
+
+    // Update the min and target SDKs for robolectric
+    def classFile = file('src/test/java/karyon/android/Config.java')
+    def text = classFile.getText();
+    def matcher = Pattern.compile("m_nMinSDKVersion.=.(\\d+);").matcher(text);
+    text = matcher.replaceAll("m_nMinSDKVersion = " + android.defaultConfig.minSdkVersion.mApiLevel + ";")
+
+    matcher = Pattern.compile("m_nTargetSDKVersion.=.(\\d+);").matcher(text);
+    text = matcher.replaceAll("m_nTargetSDKVersion = " + android.defaultConfig.targetSdkVersion.mApiLevel + ";")
+
+    classFile.write(text);
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
+    group = "Reporting"
+
+    description = "Generate Jacoco coverage reports"
+
+    classDirectories = fileTree(
+            dir: './build/intermediates/classes/debug',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/*$ViewInjector*.*',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*']
+    )
+
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files('./build/jacoco/testDebug.exec')
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+}
+
