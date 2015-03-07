@@ -2,15 +2,20 @@ package karyon.android.layouts;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
 import karyon.android.CustomRoboTestRunner;
 import karyon.android.R;
 import karyon.android.activities.SplashActivity;
 import karyon.android.applications.AndroidApplicationAdaptor;
+import karyon.dynamicCode.Java;
 import karyon.testing.KaryonTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.util.ActivityController;
+
+import java.lang.reflect.Method;
 
 import static org.junit.Assert.*;
 
@@ -134,7 +139,13 @@ public class FlyInLayoutTest
         loActivity.setup();
 
         loActivity.get().setContentView(loLayout);
-        assertEquals(View.GONE, loLayout.getVisibility());
+        Method loMethod = Java.getMethod(FlyInLayout.class, "getMenu", new Class[]{});
+        if (!loMethod.isAccessible())
+        {
+            loMethod.setAccessible(true);
+        }
+        LinearLayout loMenu = (LinearLayout)loMethod.invoke(loLayout);
+        assertEquals(View.GONE, loMenu.getVisibility());
     }
 
     @Test
