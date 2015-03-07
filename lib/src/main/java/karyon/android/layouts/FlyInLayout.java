@@ -466,7 +466,8 @@ public class FlyInLayout
             loCurrentView.setVisibility(View.VISIBLE);
             if (getParent() != null)
             {
-                onLayout(true, getLeft(), getTop(), getRight(), getBottom());
+                invalidate();
+                layout(getLeft(), getTop(), getRight(), getBottom());
                 if (m_oHelper != null)
                 {
                     m_oHelper.onViewChanged(m_nCurrentView, loCurrentView);

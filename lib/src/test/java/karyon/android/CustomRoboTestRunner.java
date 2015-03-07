@@ -4,6 +4,7 @@ import android.app.Application;
 import org.junit.runners.model.InitializationError;
 import org.robolectric.*;
 import org.robolectric.annotation.Config;
+import org.robolectric.AndroidManifest;
 import org.robolectric.res.Fs;
 
 import java.lang.reflect.Method;
@@ -14,6 +15,7 @@ import java.lang.reflect.Method;
 public class CustomRoboTestRunner extends RobolectricTestRunner
 {
     private static Application g_oApplication;
+    private static AndroidManifest g_oManifest;
 
     /**
      * Forces termination of the android application
@@ -64,32 +66,43 @@ public class CustomRoboTestRunner extends RobolectricTestRunner
     @Override
     protected AndroidManifest getAppManifest(Config toConfig)
     {
-        String lcAppRoot = "src/main/";
-        String lcManifestPath = lcAppRoot + "AndroidManifest.xml";
-        String lcResDir = lcAppRoot + "res";
-        String lcAssetsDir = lcAppRoot + "assets";
+        if (g_oManifest == null) {
 
-        // Create the Manifest Object
-        // TODO: May want to create a subclass
-        AndroidManifest loManifest = new AndroidManifest(Fs.fileFromPath(lcManifestPath),
-                Fs.fileFromPath(lcResDir),
-                Fs.fileFromPath(lcAssetsDir))
-        {
-            private karyon.android.Config m_oConfig = new karyon.android.Config();
+            String[] laAppRoots = new String[]{"src/main/", "lib/src/main/"};
 
-            @Override
-            public int getTargetSdkVersion() {
-                return m_oConfig.getTargetSDKVersion();
+            for (String lcAppRoot : laAppRoots) {
+                String lcManifestPath = lcAppRoot + "AndroidManifest.xml";
+                String lcResDir = lcAppRoot + "res";
+                String lcAssetsDir = lcAppRoot + "assets";
+
+                // Create the Manifest Object
+                // TODO: May want to create a subclass
+                AndroidManifest loManifest = new AndroidManifest(Fs.fileFromPath(lcManifestPath),
+                        Fs.fileFromPath(lcResDir),
+                        Fs.fileFromPath(lcAssetsDir)) {
+                    private karyon.android.Config m_oConfig = new karyon.android.Config();
+
+                    @Override
+                    public int getTargetSdkVersion() {
+                        return m_oConfig.getTargetSDKVersion();
+                    }
+
+                    @Override
+                    public int getMinSdkVersion() {
+                        return m_oConfig.getMinSDKVersion();
+                    }
+                };
+
+                loManifest.setPackageName(System.getProperty("android.package"));
+
+                try {
+                    loManifest.getApplicationMetaData();
+                    g_oManifest = loManifest;
+                } catch (Throwable ex) {
+                }
             }
-
-            @Override
-            public int getMinSdkVersion() {
-                return m_oConfig.getMinSDKVersion();
-            }
-        };
-
-        loManifest.setPackageName(System.getProperty("android.package"));
-        return loManifest;
+        }
+        return g_oManifest;
     }
 
     /**
