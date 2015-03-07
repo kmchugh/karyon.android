@@ -131,11 +131,10 @@ public class FlyInLayoutTest
         ActivityController<SplashActivity> loActivity = Robolectric.buildActivity(SplashActivity.class);
         FlyInLayout loLayout = new FlyInLayout(AndroidApplicationAdaptor.getInstance().getApplicationContext());
 
-        loActivity.create();
-        loActivity.start();
+        loActivity.setup();
 
         loActivity.get().setContentView(loLayout);
-        assertEquals(View.GONE, loLayout.getChildAt(0).getVisibility());
+        assertEquals(View.GONE, loLayout.getVisibility());
     }
 
     @Test
@@ -180,8 +179,7 @@ public class FlyInLayoutTest
         ViewGroup loMenu = (ViewGroup)loLayout.getChildAt(0);
         assertEquals(2, loMenu.getChildCount());
 
-        // Test the views exist, 4 views, menu, empty + 2 added views
-        assertEquals(4, loLayout.getChildCount());
+        assertEquals(3, loLayout.getChildCount());
     }
 
     @Test
@@ -200,15 +198,15 @@ public class FlyInLayoutTest
         assertTrue(loLayout.addItem(R.drawable.attention, R.string.error, R.layout.splash));
         assertTrue(loLayout.addItem(R.drawable.attention, R.string.app_name, R.layout.splash));
 
+        assertEquals(View.GONE, loLayout.getChildAt(1).getVisibility());
         assertEquals(View.GONE, loLayout.getChildAt(2).getVisibility());
-        assertEquals(View.GONE, loLayout.getChildAt(3).getVisibility());
 
         assertTrue(loLayout.setCurrentView(R.string.error));
         assertFalse(loLayout.setCurrentView(R.string.error));
         assertTrue(loLayout.setCurrentView(R.string.app_name));
 
-        assertEquals(View.GONE, loLayout.getChildAt(2).getVisibility());
-        assertEquals(View.VISIBLE, loLayout.getChildAt(3).getVisibility());
+        assertEquals(View.GONE, loLayout.getChildAt(1).getVisibility());
+        assertEquals(View.VISIBLE, loLayout.getChildAt(2).getVisibility());
     }
 
     @Test
@@ -233,11 +231,11 @@ public class FlyInLayoutTest
 
         loLayout.setCurrentView(R.string.app_name);
         assertEquals(R.string.app_name, loLayout.getCurrentViewID());
-        assertEquals(View.VISIBLE, loLayout.getChildAt(3).getVisibility());
+        assertEquals(View.VISIBLE, loLayout.getChildAt(2).getVisibility());
 
         loLayout.setCurrentView(R.string.error);
         assertEquals(R.string.error, loLayout.getCurrentViewID());
-        assertEquals(View.VISIBLE, loLayout.getChildAt(2).getVisibility());
+        assertEquals(View.VISIBLE, loLayout.getChildAt(1).getVisibility());
 
         loLayout.setFlyInHelper(new FlyInLayout.FlyInHelper()
         {
@@ -249,7 +247,7 @@ public class FlyInLayoutTest
         });
 
         loLayout.setCurrentView(R.string.app_name);
-        assertEquals(View.VISIBLE, loLayout.getChildAt(4).getVisibility());
+        assertEquals(View.VISIBLE, loLayout.getChildAt(3).getVisibility());
         assertEquals(R.string.cancel, loLayout.getCurrentViewID());
 
         assertFalse(loLayout.setCurrentView(R.string.app_name));
@@ -276,14 +274,13 @@ public class FlyInLayoutTest
         ViewGroup loMenu = (ViewGroup)loLayout.getChildAt(0);
         assertEquals(2, loMenu.getChildCount());
 
-        // Test the views exist, 4 views, menu, empty + 2 added views
-        assertEquals(4, loLayout.getChildCount());
+        assertEquals(3, loLayout.getChildCount());
 
         assertFalse(loLayout.addView(R.string.error, new View(loMenu.getContext())));
         assertTrue(loLayout.addView(R.string.cancel, new View(loMenu.getContext())));
 
         assertEquals(2, loMenu.getChildCount());
-        assertEquals(5, loLayout.getChildCount());
+        assertEquals(4, loLayout.getChildCount());
     }
 
     @Test
@@ -307,20 +304,20 @@ public class FlyInLayoutTest
         assertTrue(loLayout.addView(R.string.cancel, new View(loMenu.getContext())));
 
         loLayout.setCurrentView(R.string.app_name);
-        assertEquals(View.VISIBLE, loLayout.getChildAt(3).getVisibility());
+        assertEquals(View.VISIBLE, loLayout.getChildAt(2).getVisibility());
 
         loLayout.setCurrentView(R.string.error);
-        assertEquals(View.VISIBLE, loLayout.getChildAt(2).getVisibility());
+        assertEquals(View.VISIBLE, loLayout.getChildAt(1).getVisibility());
 
         TestLayoutHelper loHelper = new TestLayoutHelper();
 
         loLayout.setFlyInHelper(loHelper);
 
         loLayout.setCurrentView(R.string.app_name);
-        assertEquals(View.VISIBLE, loLayout.getChildAt(4).getVisibility());
+        assertEquals(View.VISIBLE, loLayout.getChildAt(3).getVisibility());
         assertFalse(loLayout.setCurrentView(R.string.app_name));
 
         assertEquals(R.string.cancel, loHelper.m_nLastView);
-        assertEquals(loLayout.getChildAt(4), loHelper.m_oLastView);
+        assertEquals(loLayout.getChildAt(3), loHelper.m_oLastView);
     }
 }

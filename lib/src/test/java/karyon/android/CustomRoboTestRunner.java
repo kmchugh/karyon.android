@@ -64,7 +64,7 @@ public class CustomRoboTestRunner extends RobolectricTestRunner
     @Override
     protected AndroidManifest getAppManifest(Config toConfig)
     {
-        String lcAppRoot = "lib/src/main/";
+        String lcAppRoot = "src/main/";
         String lcManifestPath = lcAppRoot + "AndroidManifest.xml";
         String lcResDir = lcAppRoot + "res";
         String lcAssetsDir = lcAppRoot + "assets";

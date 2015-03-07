@@ -60,8 +60,10 @@ dependencies {
     compile "com.android.support:appcompat-v7:${appcompat_version}"
     testCompile "org.robolectric:robolectric:${robolectric_version}"
     testCompile "junit:junit:${junit_version}"
+    testCompile "com.android.support:appcompat-v7:${appcompat_version}"
     androidTestCompile "org.robolectric:robolectric:${robolectric_version}"
     androidTestCompile "junit:junit:${junit_version}"
+    androidTestCompile "com.android.support:appcompat-v7:${appcompat_version}"
 }
 
 apply plugin: 'jacoco'
