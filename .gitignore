@@ -17,3 +17,4 @@ config/
 *.iws
 pom.xml.releaseBackup
 out/
+.gradle/

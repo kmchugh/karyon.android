@@ -17,3 +17,18 @@ setting the android:name attribute to the inner class.  This is done by using th
 '$' to denote the inner class.  e.g. <fully qualified outer class>$<inner class>
 
 Set the activity to kayron.Android.Activities.SplashActivity, and run the app.
+
+
+To install the required libraries for robolectric 2.4:
+
+mvn install:install-file -DgroupId=com.google.android.maps \
+  -DartifactId=maps \
+  -Dversion=18_r3 \
+  -Dpackaging=jar \
+  -Dfile="$ANDROID_HOME/add-ons/addon-google_apis-google-18/libs/maps.jar"
+
+mvn install:install-file -DgroupId=com.android.support \
+  -DartifactId=support-v4 \
+  -Dversion=19.0.1 \
+  -Dpackaging=jar \
+  -Dfile="$ANDROID_HOME/extras/android/m2repository/com/android/support/support-v4/19.0.1/support-v4-19.0.1.jar"
